@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { Bell } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Bell, Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -76,6 +77,10 @@ export function NotificationsBell() {
             ))}
           </div>
         )}
+        <DropdownMenuSeparator />
+        <Link to="/portal/notifications" className="text-muted-foreground hover:text-foreground flex items-center gap-1.5 px-2 py-1.5 text-xs">
+          <Settings2 className="size-3.5" /> Notification preferences
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -25,7 +25,7 @@ export default function CollegeProgrammes() {
 
   return (
     <>
-      <Hero variant="compact" title="Programmes & Courses" imageUrl={collegeHeroUrl(1)} />
+      <Hero variant="compact" title="Programmes & Courses" imageUrl={collegeHeroUrl(3)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Programmes & Courses" }]} />
 
       <Container className="pt-10">

@@ -1,6 +1,7 @@
 import { mockRequest } from "@/mocks/api/client";
 import {
   allStudents,
+  allGuardians,
   getStudentsByInstitution,
   getStudent,
   getGuardian,
@@ -9,6 +10,7 @@ import {
 import { getInvoicesByStudent } from "@/mocks/data/erp/finance";
 import { getMarksByStudent } from "@/mocks/data/erp/examinations";
 import { getRecordsByStudent, getSession } from "@/mocks/data/erp/attendance";
+import { logActivity } from "@/mocks/data/activityLog";
 import type { Guardian, InstitutionType, Student } from "@/types";
 
 export const studentService = {
@@ -54,6 +56,17 @@ export const studentService = {
   getResultsSummary: (studentId: string) => mockRequest(() => getMarksByStudent(studentId)),
 
   getFeeLedger: (studentId: string) => mockRequest(() => getInvoicesByStudent(studentId)),
+
+  /** Self-service contact update — scoped to phone/email only, unlike the admin-only institutionService.update. */
+  updateGuardianContact: (guardianId: string, patch: { phone?: string; email?: string }, actor: string) =>
+    mockRequest<{ ok: true } | { ok: false; error: string }>(() => {
+      const guardian = allGuardians.find((g) => g.id === guardianId);
+      if (!guardian) return { ok: false, error: "Guardian record not found." };
+      if (patch.phone !== undefined) guardian.phone = patch.phone;
+      if (patch.email !== undefined) guardian.email = patch.email;
+      logActivity({ institutionId: guardian.institutionId, category: "Students", action: `${actor} updated their contact details`, actor });
+      return { ok: true };
+    }, { latencyMs: [300, 550] }),
 
   getDashboardStats: (institutionId: InstitutionType) =>
     mockRequest(() => {

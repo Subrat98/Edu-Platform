@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/common/Container";
+import { HeroCarousel } from "./HeroCarousel";
 import { cn } from "@/lib/utils";
 
 interface HeroCta {
@@ -13,19 +14,25 @@ export interface HeroProps {
   badge?: string;
   title: string;
   description?: string;
-  imageUrl: string;
+  imageUrl?: string;
+  /** When given (2+ photos), the hero renders as an auto-advancing, swipeable carousel instead of a single static image. */
+  images?: string[];
   primaryCta?: HeroCta;
   secondaryCta?: HeroCta;
   variant?: "full" | "compact";
 }
 
-export function Hero({ badge, title, description, imageUrl, primaryCta, secondaryCta, variant = "full" }: HeroProps) {
+export function Hero({ badge, title, description, imageUrl, images, primaryCta, secondaryCta, variant = "full" }: HeroProps) {
   const isCompact = variant === "compact";
+
+  if (!isCompact && images && images.length > 1) {
+    return <HeroCarousel badge={badge} title={title} description={description} images={images} primaryCta={primaryCta} secondaryCta={secondaryCta} />;
+  }
 
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0">
-        <img src={imageUrl} alt="" className="size-full object-cover" />
+        <img src={imageUrl ?? images?.[0] ?? ""} alt="" className="size-full object-cover" />
         <div className="from-primary/95 via-primary/80 absolute inset-0 bg-gradient-to-r to-transparent" />
       </div>
       <Container className={cn("relative py-20 sm:py-28", isCompact && "py-14 sm:py-16")}>

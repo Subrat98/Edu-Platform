@@ -15,6 +15,8 @@ export const staffService = {
 
   get: (id: string) => mockRequest<StaffMember | null>(() => allStaff.find((s) => s.id === id) ?? null),
 
+  listByDepartment: (departmentId: string) => mockRequest<StaffMember[]>(() => allStaff.filter((s) => s.departmentId === departmentId)),
+
   /** Distinct class/section/subject combinations a staff member teaches, derived from the timetable. */
   getAssignments: (staffId: string) =>
     mockRequest(() => {

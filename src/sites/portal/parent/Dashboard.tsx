@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { CalendarCheck, IndianRupee, Megaphone, Trophy } from "lucide-react";
+import { CalendarCheck, CalendarDays, FileBadge, IndianRupee, Megaphone, Pencil, Trophy } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { StatCard } from "@/components/admin/StatCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { AvatarInitials } from "@/components/common/AvatarInitials";
 import { EmptyState } from "@/components/common/EmptyState";
@@ -21,8 +22,10 @@ import { studentService } from "@/features/students/studentService";
 import { examinationService } from "@/features/examinations/examinationService";
 import { financeService } from "@/features/finance/financeService";
 import { noticeService } from "@/features/notices/noticeService";
+import { leaveRequestService } from "@/features/academics/leaveRequestService";
+import { certificateRequestService } from "@/features/students/certificateRequestService";
 import { queryKeys } from "@/lib/queryKeys";
-import type { Invoice, PaymentMode } from "@/types";
+import type { CertificateType, Invoice, PaymentMode } from "@/types";
 
 export default function ParentDashboard() {
   const currentUser = useAuthStore((s) => s.currentUser);
@@ -32,6 +35,12 @@ export default function ParentDashboard() {
   const [payDialog, setPayDialog] = useState<Invoice | null>(null);
   const [amount, setAmount] = useState("");
   const [mode, setMode] = useState<PaymentMode>("Online");
+  const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
+  const [leaveForm, setLeaveForm] = useState({ startDate: "", endDate: "", reason: "" });
+  const [contactEditing, setContactEditing] = useState(false);
+  const [contactForm, setContactForm] = useState({ phone: "", email: "" });
+  const [certDialogOpen, setCertDialogOpen] = useState(false);
+  const [certForm, setCertForm] = useState<{ type: CertificateType; reason: string }>({ type: "Bonafide Certificate", reason: "" });
   const queryClient = useQueryClient();
 
   const { data: children, isLoading: loadingChildren } = useQuery({
@@ -48,6 +57,13 @@ export default function ParentDashboard() {
   const { data: invoices } = useQuery({ queryKey: queryKeys.studentFees(activeChildId ?? ""), queryFn: () => studentService.getFeeLedger(activeChildId!), enabled: !!activeChildId });
   const { data: exams } = useQuery({ queryKey: queryKeys.examinations(institutionId), queryFn: () => examinationService.list(institutionId) });
   const { data: notices } = useQuery({ queryKey: queryKeys.notices(institutionId), queryFn: () => noticeService.list(institutionId) });
+  const { data: guardian } = useQuery({ queryKey: queryKeys.guardian(guardianId ?? ""), queryFn: () => studentService.getGuardian(guardianId!), enabled: !!guardianId });
+  const { data: leaveRequests } = useQuery({ queryKey: queryKeys.leaveRequestsByStudent(activeChildId ?? ""), queryFn: () => leaveRequestService.listByStudent(activeChildId!), enabled: !!activeChildId });
+  const { data: certRequests } = useQuery({
+    queryKey: queryKeys.certificateRequestsByStudent(activeChildId ?? ""),
+    queryFn: () => certificateRequestService.listByStudent(activeChildId!),
+    enabled: !!activeChildId && institutionId === "school",
+  });
 
   const publishedResults = useMemo(() => {
     const publishedExamIds = new Set((exams ?? []).filter((e) => e.status === "Published").map((e) => e.id));
@@ -65,6 +81,38 @@ export default function ParentDashboard() {
       } else {
         toast.error(res.error);
       }
+    },
+  });
+
+  const leaveMutation = useMutation({
+    mutationFn: () => leaveRequestService.create({ studentId: activeChildId!, requestedBy: `${currentUser?.name} (${guardian?.relationship ?? "Guardian"})`, ...leaveForm }),
+    onSuccess: (res) => {
+      if (!res.ok) return toast.error(res.error);
+      toast.success("Leave request submitted");
+      queryClient.invalidateQueries({ queryKey: queryKeys.leaveRequestsByStudent(activeChildId ?? "") });
+      setLeaveDialogOpen(false);
+      setLeaveForm({ startDate: "", endDate: "", reason: "" });
+    },
+  });
+
+  const contactMutation = useMutation({
+    mutationFn: () => studentService.updateGuardianContact(guardianId!, contactForm, currentUser?.name ?? "Parent"),
+    onSuccess: (res) => {
+      if (!res.ok) return toast.error(res.error);
+      toast.success("Contact details updated");
+      queryClient.invalidateQueries({ queryKey: queryKeys.guardian(guardianId ?? "") });
+      setContactEditing(false);
+    },
+  });
+
+  const certMutation = useMutation({
+    mutationFn: () => certificateRequestService.create(activeChildId!, certForm.type, certForm.reason, currentUser?.name ?? "Parent"),
+    onSuccess: (res) => {
+      if (!res.ok) return toast.error(res.error);
+      toast.success(`${certForm.type} requested`);
+      queryClient.invalidateQueries({ queryKey: queryKeys.certificateRequestsByStudent(activeChildId ?? "") });
+      setCertDialogOpen(false);
+      setCertForm({ type: "Bonafide Certificate", reason: "" });
     },
   });
 
@@ -209,6 +257,132 @@ export default function ParentDashboard() {
                 )}
               </CardContent>
             </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <CalendarDays className="size-4" /> Leave requests
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {(leaveRequests ?? []).length === 0 ? (
+                  <p className="text-muted-foreground text-sm">No leave requests yet.</p>
+                ) : (
+                  <ul className="divide-border divide-y">
+                    {(leaveRequests ?? []).map((r) => (
+                      <li key={r.id} className="flex items-center justify-between py-2 text-sm">
+                        <span>
+                          {r.startDate} → {r.endDate}
+                        </span>
+                        <Badge
+                          variant="outline"
+                          className={
+                            r.status === "Approved"
+                              ? "border-success/30 bg-success/10 text-success"
+                              : r.status === "Rejected"
+                                ? "border-destructive/30 text-destructive"
+                                : "border-warning/30 bg-warning/10 text-warning"
+                          }
+                        >
+                          {r.status}
+                        </Badge>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                <Button size="sm" variant="outline" className="mt-3" onClick={() => setLeaveDialogOpen(true)}>
+                  Submit leave request
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Pencil className="size-4" /> Contact details
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {contactEditing ? (
+                  <div className="space-y-3">
+                    <div>
+                      <Label>Phone</Label>
+                      <Input className="mt-1.5" value={contactForm.phone} onChange={(e) => setContactForm((f) => ({ ...f, phone: e.target.value }))} />
+                    </div>
+                    <div>
+                      <Label>Email</Label>
+                      <Input className="mt-1.5" value={contactForm.email} onChange={(e) => setContactForm((f) => ({ ...f, email: e.target.value }))} />
+                    </div>
+                    <div className="flex gap-2">
+                      <Button size="sm" onClick={() => contactMutation.mutate()} disabled={contactMutation.isPending}>
+                        {contactMutation.isPending ? "Saving…" : "Save"}
+                      </Button>
+                      <Button size="sm" variant="outline" onClick={() => setContactEditing(false)}>
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-1.5 text-sm">
+                    <p>
+                      <span className="text-muted-foreground">Phone:</span> {guardian?.phone}
+                    </p>
+                    <p>
+                      <span className="text-muted-foreground">Email:</span> {guardian?.email}
+                    </p>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="mt-2"
+                      onClick={() => {
+                        setContactForm({ phone: guardian?.phone ?? "", email: guardian?.email ?? "" });
+                        setContactEditing(true);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {institutionId === "school" ? (
+              <Card className="lg:col-span-2">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <FileBadge className="size-4" /> Certificate requests
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {(certRequests ?? []).length === 0 ? (
+                    <p className="text-muted-foreground text-sm">No certificate requests yet.</p>
+                  ) : (
+                    <ul className="divide-border divide-y">
+                      {(certRequests ?? []).map((r) => (
+                        <li key={r.id} className="flex items-center justify-between py-2 text-sm">
+                          <span>{r.type}</span>
+                          <Badge
+                            variant="outline"
+                            className={
+                              r.status === "Issued"
+                                ? "border-success/30 bg-success/10 text-success"
+                                : r.status === "Rejected"
+                                  ? "border-destructive/30 text-destructive"
+                                  : "border-warning/30 bg-warning/10 text-warning"
+                            }
+                          >
+                            {r.status}
+                          </Badge>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <Button size="sm" variant="outline" className="mt-3" onClick={() => setCertDialogOpen(true)}>
+                    Request a certificate
+                  </Button>
+                </CardContent>
+              </Card>
+            ) : null}
           </div>
         </>
       ) : null}
@@ -244,6 +418,72 @@ export default function ParentDashboard() {
             </Button>
             <Button onClick={() => payMutation.mutate()} disabled={payMutation.isPending || !amount}>
               {payMutation.isPending ? "Processing…" : "Pay"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={leaveDialogOpen} onOpenChange={setLeaveDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Submit leave request — {child?.name}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label>From</Label>
+                <Input type="date" className="mt-1.5" value={leaveForm.startDate} onChange={(e) => setLeaveForm((f) => ({ ...f, startDate: e.target.value }))} />
+              </div>
+              <div>
+                <Label>To</Label>
+                <Input type="date" className="mt-1.5" value={leaveForm.endDate} onChange={(e) => setLeaveForm((f) => ({ ...f, endDate: e.target.value }))} />
+              </div>
+            </div>
+            <div>
+              <Label>Reason</Label>
+              <Textarea className="mt-1.5" rows={2} value={leaveForm.reason} onChange={(e) => setLeaveForm((f) => ({ ...f, reason: e.target.value }))} />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setLeaveDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={() => leaveMutation.mutate()} disabled={leaveMutation.isPending || !leaveForm.startDate || !leaveForm.endDate}>
+              {leaveMutation.isPending ? "Submitting…" : "Submit"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={certDialogOpen} onOpenChange={setCertDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Request a certificate — {child?.name}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3">
+            <div>
+              <Label>Certificate type</Label>
+              <Select value={certForm.type} onValueChange={(v) => setCertForm((f) => ({ ...f, type: v as CertificateType }))}>
+                <SelectTrigger className="mt-1.5">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Bonafide Certificate">Bonafide Certificate</SelectItem>
+                  <SelectItem value="Transfer Certificate">Transfer Certificate</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label>Reason</Label>
+              <Textarea className="mt-1.5" rows={2} value={certForm.reason} onChange={(e) => setCertForm((f) => ({ ...f, reason: e.target.value }))} placeholder="e.g. Required for passport application" />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setCertDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={() => certMutation.mutate()} disabled={certMutation.isPending}>
+              {certMutation.isPending ? "Submitting…" : "Submit request"}
             </Button>
           </DialogFooter>
         </DialogContent>

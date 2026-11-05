@@ -10,7 +10,9 @@ export type RoleKey =
   | "librarian"
   | "faculty"
   | "student"
-  | "parent";
+  | "parent"
+  | "exam_cell"
+  | "hod";
 
 export interface DemoUser {
   id: string;
@@ -28,6 +30,15 @@ export interface DemoUser {
   guardianId?: string;
   /** Mock account-status flag toggled from the admin User & Role Management screen. */
   active?: boolean;
+  /**
+   * Set only for personas belonging to a "Both mode" institution (see
+   * src/types/unified.ts). `institutionId` above still carries their
+   * *current wing* ("school" or "college") so every existing
+   * institution-scoped query/component keeps working unchanged; this
+   * field marks which UnifiedInstitution.id they belong to, for the
+   * shared brand header and the wing switcher.
+   */
+  homeInstitutionId?: string;
 }
 
 export const ROLE_LABELS: Record<RoleKey, string> = {
@@ -41,4 +52,6 @@ export const ROLE_LABELS: Record<RoleKey, string> = {
   faculty: "Faculty",
   student: "Student",
   parent: "Parent / Guardian",
+  exam_cell: "Examination Cell",
+  hod: "HOD / Department Coordinator",
 };

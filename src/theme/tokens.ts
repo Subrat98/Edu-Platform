@@ -1,4 +1,5 @@
 import type { ColorTokens, ThemeTokens, TypographyTokens } from "@/types";
+import eduPlatformLogo from "@/assets/Edu-Platform Education Logo.png";
 
 export const SCHOOL_COLORS: ColorTokens = {
   primary: "#1f3a5f",
@@ -37,12 +38,32 @@ export const SCHOOL_THEME: ThemeTokens = {
   colors: SCHOOL_COLORS,
   typography: BRAND_TYPOGRAPHY,
   radius: "0.75rem",
-  logoUrl: "",
+  logoUrl: eduPlatformLogo,
 };
 
 export const COLLEGE_THEME: ThemeTokens = {
   colors: COLLEGE_COLORS,
   typography: BRAND_TYPOGRAPHY,
   radius: "0.5rem",
-  logoUrl: "",
+  logoUrl: eduPlatformLogo,
+};
+
+// A third, visually distinct identity (deep maroon + amber) so a "Both
+// mode" institution's shared brand header is obviously its own thing,
+// not just a relabelled school or college.
+export const UNIFIED_COLORS: ColorTokens = {
+  ...SCHOOL_COLORS,
+  primary: "#7a2048",
+  primaryForeground: "#ffffff",
+  accent: "#b8761f",
+  accentForeground: "#1f1300",
+  highlight: "#1f8a5f",
+  highlightForeground: "#ffffff",
+};
+
+export const UNIFIED_THEME: ThemeTokens = {
+  colors: UNIFIED_COLORS,
+  typography: BRAND_TYPOGRAPHY,
+  radius: "0.65rem",
+  logoUrl: eduPlatformLogo,
 };

@@ -116,9 +116,17 @@ export function Header() {
       {/* Main nav */}
       <Container className="flex h-16 items-center justify-between gap-4">
         <Link to={`/${institutionId}`} className="flex min-w-0 shrink items-center gap-2">
-          <span className="bg-primary flex size-9 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white">
-            {institution?.shortName ?? ""}
-          </span>
+          {institution?.theme.logoUrl ? (
+            <img
+              src={institution.theme.logoUrl}
+              alt={`${institution.name} logo`}
+              className="size-9 shrink-0 rounded-lg object-contain"
+            />
+          ) : (
+            <span className="bg-primary flex size-9 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white">
+              {institution?.shortName ?? ""}
+            </span>
+          )}
           <span className="min-w-0">
             <span className="font-heading text-foreground block truncate text-sm leading-tight font-semibold sm:text-base">
               {institution?.name ?? "Loading…"}

@@ -11,6 +11,8 @@ import {
   ClipboardList,
   CalendarCheck,
   IndianRupee,
+  Landmark,
+  Layers,
 } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
@@ -18,6 +20,8 @@ import { StatCard } from "@/components/admin/StatCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useInstitutionData } from "@/features/institutions/useInstitutionData";
+import { useAuthStore } from "@/features/auth/authStore";
+import { getUnifiedInstitution } from "@/mocks/data/unifiedInstitutions";
 import { cmsService } from "@/features/cms/cmsService";
 import { libraryService } from "@/features/library/libraryService";
 import { admissionService } from "@/features/admissions/admissionService";
@@ -30,6 +34,29 @@ import { useChartColors } from "@/lib/useChartColors";
 export default function AdminDashboard() {
   const { institutionId, institution } = useInstitutionData();
   const CHART_COLORS = useChartColors(institutionId);
+  const currentUser = useAuthStore((s) => s.currentUser);
+  const unified = currentUser?.homeInstitutionId ? getUnifiedInstitution(currentUser.homeInstitutionId) : undefined;
+
+  const { data: schoolStudentStats } = useQuery({
+    queryKey: queryKeys.studentStats("school"),
+    queryFn: () => studentService.getDashboardStats("school"),
+    enabled: !!unified,
+  });
+  const { data: collegeStudentStats } = useQuery({
+    queryKey: queryKeys.studentStats("college"),
+    queryFn: () => studentService.getDashboardStats("college"),
+    enabled: !!unified,
+  });
+  const { data: schoolAdmissionStats } = useQuery({
+    queryKey: queryKeys.admissionStats("school"),
+    queryFn: () => admissionService.getDashboardStats("school"),
+    enabled: !!unified,
+  });
+  const { data: collegeAdmissionStats } = useQuery({
+    queryKey: queryKeys.admissionStats("college"),
+    queryFn: () => admissionService.getDashboardStats("college"),
+    enabled: !!unified,
+  });
 
   const { data: pages } = useQuery({ queryKey: queryKeys.cmsPages(institutionId), queryFn: () => cmsService.listPages(institutionId) });
   const { data: libraryStats } = useQuery({ queryKey: queryKeys.libraryDashboard(institutionId), queryFn: () => libraryService.getDashboardStats(institutionId) });
@@ -57,7 +84,39 @@ export default function AdminDashboard() {
     <div>
       <AdminPageHeader title="Admin Dashboard" description={`Overview for ${institution?.name ?? ""}`} />
 
-      <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wide uppercase">Education ERP</p>
+      {unified ? (
+        <Card className="mb-6 border-accent/30">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Layers className="size-4" /> Combined overview — {unified.name}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="border-border flex items-center gap-3 rounded-lg border p-3">
+              <GraduationCap className="text-accent size-5" />
+              <div>
+                <p className="text-sm font-medium">School wing</p>
+                <p className="text-muted-foreground text-xs">
+                  {schoolStudentStats?.active ?? "—"} active students · {schoolAdmissionStats?.underReview ?? "—"} applications under review
+                </p>
+              </div>
+            </div>
+            <div className="border-border flex items-center gap-3 rounded-lg border p-3">
+              <Landmark className="text-accent size-5" />
+              <div>
+                <p className="text-sm font-medium">College wing</p>
+                <p className="text-muted-foreground text-xs">
+                  {collegeStudentStats?.active ?? "—"} active students · {collegeAdmissionStats?.underReview ?? "—"} applications under review
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ) : null}
+
+      <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wide uppercase">
+        Education ERP {unified ? `— ${institutionId === "school" ? "School" : "College"} wing (currently viewing)` : ""}
+      </p>
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard label="Active Students" value={studentStats?.active ?? "—"} icon={GraduationCap} />
         <StatCard label="Applications Under Review" value={admissionStats?.underReview ?? "—"} icon={ClipboardList} tone="warning" />

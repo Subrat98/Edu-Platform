@@ -11,6 +11,7 @@ import { PageLoadingSkeleton } from "@/components/common/PageLoadingSkeleton";
 import { useInstitutionData } from "@/features/institutions/useInstitutionData";
 import { cmsService } from "@/features/cms/cmsService";
 import { queryKeys } from "@/lib/queryKeys";
+import { presetsFor, type ThemePreset } from "@/theme/presets";
 import type { ColorTokens } from "@/types";
 
 const SWATCHES: { key: keyof ColorTokens; label: string; help: string }[] = [
@@ -49,6 +50,17 @@ export default function ThemeDesigner() {
     },
   });
 
+  const applyPresetMutation = useMutation({
+    mutationFn: (preset: ThemePreset) => cmsService.updateTheme(institutionId, preset.theme.colors, preset.theme.radius),
+    onSuccess: (_r, preset) => {
+      setColors(preset.theme.colors);
+      setRadiusPx(Math.round(parseFloat(preset.theme.radius) * 16));
+      queryClient.invalidateQueries({ queryKey: queryKeys.institution(institutionId) });
+      queryClient.invalidateQueries({ queryKey: ["cmsTheme", institutionId] });
+      toast.success(`"${preset.label}" applied`, { description: "Fine-tune the colours below, or save as-is." });
+    },
+  });
+
   function resetDefaults() {
     if (!theme) return;
     setColors(theme.colors);
@@ -77,6 +89,33 @@ export default function ThemeDesigner() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1fr]">
         <div className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-base">Template presets</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                {presetsFor(institutionId).map((preset) => (
+                  <button
+                    key={preset.id}
+                    type="button"
+                    onClick={() => applyPresetMutation.mutate(preset)}
+                    disabled={applyPresetMutation.isPending}
+                    className="border-border hover:border-accent rounded-lg border p-3 text-left transition-colors disabled:opacity-60"
+                  >
+                    <div className="mb-2 flex gap-1.5">
+                      {([preset.theme.colors.primary, preset.theme.colors.accent, preset.theme.colors.highlight] as string[]).map((c, i) => (
+                        <span key={i} className="size-5 rounded-full border border-white/40" style={{ backgroundColor: c }} />
+                      ))}
+                    </div>
+                    <p className="text-sm font-medium">{preset.label}</p>
+                    <p className="text-muted-foreground mt-0.5 text-xs">{preset.description}</p>
+                  </button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Brand colours</CardTitle>

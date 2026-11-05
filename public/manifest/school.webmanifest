@@ -1,0 +1,14 @@
+{
+  "name": "Pathani Samanta Public School",
+  "short_name": "PSPS",
+  "description": "School website, notices, attendance, results and fees for Pathani Samanta Public School.",
+  "start_url": "/school",
+  "scope": "/school",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#1f3a5f",
+  "icons": [
+    { "src": "/icons/school-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icons/school-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

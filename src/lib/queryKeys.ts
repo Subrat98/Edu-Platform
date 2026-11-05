@@ -67,10 +67,23 @@ export const queryKeys = {
   staffList: (institutionId: string) => ["staffList", institutionId] as const,
   staffMember: (id: string) => ["staffMember", id] as const,
   staffAssignments: (staffId: string) => ["staffAssignments", staffId] as const,
+  staffByDepartment: (departmentId: string) => ["staffByDepartment", departmentId] as const,
+
+  revaluations: (institutionId: string) => ["revaluations", institutionId] as const,
+  revaluationsByStudent: (studentId: string) => ["revaluationsByStudent", studentId] as const,
+  availableSubjects: () => ["availableSubjects"] as const,
+  myRegistration: (studentId: string) => ["myRegistration", studentId] as const,
 
   timetableGroups: (institutionId: string) => ["timetableGroups", institutionId] as const,
   timetableGroup: (institutionId: string, classId: string, section: string) => ["timetableGroup", institutionId, classId, section] as const,
   timetableStaff: (staffId: string) => ["timetableStaff", staffId] as const,
+
+  leaveRequests: (institutionId: string) => ["leaveRequests", institutionId] as const,
+  leaveRequestsByStudent: (studentId: string) => ["leaveRequestsByStudent", studentId] as const,
+  leaveRequestsForTeacher: (staffId: string) => ["leaveRequestsForTeacher", staffId] as const,
+
+  certificateRequests: (institutionId: string) => ["certificateRequests", institutionId] as const,
+  certificateRequestsByStudent: (studentId: string) => ["certificateRequestsByStudent", studentId] as const,
 
   activityLog: (institutionId: string) => ["activityLog", institutionId] as const,
   notifications: (institutionId: string, userId: string) => ["notifications", institutionId, userId] as const,

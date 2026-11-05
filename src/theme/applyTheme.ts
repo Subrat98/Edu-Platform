@@ -38,4 +38,8 @@ export function applyTheme(theme: ThemeTokens) {
   root.setProperty("--font-heading", theme.typography.headingFont);
   root.setProperty("--font-body", theme.typography.bodyFont);
   root.setProperty("--radius", theme.radius);
+
+  // Keeps the iPhone/iPad Safari chrome and the installed PWA's title-bar
+  // colour matching the active institution's brand (spec §6.5/§6.7).
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", theme.colors.primary);
 }

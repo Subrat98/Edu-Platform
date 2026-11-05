@@ -17,7 +17,7 @@ const recruiters = [
 export default function CollegePlacements() {
   return (
     <>
-      <Hero variant="compact" title="Placements & Career Cell" imageUrl={collegeHeroUrl(1)} />
+      <Hero variant="compact" title="Placements & Career Cell" imageUrl={collegeHeroUrl(3)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Placements" }]} />
 
       <Stats

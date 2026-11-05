@@ -19,7 +19,10 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { AvatarInitials } from "@/components/common/AvatarInitials";
 import { NotificationsBell } from "./NotificationsBell";
+import { WingSwitcher } from "./WingSwitcher";
+import { InstallPrompt } from "@/features/pwa/InstallPrompt";
 import { Button } from "@/components/ui/button";
+import { getUnifiedInstitution } from "@/mocks/data/unifiedInstitutions";
 import { useAuthStore } from "@/features/auth/authStore";
 import { useInstitutionData } from "@/features/institutions/useInstitutionData";
 import { useSyncInstitutionToUser } from "@/features/institutions/useSyncInstitutionToUser";
@@ -33,6 +36,9 @@ export function AppSidebarShell({ groups, brandLabel }: { groups: AdminNavGroup[
   const { institution, institutionId } = useInstitutionData();
   const { pathname } = useLocation();
   const { resolvedTheme, setTheme } = useTheme();
+  const unified = currentUser?.homeInstitutionId ? getUnifiedInstitution(currentUser.homeInstitutionId) : undefined;
+  const brandName = unified?.name ?? institution?.name;
+  const publicSiteHref = unified ? "/unified" : `/${institutionId}`;
 
   return (
     <SidebarProvider>
@@ -44,9 +50,14 @@ export function AppSidebarShell({ groups, brandLabel }: { groups: AdminNavGroup[
             </span>
             <div className="min-w-0 group-data-[collapsible=icon]:hidden">
               <p className="text-sidebar-foreground truncate text-sm font-semibold">{brandLabel}</p>
-              <p className="text-muted-foreground truncate text-xs">{institution?.name}</p>
+              <p className="text-muted-foreground truncate text-xs">{brandName}</p>
             </div>
           </div>
+          {unified ? (
+            <div className="mt-2 px-2">
+              <WingSwitcher />
+            </div>
+          ) : null}
         </SidebarHeader>
         <SidebarContent>
           {groups.map((group) => (
@@ -85,7 +96,7 @@ export function AppSidebarShell({ groups, brandLabel }: { groups: AdminNavGroup[
           </div>
           <div className="flex flex-col gap-1 px-2 group-data-[collapsible=icon]:hidden">
             <Button asChild variant="ghost" size="sm" className="justify-start gap-2">
-              <Link to={`/${institutionId}`}>
+              <Link to={publicSiteHref}>
                 <ExternalLink className="size-4" /> View public site
               </Link>
             </Button>
@@ -116,6 +127,7 @@ export function AppSidebarShell({ groups, brandLabel }: { groups: AdminNavGroup[
           <Outlet />
         </main>
       </SidebarInset>
+      <InstallPrompt />
     </SidebarProvider>
   );
 }

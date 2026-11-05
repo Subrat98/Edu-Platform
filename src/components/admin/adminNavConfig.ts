@@ -29,6 +29,11 @@ import {
   ScrollText,
   LineChart,
   Baby,
+  Wand2,
+  FileQuestion,
+  Network,
+  BookMarked,
+  FileBadge,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -69,6 +74,8 @@ export const adminNavGroups: AdminNavGroup[] = [
     items: [
       { label: "Student Directory", path: "/admin/students", icon: GraduationCap, end: true },
       { label: "Guardians", path: "/admin/students/guardians", icon: Users },
+      { label: "Leave Requests", path: "/admin/students/leave-requests", icon: CalendarDays },
+      { label: "Certificate Requests", path: "/admin/students/certificates", icon: FileBadge },
     ],
   },
   {
@@ -105,10 +112,41 @@ export const adminNavGroups: AdminNavGroup[] = [
   },
 ];
 
+// Admission Officer and Accountant get a narrower nav than the full
+// institution_admin/principal view, matching the spec's "Admission
+// workflows only" / "Financial functions only" access boundaries —
+// reuses the same group objects, so the pages themselves need no change.
+export const admissionOfficerNavGroups: AdminNavGroup[] = [
+  adminNavGroups[0]!,
+  adminNavGroups.find((g) => g.label === "Admissions")!,
+  adminNavGroups.find((g) => g.label === "Students")!,
+  adminNavGroups.find((g) => g.label === "Reports")!,
+];
+
+export const accountantNavGroups: AdminNavGroup[] = [
+  adminNavGroups[0]!,
+  adminNavGroups.find((g) => g.label === "Finance")!,
+  adminNavGroups.find((g) => g.label === "Students")!,
+  adminNavGroups.find((g) => g.label === "Reports")!,
+];
+
+// Only ever shown to platform_admin — see AdminLayout.tsx. Creating a new
+// institution is a platform-level action, not something any individual
+// institution's own admin should be able to do.
+export const platformNavGroups: AdminNavGroup[] = [
+  {
+    label: "Platform",
+    items: [{ label: "Setup Wizard", path: "/admin/platform/setup-wizard", icon: Wand2, end: true }],
+  },
+];
+
 export const studentNavGroups: AdminNavGroup[] = [
   {
     label: "My Portal",
-    items: [{ label: "Dashboard", path: "/portal/student", icon: LayoutDashboard, end: true }],
+    items: [
+      { label: "Dashboard", path: "/portal/student", icon: LayoutDashboard, end: true },
+      { label: "My Courses", path: "/portal/student/courses", icon: BookMarked },
+    ],
   },
   {
     label: "Library",
@@ -133,6 +171,7 @@ export const teacherNavGroups: AdminNavGroup[] = [
       { label: "My Timetable", path: "/portal/teacher/timetable", icon: Table2 },
       { label: "Mark Attendance", path: "/portal/teacher/attendance", icon: CalendarCheck },
       { label: "Examinations", path: "/portal/teacher/examinations", icon: PenSquare, end: true },
+      { label: "Leave Requests", path: "/portal/teacher/leave-requests", icon: CalendarDays },
     ],
   },
 ];
@@ -141,6 +180,27 @@ export const parentNavGroups: AdminNavGroup[] = [
   {
     label: "My Portal",
     items: [{ label: "Dashboard", path: "/portal/parent", icon: Baby, end: true }],
+  },
+];
+
+export const examCellNavGroups: AdminNavGroup[] = [
+  {
+    label: "My Portal",
+    items: [{ label: "Dashboard", path: "/portal/examcell", icon: LayoutDashboard, end: true }],
+  },
+  {
+    label: "Examinations",
+    items: [
+      { label: "All Examinations", path: "/portal/examcell/examinations", icon: PenSquare, end: true },
+      { label: "Revaluation Requests", path: "/portal/examcell/revaluation", icon: FileQuestion },
+    ],
+  },
+];
+
+export const hodNavGroups: AdminNavGroup[] = [
+  {
+    label: "My Portal",
+    items: [{ label: "Department Dashboard", path: "/portal/hod", icon: Network, end: true }],
   },
 ];
 

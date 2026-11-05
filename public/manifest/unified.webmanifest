@@ -1,0 +1,14 @@
+{
+  "name": "Pathani Samanta Education Campus",
+  "short_name": "PSEC",
+  "description": "One shared campus app for the School wing and the College wing.",
+  "start_url": "/unified",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#7a2048",
+  "icons": [
+    { "src": "/icons/unified-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icons/unified-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

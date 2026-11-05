@@ -3,9 +3,15 @@
 // photography; downloads can have gaps or mixed extensions, so we list
 // real filenames rather than assuming a contiguous numeric sequence).
 // People are never represented with real photos — see images.ts.
-export const heroSchoolFiles = ["school-hero-03.jpg"];
+export const heroSchoolFiles = [
+  "school-hero-03.jpg",
+  "school-hero-04.png",
+  "school-hero-05.png",
+  "school-hero-06.png",
+  "school-hero-07.png",
+];
 
-export const heroCollegeFiles = ["college-hero-02.jpg"];
+export const heroCollegeFiles = ["college-hero-02.jpg", "college-hero-03.png", "college-hero-04.png"];
 
 export const gallerySchoolFiles = [
   "school-gallery-02.jpg",

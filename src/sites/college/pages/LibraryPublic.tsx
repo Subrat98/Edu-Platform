@@ -7,7 +7,7 @@ import { collegeHeroUrl } from "@/mocks/data/images";
 export default function CollegeLibraryPublic() {
   return (
     <>
-      <Hero variant="compact" title="Central Library" imageUrl={collegeHeroUrl(1)} />
+      <Hero variant="compact" title="Central Library" imageUrl={collegeHeroUrl(3)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Library" }]} />
 
       <LibraryWidget

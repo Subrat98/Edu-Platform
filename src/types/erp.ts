@@ -67,6 +67,8 @@ export interface Enrollment {
   section: string;
   rollNumber: string;
   status: StudentStatus;
+  /** College only — subject/course offerings the student has self-registered for this semester. */
+  enrolledCourseIds?: string[];
 }
 
 export interface Student {

@@ -79,6 +79,12 @@ const AdminReports = lazy(() => import("@/sites/admin/reports/Reports"));
 const UsersRoles = lazy(() => import("@/sites/admin/settings/UsersRoles"));
 const InstitutionSettings = lazy(() => import("@/sites/admin/settings/InstitutionSettings"));
 const AdminActivityLog = lazy(() => import("@/sites/admin/settings/ActivityLog"));
+const AdminLeaveRequests = lazy(() => import("@/sites/admin/students/LeaveRequests"));
+const AdminCertificateRequests = lazy(() => import("@/sites/admin/students/CertificateRequests"));
+const SetupWizard = lazy(() => import("@/sites/admin/platform/SetupWizard"));
+
+// --- Unified (Both-mode) public landing (lazy) ---
+const UnifiedLanding = lazy(() => import("@/sites/unified/UnifiedLanding"));
 
 // --- Teacher/Faculty portal pages (lazy) ---
 const TeacherDashboard = lazy(() => import("@/sites/portal/teacher/Dashboard"));
@@ -87,17 +93,32 @@ const TeacherMyTimetable = lazy(() => import("@/sites/portal/teacher/MyTimetable
 const TeacherMarkAttendance = lazy(() => import("@/sites/portal/teacher/MarkAttendance"));
 const TeacherExaminations = lazy(() => import("@/sites/portal/teacher/Examinations"));
 const TeacherExaminationDetail = lazy(() => import("@/sites/portal/teacher/ExaminationDetail"));
+const TeacherLeaveRequests = lazy(() => import("@/sites/portal/teacher/LeaveRequests"));
 
 // --- Parent/Guardian portal pages (lazy) ---
 const ParentDashboard = lazy(() => import("@/sites/portal/parent/Dashboard"));
 
+// --- Notification preferences (any authenticated role, lazy) ---
+const NotificationPreferences = lazy(() => import("@/sites/portal/notifications/Preferences"));
+
 // --- Student portal pages (lazy) ---
 const StudentDashboard = lazy(() => import("@/sites/portal/student/Dashboard"));
+const StudentMyCourses = lazy(() => import("@/sites/portal/student/MyCourses"));
 const StudentLibraryCatalogue = lazy(() => import("@/sites/portal/student/LibraryCatalogue"));
 const StudentBookDetail = lazy(() => import("@/sites/portal/student/BookDetail"));
 const StudentMyBookings = lazy(() => import("@/sites/portal/student/MyBookings"));
 const StudentMyLoans = lazy(() => import("@/sites/portal/student/MyLoans"));
 const StudentMyFines = lazy(() => import("@/sites/portal/student/MyFines"));
+
+// --- Examination Cell portal pages (lazy) ---
+const ExamCellDashboard = lazy(() => import("@/sites/portal/examcell/Dashboard"));
+const ExamCellExaminations = lazy(() => import("@/sites/portal/examcell/Examinations"));
+const ExamCellExaminationDetail = lazy(() => import("@/sites/portal/examcell/ExaminationDetail"));
+const ExamCellRevaluation = lazy(() => import("@/sites/portal/examcell/Revaluation"));
+const HallTicket = lazy(() => import("@/sites/portal/examcell/HallTicket"));
+
+// --- HOD / Department Coordinator portal pages (lazy) ---
+const HodDashboard = lazy(() => import("@/sites/portal/hod/Dashboard"));
 
 // --- Librarian portal pages (lazy) ---
 const LibrarianDashboard = lazy(() => import("@/sites/portal/librarian/Dashboard"));
@@ -168,6 +189,16 @@ export const router = createBrowserRouter([
       { path: "policies/:slug", element: <CollegePolicyPage /> },
     ],
   },
+  { path: "/unified", element: <UnifiedLanding /> },
+  { path: "/unified/:id", element: <UnifiedLanding /> },
+  {
+    path: "/hall-ticket/:examId/:studentId",
+    element: (
+      <RequireAuth fallback={<AdminLoginRedirect />}>
+        <HallTicket />
+      </RequireAuth>
+    ),
+  },
   {
     path: "/auth",
     element: <AuthLayout />,
@@ -206,6 +237,16 @@ export const router = createBrowserRouter([
       { path: "settings/users", element: <UsersRoles /> },
       { path: "settings/institution", element: <InstitutionSettings /> },
       { path: "settings/activity-log", element: <AdminActivityLog /> },
+      { path: "students/leave-requests", element: <AdminLeaveRequests /> },
+      { path: "students/certificates", element: <AdminCertificateRequests /> },
+      {
+        path: "platform/setup-wizard",
+        element: (
+          <RequireRole roles={["platform_admin"]} fallback={<Navigate to="/admin" replace />}>
+            <SetupWizard />
+          </RequireRole>
+        ),
+      },
     ],
   },
   {
@@ -218,6 +259,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <PortalIndexRedirect /> },
       { path: "student", element: <StudentDashboard /> },
+      { path: "student/courses", element: <StudentMyCourses /> },
       { path: "student/library", element: <StudentLibraryCatalogue /> },
       { path: "student/library/book/:id", element: <StudentBookDetail /> },
       { path: "student/library/bookings", element: <StudentMyBookings /> },
@@ -238,7 +280,14 @@ export const router = createBrowserRouter([
       { path: "teacher/attendance", element: <TeacherMarkAttendance /> },
       { path: "teacher/examinations", element: <TeacherExaminations /> },
       { path: "teacher/examinations/:id", element: <TeacherExaminationDetail /> },
+      { path: "teacher/leave-requests", element: <TeacherLeaveRequests /> },
       { path: "parent", element: <ParentDashboard /> },
+      { path: "notifications", element: <NotificationPreferences /> },
+      { path: "examcell", element: <ExamCellDashboard /> },
+      { path: "examcell/examinations", element: <ExamCellExaminations /> },
+      { path: "examcell/examinations/:id", element: <ExamCellExaminationDetail /> },
+      { path: "examcell/revaluation", element: <ExamCellRevaluation /> },
+      { path: "hod", element: <HodDashboard /> },
     ],
   },
   { path: "*", element: <NotFoundPage /> },

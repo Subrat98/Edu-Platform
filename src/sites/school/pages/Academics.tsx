@@ -17,7 +17,7 @@ export default function SchoolAcademics() {
 
   return (
     <>
-      <Hero variant="compact" title="Academics" imageUrl={schoolHeroUrl(1)} />
+      <Hero variant="compact" title="Academics" imageUrl={schoolHeroUrl(3)} />
       <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Academics" }]} />
 
       <RichText

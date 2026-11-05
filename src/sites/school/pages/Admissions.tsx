@@ -17,7 +17,7 @@ const faqItems = [
 export default function SchoolAdmissions() {
   return (
     <>
-      <Hero variant="compact" title="Admissions 2027–28" imageUrl={schoolHeroUrl(1)} />
+      <Hero variant="compact" title="Admissions 2027–28" imageUrl={schoolHeroUrl(4)} />
       <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Admissions" }]} />
 
       <AdmissionsCTA

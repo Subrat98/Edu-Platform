@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageLoadingSkeleton } from "@/components/common/PageLoadingSkeleton";
+import { InstallPrompt } from "@/features/pwa/InstallPrompt";
 
 export function PublicLayout() {
   const location = useLocation();
@@ -15,6 +16,7 @@ export function PublicLayout() {
         </Suspense>
       </main>
       <Footer />
+      <InstallPrompt />
     </div>
   );
 }

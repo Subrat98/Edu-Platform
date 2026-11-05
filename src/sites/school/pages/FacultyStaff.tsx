@@ -6,7 +6,7 @@ import { schoolHeroUrl } from "@/mocks/data/images";
 export default function SchoolFacultyStaff() {
   return (
     <>
-      <Hero variant="compact" title="Faculty & Staff" imageUrl={schoolHeroUrl(1)} />
+      <Hero variant="compact" title="Faculty & Staff" imageUrl={schoolHeroUrl(3)} />
       <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Faculty & Staff" }]} />
       <FacultyGrid
         eyebrow="Our people"

@@ -22,6 +22,10 @@ export function landingPathFor(role: RoleKey): string {
       return "/portal/teacher";
     case "parent":
       return "/portal/parent";
+    case "exam_cell":
+      return "/portal/examcell";
+    case "hod":
+      return "/portal/hod";
     default:
       return "/portal";
   }

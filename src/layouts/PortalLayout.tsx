@@ -1,7 +1,14 @@
 import { Outlet } from "react-router-dom";
 import { UserCircle } from "lucide-react";
 import { AppSidebarShell } from "@/components/admin/AppSidebarShell";
-import { studentNavGroups, librarianNavGroups, teacherNavGroups, parentNavGroups } from "@/components/admin/adminNavConfig";
+import {
+  studentNavGroups,
+  librarianNavGroups,
+  teacherNavGroups,
+  parentNavGroups,
+  examCellNavGroups,
+  hodNavGroups,
+} from "@/components/admin/adminNavConfig";
 import { useAuthStore } from "@/features/auth/authStore";
 import { useSyncInstitutionToUser } from "@/features/institutions/useSyncInstitutionToUser";
 import { ROLE_LABELS } from "@/types";
@@ -43,6 +50,12 @@ export function PortalLayout() {
   }
   if (currentUser?.role === "parent") {
     return <AppSidebarShell groups={parentNavGroups} brandLabel="Parent Portal" />;
+  }
+  if (currentUser?.role === "exam_cell") {
+    return <AppSidebarShell groups={examCellNavGroups} brandLabel="Examination Cell" />;
+  }
+  if (currentUser?.role === "hod") {
+    return <AppSidebarShell groups={hodNavGroups} brandLabel="Department Portal" />;
   }
   return <SimplePortalShell />;
 }

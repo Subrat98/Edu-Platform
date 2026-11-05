@@ -22,7 +22,16 @@ export function Footer() {
     <footer className="bg-primary text-white">
       <Container className="grid grid-cols-1 gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <span className="font-heading text-lg font-semibold">{institution?.name}</span>
+          <div className="flex items-center gap-2">
+            {institution?.theme.logoUrl ? (
+              <img
+                src={institution.theme.logoUrl}
+                alt={`${institution.name} logo`}
+                className="size-8 shrink-0 rounded-lg object-contain"
+              />
+            ) : null}
+            <span className="font-heading text-lg font-semibold">{institution?.name}</span>
+          </div>
           <p className="mt-3 max-w-xs text-sm text-white/75">{institution?.description}</p>
           <div className="mt-4 flex gap-3">
             {institution &&
