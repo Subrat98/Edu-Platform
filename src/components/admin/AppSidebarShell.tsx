@@ -29,6 +29,8 @@ import { useAuthStore } from "@/features/auth/authStore";
 import { useInstitutionData } from "@/features/institutions/useInstitutionData";
 import { useSyncInstitutionToUser } from "@/features/institutions/useSyncInstitutionToUser";
 import { ROLE_LABELS } from "@/types";
+import { LanguageDropdown } from "@/components/common/LanguageDropdown";
+import { useTranslation } from "@/features/i18n/languageStore";
 import type { AdminNavGroup } from "./adminNavConfig";
 
 export function AppSidebarShell({
@@ -46,6 +48,7 @@ export function AppSidebarShell({
   const { institution, institutionId } = useInstitutionData();
   const { pathname } = useLocation();
   const { resolvedTheme, setTheme } = useTheme();
+  const { t } = useTranslation();
   const unified = currentUser?.homeInstitutionId ? getUnifiedInstitution(currentUser.homeInstitutionId) : undefined;
   const brandName = unified?.name ?? institution?.name;
   const publicSiteHref = unified ? "/unified" : `/${institutionId}`;
@@ -72,17 +75,17 @@ export function AppSidebarShell({
         <SidebarContent>
           {groups.map((group) => (
             <SidebarGroup key={group.label}>
-              <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+              <SidebarGroupLabel>{t(group.label)}</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
                   {group.items.map((item) => {
                     const isActive = item.end ? pathname === item.path : pathname.startsWith(item.path);
                     return (
                       <SidebarMenuItem key={item.path}>
-                        <SidebarMenuButton asChild tooltip={item.label} isActive={isActive}>
+                        <SidebarMenuButton asChild tooltip={t(item.label)} isActive={isActive}>
                           <Link to={item.path}>
                             <item.icon className="size-4" />
-                            <span>{item.label}</span>
+                            <span>{t(item.label)}</span>
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -107,12 +110,12 @@ export function AppSidebarShell({
           <div className="flex flex-col gap-1 px-2 group-data-[collapsible=icon]:hidden">
             <Button asChild variant="ghost" size="sm" className="justify-start gap-2">
               <Link to={publicSiteHref}>
-                <ExternalLink className="size-4" /> View public site
+                <ExternalLink className="size-4" /> {t("viewPublicSite")}
               </Link>
             </Button>
             <Button variant="ghost" size="sm" className="justify-start gap-2" onClick={logout} asChild>
               <Link to="/auth/login">
-                <LogOut className="size-4" /> Log out
+                <LogOut className="size-4" /> {t("logOut")}
               </Link>
             </Button>
           </div>
@@ -123,6 +126,7 @@ export function AppSidebarShell({
           <SidebarTrigger />
           <Separator orientation="vertical" className="h-5" />
           <p className="text-muted-foreground flex-1 text-sm">{institution?.name}</p>
+          <LanguageDropdown variant="default" />
           <NotificationsBell />
           <Button
             variant="ghost"

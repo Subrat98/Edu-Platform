@@ -44,6 +44,8 @@ import { navMenuService } from "@/features/content/navMenuService";
 import { queryKeys } from "@/lib/queryKeys";
 import { resetDemoData } from "@/lib/resetDemoData";
 import { cn } from "@/lib/utils";
+import { LanguageDropdown } from "@/components/common/LanguageDropdown";
+import { useTranslation } from "@/features/i18n/languageStore";
 
 export function Header() {
   const { institutionId, institution } = useInstitutionData();
@@ -53,6 +55,7 @@ export function Header() {
   const navigate = useNavigate();
   const { resolvedTheme, setTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { t } = useTranslation();
 
   const { data: menu } = useQuery({
     queryKey: queryKeys.navMenu(institutionId),
@@ -104,10 +107,11 @@ export function Header() {
                   )}
                 >
                   {wing === "school" ? <GraduationCap className="size-3" /> : <Landmark className="size-3" />}
-                  {wing}
+                  {wing === "school" ? t("school") : t("college")}
                 </button>
               ))}
             </div>
+            <LanguageDropdown variant="light" />
             <button
               type="button"
               onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
@@ -121,7 +125,7 @@ export function Header() {
               onClick={resetDemoData}
               className="flex items-center gap-1 rounded-full px-2 py-1 hover:bg-white/15"
             >
-              <RotateCcw className="size-3" /> Reset demo
+              <RotateCcw className="size-3" /> {t("resetDemo")}
             </button>
           </div>
         </Container>
@@ -155,13 +159,13 @@ export function Header() {
               <DropdownMenu key={item.label}>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm" className="shrink-0 gap-1 px-2 text-sm whitespace-nowrap">
-                    {item.label} <ChevronDown className="size-3.5" />
+                    {t(item.label)} <ChevronDown className="size-3.5" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start">
                   {item.children.map((child) => (
                     <DropdownMenuItem key={child.path} asChild>
-                      <Link to={child.path}>{child.label}</Link>
+                      <Link to={child.path}>{t(child.label)}</Link>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -178,15 +182,20 @@ export function Header() {
                   )
                 }
               >
-                {item.label}
+                {t(item.label)}
               </NavLink>
             ),
           )}
         </nav>
 
         <div className="flex shrink-0 items-center gap-2">
+          {/* Mobile language dropdown */}
+          <div className="sm:hidden">
+            <LanguageDropdown variant="default" />
+          </div>
+
           <Button asChild size="sm" className="bg-highlight text-highlight-foreground hover:bg-highlight/90 hidden sm:inline-flex">
-            <Link to={`/${institutionId}/admissions`}>Apply Now</Link>
+            <Link to={`/${institutionId}/admissions`}>{t("applyNow")}</Link>
           </Button>
 
           <DropdownMenu>
@@ -199,7 +208,7 @@ export function Header() {
                   </>
                 ) : (
                   <>
-                    <LogIn className="size-4" /> <span className="hidden md:inline">Login</span>
+                    <LogIn className="size-4" /> <span className="hidden md:inline">{t("login")}</span>
                   </>
                 )}
               </Button>
@@ -208,20 +217,20 @@ export function Header() {
               {currentUser ? (
                 <>
                   <DropdownMenuLabel>
-                    Signed in as
+                    {t("signedInAs")}
                     <div className="text-muted-foreground font-normal">
                       {currentUser.name} · {ROLE_LABELS[currentUser.role]}
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>
-                    <Link to="/portal">Go to portal</Link>
+                    <Link to="/portal">{t("goToPortal")}</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                 </>
               ) : null}
               <DropdownMenuLabel className="text-muted-foreground text-xs font-normal">
-                Switch demo account
+                {t("switchDemoAccount")}
               </DropdownMenuLabel>
               {demoUsers.map((u) => (
                 <DropdownMenuItem key={u.id} asChild>
@@ -238,7 +247,7 @@ export function Header() {
                 <>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onSelect={handleLogout} variant="destructive">
-                    <LogOut className="size-4" /> Log out
+                    <LogOut className="size-4" /> {t("logOut")}
                   </DropdownMenuItem>
                 </>
               ) : null}
@@ -251,11 +260,15 @@ export function Header() {
                 <SheetTitle>{institution?.name}</SheetTitle>
               </SheetHeader>
               <div className="flex flex-col gap-1 px-4 pb-6">
+                <div className="py-2 border-b border-border mb-2 flex items-center justify-between">
+                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{t("language")}</span>
+                  <LanguageDropdown variant="default" />
+                </div>
                 {(menu?.items ?? []).map((item) =>
                   item.children ? (
                     <div key={item.label} className="py-1">
                       <p className="text-muted-foreground px-2 py-1.5 text-xs font-semibold tracking-wide uppercase">
-                        {item.label}
+                        {t(item.label)}
                       </p>
                       {item.children.map((child) => (
                         <SheetClose asChild key={child.path}>
@@ -263,7 +276,7 @@ export function Header() {
                             to={child.path}
                             className="hover:bg-muted flex items-center justify-between rounded-lg px-2 py-2 text-sm"
                           >
-                            {child.label} <ChevronRight className="text-muted-foreground size-4" />
+                            {t(child.label)} <ChevronRight className="text-muted-foreground size-4" />
                           </Link>
                         </SheetClose>
                       ))}
@@ -274,13 +287,13 @@ export function Header() {
                         to={item.path}
                         className="hover:bg-muted flex items-center justify-between rounded-lg px-2 py-2.5 text-sm font-medium"
                       >
-                        {item.label} <ChevronRight className="text-muted-foreground size-4" />
+                        {t(item.label)} <ChevronRight className="text-muted-foreground size-4" />
                       </Link>
                     </SheetClose>
                   ),
                 )}
                 <div className="border-border mt-3 border-t pt-3 space-y-1.5">
-                  <p className="text-muted-foreground px-1 text-xs font-semibold tracking-wide uppercase">Switch wing</p>
+                  <p className="text-muted-foreground px-1 text-xs font-semibold tracking-wide uppercase">{t("switchWing")}</p>
                   {(["school", "college"] as const).map((wing) => (
                     <SheetClose asChild key={wing}>
                       <button
@@ -296,9 +309,9 @@ export function Header() {
                         {wing === "school"
                           ? <GraduationCap className="size-4 shrink-0" />
                           : <Landmark className="size-4 shrink-0" />}
-                        {wing === "school" ? "School site" : "College site"}
+                        {wing === "school" ? t("schoolSite") : t("collegeSite")}
                         {institutionId === wing && (
-                          <span className="bg-primary ml-auto rounded-full px-1.5 py-0.5 text-[10px] font-semibold text-white">Active</span>
+                          <span className="bg-primary ml-auto rounded-full px-1.5 py-0.5 text-[10px] font-semibold text-white">{t("active")}</span>
                         )}
                       </button>
                     </SheetClose>
