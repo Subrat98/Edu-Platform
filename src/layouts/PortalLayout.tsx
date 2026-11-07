@@ -18,7 +18,7 @@ function SimplePortalShell() {
   const currentUser = useAuthStore((s) => s.currentUser);
   return (
     <div className="bg-background flex min-h-screen flex-col">
-      <header className="bg-surface border-border border-b px-6 py-4 sm:px-10">
+      <header className="border-b border-border bg-card px-6 py-4 sm:px-10">
         <div className="flex items-center gap-2">
           <UserCircle className="text-accent size-5" />
           <span className="font-heading text-sm font-semibold">

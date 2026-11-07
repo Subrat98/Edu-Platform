@@ -162,6 +162,8 @@
   --color-brand-error: var(--color-error);
   --color-brand-info: var(--color-info);
 
+  --color-surface: var(--color-surface);
+
   --font-sans: var(--font-body);
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);

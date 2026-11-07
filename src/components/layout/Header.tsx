@@ -72,7 +72,7 @@ export function Header() {
   }
 
   return (
-    <header className="bg-surface border-border sticky top-0 z-40 border-b">
+    <header className="sticky top-0 z-40 border-b border-border bg-card shadow-sm">
       {/* Utility bar */}
       <div className="bg-primary hidden text-white sm:block">
         <Container className="flex h-9 items-center justify-between text-xs">

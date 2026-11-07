@@ -119,7 +119,7 @@ export function AppSidebarShell({
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <header className="bg-surface border-border flex h-14 shrink-0 items-center gap-3 border-b px-4">
+        <header className="flex h-14 shrink-0 items-center gap-3 border-b border-border bg-card px-4">
           <SidebarTrigger />
           <Separator orientation="vertical" className="h-5" />
           <p className="text-muted-foreground flex-1 text-sm">{institution?.name}</p>
