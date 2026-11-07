@@ -137,7 +137,7 @@ export function AppSidebarShell({
             {resolvedTheme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
           </Button>
         </header>
-        <main className="flex-1 overflow-y-auto p-5 sm:p-8">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6">
           <Outlet />
         </main>
       </SidebarInset>
