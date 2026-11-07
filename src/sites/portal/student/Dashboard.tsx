@@ -71,7 +71,7 @@ export default function StudentDashboard() {
 
   return (
     <div>
-      <AdminPageHeader title={`Welcome, ${currentUser?.name?.split(" ")[0] ?? "Student"}`} description="Your library activity at a glance." />
+      <AdminPageHeader title={`Welcome, ${currentUser?.name?.split(" ")[0] ?? "Student"}`} description="Your academic overview." />
 
       {studentId ? (
         <Card className="mb-6">

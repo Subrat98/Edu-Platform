@@ -36,7 +36,7 @@ import type {
   Reservation,
 } from "@/types";
 
-const TODAY = "2026-10-29";
+const TODAY = new Date().toISOString().slice(0, 10);
 
 function nextBookingNo(): string {
   return `BK-2026-${String(allBookings.length + 1).padStart(6, "0")}`;

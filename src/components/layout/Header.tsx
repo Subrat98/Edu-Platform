@@ -13,6 +13,8 @@ import {
   LogIn,
   LogOut,
   ChevronRight,
+  GraduationCap,
+  Landmark,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -86,14 +88,26 @@ export function Header() {
               </>
             ) : null}
           </div>
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={handleInstitutionSwitch}
-              className="rounded-full bg-white/15 px-2.5 py-1 font-medium hover:bg-white/25"
-            >
-              Switch to {otherInstitutionId === "school" ? "School" : "College"} site
-            </button>
+          <div className="flex items-center gap-2">
+            {/* Wing toggle — pill with two segments */}
+            <div className="flex items-center rounded-full border border-white/25 bg-white/10 p-0.5">
+              {(["school", "college"] as const).map((wing) => (
+                <button
+                  key={wing}
+                  type="button"
+                  onClick={() => { setInstitution(wing); navigate(`/${wing}`); }}
+                  className={cn(
+                    "flex items-center gap-1 rounded-full px-3 py-0.5 text-[11px] font-semibold capitalize transition-all",
+                    institutionId === wing
+                      ? "bg-white text-primary shadow-sm"
+                      : "text-white/80 hover:text-white",
+                  )}
+                >
+                  {wing === "school" ? <GraduationCap className="size-3" /> : <Landmark className="size-3" />}
+                  {wing}
+                </button>
+              ))}
+            </div>
             <button
               type="button"
               onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
@@ -107,7 +121,7 @@ export function Header() {
               onClick={resetDemoData}
               className="flex items-center gap-1 rounded-full px-2 py-1 hover:bg-white/15"
             >
-              <RotateCcw className="size-3" /> Reset demo data
+              <RotateCcw className="size-3" /> Reset demo
             </button>
           </div>
         </Container>
@@ -265,12 +279,30 @@ export function Header() {
                     </SheetClose>
                   ),
                 )}
-                <div className="border-border mt-3 border-t pt-3">
-                  <SheetClose asChild>
-                    <Button onClick={handleInstitutionSwitch} variant="outline" className="w-full justify-start">
-                      Switch to {otherInstitutionId === "school" ? "School" : "College"} site
-                    </Button>
-                  </SheetClose>
+                <div className="border-border mt-3 border-t pt-3 space-y-1.5">
+                  <p className="text-muted-foreground px-1 text-xs font-semibold tracking-wide uppercase">Switch wing</p>
+                  {(["school", "college"] as const).map((wing) => (
+                    <SheetClose asChild key={wing}>
+                      <button
+                        type="button"
+                        onClick={() => { setInstitution(wing); navigate(`/${wing}`); }}
+                        className={cn(
+                          "flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
+                          institutionId === wing
+                            ? "bg-primary/10 text-primary"
+                            : "hover:bg-muted text-foreground",
+                        )}
+                      >
+                        {wing === "school"
+                          ? <GraduationCap className="size-4 shrink-0" />
+                          : <Landmark className="size-4 shrink-0" />}
+                        {wing === "school" ? "School site" : "College site"}
+                        {institutionId === wing && (
+                          <span className="bg-primary ml-auto rounded-full px-1.5 py-0.5 text-[10px] font-semibold text-white">Active</span>
+                        )}
+                      </button>
+                    </SheetClose>
+                  ))}
                 </div>
               </div>
             </SheetContent>

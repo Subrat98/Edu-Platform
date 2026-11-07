@@ -1,6 +1,8 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useTheme } from "next-themes";
 import { GraduationCap, LogOut, ExternalLink, Moon, Sun } from "lucide-react";
+import { BottomTabBar } from "@/components/layout/BottomTabBar";
+import type { Tab } from "@/components/layout/BottomTabBar";
 import {
   Sidebar,
   SidebarContent,
@@ -29,7 +31,15 @@ import { useSyncInstitutionToUser } from "@/features/institutions/useSyncInstitu
 import { ROLE_LABELS } from "@/types";
 import type { AdminNavGroup } from "./adminNavConfig";
 
-export function AppSidebarShell({ groups, brandLabel }: { groups: AdminNavGroup[]; brandLabel: string }) {
+export function AppSidebarShell({
+  groups,
+  brandLabel,
+  mobileTabs,
+}: {
+  groups: AdminNavGroup[];
+  brandLabel: string;
+  mobileTabs?: Tab[];
+}) {
   useSyncInstitutionToUser();
   const currentUser = useAuthStore((s) => s.currentUser);
   const logout = useAuthStore((s) => s.logout);
@@ -127,6 +137,9 @@ export function AppSidebarShell({ groups, brandLabel }: { groups: AdminNavGroup[
           <Outlet />
         </main>
       </SidebarInset>
+      {mobileTabs && mobileTabs.length > 0 && (
+        <BottomTabBar tabs={mobileTabs} />
+      )}
       <InstallPrompt />
     </SidebarProvider>
   );
