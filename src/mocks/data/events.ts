@@ -70,7 +70,7 @@ export const schoolEvents: EventItem[] = [
     category: "Academic",
     date: "2026-11-28",
     location: "School Auditorium",
-    description: "PSPS hosts a quiz competition for Classes IX–XII with teams from six neighbouring schools.",
+    description: "Our School hosts a quiz competition for Classes IX–XII with teams from six neighbouring schools.",
     imageUrl: schoolGalleryUrl(25),
   },
   {

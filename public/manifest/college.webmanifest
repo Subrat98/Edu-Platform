@@ -1,7 +1,7 @@
 {
-  "name": "Pathani Samanta College",
+  "name": "Our College",
   "short_name": "PSC",
-  "description": "College website, departments, programmes, results and fees for Pathani Samanta College.",
+  "description": "College website, departments, programmes, results and fees for Our College.",
   "start_url": "/college",
   "scope": "/college",
   "display": "standalone",

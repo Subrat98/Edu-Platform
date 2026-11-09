@@ -87,12 +87,12 @@ export default function SetupWizard() {
                 <div className="border-border rounded-lg border p-4 opacity-50">
                   <GraduationCap className="text-muted-foreground mb-2 size-5" />
                   <p className="text-sm font-medium">School</p>
-                  <p className="text-muted-foreground mt-1 text-xs">Already provisioned as Pathani Samanta Public School.</p>
+                  <p className="text-muted-foreground mt-1 text-xs">Already provisioned as Our School.</p>
                 </div>
                 <div className="border-border rounded-lg border p-4 opacity-50">
                   <Landmark className="text-muted-foreground mb-2 size-5" />
                   <p className="text-sm font-medium">College</p>
-                  <p className="text-muted-foreground mt-1 text-xs">Already provisioned as Pathani Samanta College.</p>
+                  <p className="text-muted-foreground mt-1 text-xs">Already provisioned as Our College.</p>
                 </div>
                 <div className="border-accent bg-accent/5 rounded-lg border-2 p-4">
                   <Sparkles className="text-accent mb-2 size-5" />
@@ -193,8 +193,8 @@ export default function SetupWizard() {
                 Both-mode institutions in this demo reuse the existing academic structures rather than generating a new dataset:
               </p>
               <ul className="list-inside list-disc space-y-1 text-muted-foreground">
-                <li>School wing — Nursery through Classes XI–XII (Science, Commerce, Arts streams), same as Pathani Samanta Public School.</li>
-                <li>College wing — all 12 UG/PG/Diploma programmes, same as Pathani Samanta College.</li>
+                <li>School wing — Nursery through Classes XI–XII (Science, Commerce, Arts streams), same as Our School.</li>
+                <li>College wing — all 12 UG/PG/Diploma programmes, same as Our College.</li>
               </ul>
             </div>
           )}

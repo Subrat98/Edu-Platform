@@ -18,7 +18,7 @@ export const demoUsers: DemoUser[] = [
     role: "institution_admin",
     institutionId: "school",
     avatarUrl: portraitUrl(2),
-    title: "Institution Admin, PSPS",
+    title: "Institution Admin, Our School",
   },
   {
     id: "user-school-principal",
@@ -27,7 +27,7 @@ export const demoUsers: DemoUser[] = [
     role: "principal",
     institutionId: "school",
     avatarUrl: portraitUrl(3),
-    title: "Principal, PSPS",
+    title: "Principal, Our School",
   },
   {
     id: "user-school-admissions",
@@ -36,7 +36,7 @@ export const demoUsers: DemoUser[] = [
     role: "admission_officer",
     institutionId: "school",
     avatarUrl: portraitUrl(4),
-    title: "Admission Officer, PSPS",
+    title: "Admission Officer, Our School",
   },
   {
     id: "user-school-teacher",
@@ -45,7 +45,7 @@ export const demoUsers: DemoUser[] = [
     role: "teacher",
     institutionId: "school",
     avatarUrl: portraitUrl(5),
-    title: "Senior Teacher, PSPS",
+    title: "Senior Teacher, Our School",
     staffId: "staff-sch-03",
   },
   {
@@ -55,7 +55,7 @@ export const demoUsers: DemoUser[] = [
     role: "accountant",
     institutionId: "school",
     avatarUrl: portraitUrl(6),
-    title: "Accountant, PSPS",
+    title: "Accountant, Our School",
   },
   {
     id: "user-school-parent",
@@ -64,7 +64,7 @@ export const demoUsers: DemoUser[] = [
     role: "parent",
     institutionId: "school",
     avatarUrl: portraitUrl(7),
-    title: "Parent, PSPS",
+    title: "Parent, Our School",
     guardianId: "guardian-0",
   },
   {

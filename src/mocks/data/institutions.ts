@@ -5,7 +5,7 @@ export const institutions: Record<"school" | "college", Institution> = {
   school: {
     id: "school",
     type: "school",
-    name: "Pathani Samanta Public School",
+    name: "Our School",
     shortName: "PSPS",
     tagline: "Where every child learns to shine",
     description:
@@ -38,7 +38,7 @@ export const institutions: Record<"school" | "college", Institution> = {
   college: {
     id: "college",
     type: "college",
-    name: "Pathani Samanta College",
+    name: "Our College",
     shortName: "PSC",
     tagline: "Knowledge. Research. Leadership.",
     description:

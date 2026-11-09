@@ -6,11 +6,11 @@ const seed: UnifiedInstitution[] = [
   {
     id: "unified",
     mode: "both",
-    name: "Pathani Samanta Education Campus",
+    name: "Our Campus",
     shortName: "PSEC",
     tagline: "One campus, two journeys — Nursery to Postgraduate.",
     description:
-      "A single administration running Pathani Samanta Public School and Pathani Samanta College together as two wings of one campus, sharing one brand, one set of users and one combined dashboard while each wing keeps its own academic structure, admissions, attendance, examinations and fees.",
+      "A single administration running Our School and Our College together as two wings of one campus, sharing one brand, one set of users and one combined dashboard while each wing keeps its own academic structure, admissions, attendance, examinations and fees.",
     theme: UNIFIED_THEME,
     wings: [
       { type: "school", name: institutions.school.name, tagline: institutions.school.tagline },

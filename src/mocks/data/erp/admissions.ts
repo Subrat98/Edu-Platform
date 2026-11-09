@@ -86,7 +86,7 @@ for (let i = 0; i < COLLEGE_APP_COUNT; i += 1) {
     email: `${name.toLowerCase().replace(" ", ".")}${i}@example.com`,
     appliedFor: prog.name,
     appliedForId: prog.id,
-    previousSchoolOrCollege: "Pathani Samanta Public School, Khandapara",
+    previousSchoolOrCollege: "Our School, Khandapara",
     submittedDate,
     status,
     documents: [

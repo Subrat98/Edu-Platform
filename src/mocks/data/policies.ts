@@ -41,7 +41,7 @@ export const policyPages: PolicyPageContent[] = [
     title: "Child Safety Policy",
     updatedDate: "2026-07-15",
     paragraphs: [
-      "Pathani Samanta Public School is committed to providing a safe environment for every student. All staff undergo background verification and periodic child-safety training.",
+      "Our School is committed to providing a safe environment for every student. All staff undergo background verification and periodic child-safety training.",
       "The campus is monitored by CCTV at all entry points and common areas, with controlled visitor access and mandatory sign-in at the front gate.",
       "Any concerns about student safety or wellbeing can be raised confidentially with the Principal or the designated Child Protection Officer.",
     ],

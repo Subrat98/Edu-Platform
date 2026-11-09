@@ -13,14 +13,14 @@ export default function CollegeAbout() {
 
   return (
     <>
-      <Hero variant="compact" title="About Pathani Samanta College" imageUrl={collegeHeroUrl(3)} />
+      <Hero variant="compact" title="About Our College" imageUrl={collegeHeroUrl(3)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "About" }]} />
 
       <RichText
         eyebrow="Our story"
         title="History, Vision & Mission"
         paragraphs={[
-          `Established in ${institution.establishedYear}, Pathani Samanta College has grown from a small degree college into a multi-disciplinary institution offering undergraduate and postgraduate programmes across Science, Commerce and Arts to over 4,200 students.`,
+          `Established in ${institution.establishedYear}, Our College has grown from a small degree college into a multi-disciplinary institution offering undergraduate and postgraduate programmes across Science, Commerce and Arts to over 4,200 students.`,
           "Our vision is to be a centre of academic excellence and research in Odisha, producing graduates who combine strong subject knowledge with critical thinking and civic responsibility.",
           "Our mission is to provide accessible, high-quality higher education, support active faculty research, and prepare students for both further study and meaningful careers.",
         ]}

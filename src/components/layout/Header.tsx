@@ -62,13 +62,6 @@ export function Header() {
     queryFn: () => navMenuService.get(institutionId),
   });
 
-  const otherInstitutionId = institutionId === "school" ? "college" : "school";
-
-  function handleInstitutionSwitch() {
-    setInstitution(otherInstitutionId);
-    navigate(`/${otherInstitutionId}`);
-  }
-
   function handleLogout() {
     logout();
     navigate("/auth/login");

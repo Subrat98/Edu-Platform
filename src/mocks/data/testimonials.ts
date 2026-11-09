@@ -7,7 +7,7 @@ export const schoolTestimonials: Testimonial[] = [
     name: "Suresh Pradhan",
     role: "Parent, Class VIII",
     quote:
-      "The teachers at PSPS genuinely know each child. My daughter's confidence has grown so much in just two years.",
+      "The teachers at Our School genuinely know each child. My daughter's confidence has grown so much in just two years.",
     avatarUrl: "",
     rating: 5,
   },
@@ -27,7 +27,7 @@ export const schoolTestimonials: Testimonial[] = [
     name: "Aditya Rout",
     role: "Alumnus, Class of 2024",
     quote:
-      "PSPS gave me a strong academic foundation and the confidence to speak up — things I still rely on in college.",
+      "Our School gave me a strong academic foundation and the confidence to speak up — things I still rely on in college.",
     avatarUrl: "",
     rating: 5,
   },

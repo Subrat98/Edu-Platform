@@ -11,14 +11,14 @@ export default function SchoolAbout() {
 
   return (
     <>
-      <Hero variant="compact" title="About Pathani Samanta Public School" imageUrl={schoolHeroUrl(1)} />
+      <Hero variant="compact" title="About Our School" imageUrl={schoolHeroUrl(1)} />
       <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "About Us" }]} />
 
       <RichText
         eyebrow="Our story"
         title="History, Vision & Mission"
         paragraphs={[
-          `Founded in ${institution.establishedYear}, Pathani Samanta Public School began as a small neighbourhood school in Khandapara with a handful of classrooms and a determination to make quality education accessible to every family in the region. Over nearly three decades, it has grown into a full Nursery-to-Grade-12 CBSE institution trusted by generations of local families.`,
+          `Founded in ${institution.establishedYear}, Our School began as a small neighbourhood school in Khandapara with a handful of classrooms and a determination to make quality education accessible to every family in the region. Over nearly three decades, it has grown into a full Nursery-to-Grade-12 CBSE institution trusted by generations of local families.`,
           "Our vision is to nurture confident, curious and compassionate learners who are ready for the challenges of higher education and life beyond the classroom.",
           "Our mission is to combine strong academic fundamentals with activity-based learning, individual attention and a safe, values-driven campus environment — so that every child, regardless of background, has the opportunity to shine.",
         ]}

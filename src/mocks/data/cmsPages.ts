@@ -58,7 +58,7 @@ export const cmsPages: CmsPageRecord[] = [
     author: "Sujata Rout",
     updatedAt: "2026-10-18T11:00:00",
     visibility: "Public",
-    page: richTextPage({ slug: "about", institutionId: "school", title: "About Us", heroTitle: "About Pathani Samanta Public School", paragraph: "A CBSE-affiliated Nursery-to-Grade-12 school in Khandapara, Nayagarh." }),
+    page: richTextPage({ slug: "about", institutionId: "school", title: "About Us", heroTitle: "About Our School", paragraph: "A CBSE-affiliated Nursery-to-Grade-12 school in Khandapara, Nayagarh." }),
   }),
   record({
     institutionId: "school",
@@ -80,7 +80,7 @@ export const cmsPages: CmsPageRecord[] = [
     author: "Sujata Rout",
     updatedAt: "2026-09-30T10:00:00",
     visibility: "Public",
-    page: richTextPage({ slug: "contact", institutionId: "school", title: "Contact Us", heroTitle: "Contact Us", paragraph: "Reach out to PSPS through the front office or the enquiry form." }),
+    page: richTextPage({ slug: "contact", institutionId: "school", title: "Contact Us", heroTitle: "Contact Us", paragraph: "Reach out to Our School through the front office or the enquiry form." }),
   }),
   record({
     institutionId: "school",
@@ -103,7 +103,7 @@ export const cmsPages: CmsPageRecord[] = [
     author: "Sujata Rout",
     updatedAt: "2026-10-25T13:20:00",
     visibility: "Public",
-    page: richTextPage({ slug: "smart-classroom-initiative", institutionId: "school", title: "Smart Classroom Initiative", heroTitle: "Digital classrooms are coming to PSPS", paragraph: "Draft copy — details to be confirmed with the facilities committee before publishing." }),
+    page: richTextPage({ slug: "smart-classroom-initiative", institutionId: "school", title: "Smart Classroom Initiative", heroTitle: "Digital classrooms are coming to Our School", paragraph: "Draft copy — details to be confirmed with the facilities committee before publishing." }),
   }),
   record({
     institutionId: "school",
@@ -137,7 +137,7 @@ export const cmsPages: CmsPageRecord[] = [
     author: "Dr. Snigdha Mohanty",
     updatedAt: "2026-10-15T09:00:00",
     visibility: "Public",
-    page: richTextPage({ slug: "about", institutionId: "college", title: "About", heroTitle: "About Pathani Samanta College", paragraph: "A UGC-recognized degree college offering UG and PG programmes across Science, Commerce and Arts." }),
+    page: richTextPage({ slug: "about", institutionId: "college", title: "About", heroTitle: "About Our College", paragraph: "A UGC-recognized degree college offering UG and PG programmes across Science, Commerce and Arts." }),
   }),
   record({
     institutionId: "college",

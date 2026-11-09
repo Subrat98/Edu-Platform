@@ -1,7 +1,7 @@
 {
-  "name": "Pathani Samanta Public School",
+  "name": "Our School",
   "short_name": "PSPS",
-  "description": "School website, notices, attendance, results and fees for Pathani Samanta Public School.",
+  "description": "School website, notices, attendance, results and fees for Our School.",
   "start_url": "/school",
   "scope": "/school",
   "display": "standalone",
