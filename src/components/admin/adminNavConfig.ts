@@ -34,6 +34,14 @@ import {
   Network,
   BookMarked,
   FileBadge,
+  Award,
+  Layers,
+  TrendingUp,
+  FileCheck2,
+  FolderOpen,
+  MessageSquareQuote,
+  Sparkles,
+  Clock,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -89,6 +97,24 @@ export const adminNavGroups: AdminNavGroup[] = [
       { label: "Attendance — Mark", path: "/admin/attendance/mark", icon: CalendarCheck },
       { label: "Attendance — Reports", path: "/admin/attendance/reports", icon: CalendarDays },
       { label: "Examinations", path: "/admin/examinations", icon: PenSquare, end: true },
+    ],
+  },
+  {
+    label: "NAAC & IQAC",
+    items: [
+      { label: "NAAC Dashboard", path: "/admin/naac", icon: LayoutDashboard, end: true },
+      { label: "Accreditation", path: "/admin/naac/accreditation", icon: Award },
+      { label: "Criteria 1–7", path: "/admin/naac/criteria", icon: Layers },
+      { label: "IQAC Cell", path: "/admin/naac/iqac", icon: Building2 },
+      { label: "AQAR", path: "/admin/naac/aqar", icon: TrendingUp },
+      { label: "SSR", path: "/admin/naac/ssr", icon: FileCheck2 },
+      { label: "Evidence Vault", path: "/admin/naac/evidence", icon: FolderOpen },
+      { label: "Feedback", path: "/admin/naac/feedback", icon: MessageSquareQuote },
+      { label: "Best Practices", path: "/admin/naac/best-practices", icon: Sparkles },
+      { label: "Tasks & Deadlines", path: "/admin/naac/tasks", icon: Clock },
+      { label: "Approvals", path: "/admin/naac/approvals", icon: ShieldCheck },
+      { label: "NAAC Reports", path: "/admin/naac/reports", icon: BarChart3 },
+      { label: "Audit Trail", path: "/admin/naac/audit", icon: History },
     ],
   },
   {

@@ -18,3 +18,4 @@ export * from "./unified";
 export * from "./revaluation";
 export * from "./leaveRequest";
 export * from "./certificateRequest";
+export * from "./naac";

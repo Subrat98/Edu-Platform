@@ -1,0 +1,145 @@
+import type {
+  NaacFeedbackRecord,
+  StakeholderFeedbackSummary,
+} from "@/types";
+
+export const initialFeedbackSummaries: StakeholderFeedbackSummary[] = [
+  {
+    stakeholder: "Student",
+    totalResponses: 1420,
+    averageRating: 4.42,
+    categoryScores: [
+      { category: "Curriculum & Syllabus Relevance", score: 4.5 },
+      { category: "Teaching-Learning Quality", score: 4.4 },
+      { category: "Laboratories & Infrastructure", score: 4.6 },
+      { category: "Library & E-Resources Access", score: 4.5 },
+      { category: "Placement & Career Guidance", score: 4.1 },
+    ],
+    atrSummary:
+      "Added 42 industry-oriented certificate courses and organized mock interview series for final year students.",
+  },
+  {
+    stakeholder: "Teacher",
+    totalResponses: 114,
+    averageRating: 4.58,
+    categoryScores: [
+      { category: "Academic Freedom & Flexibility", score: 4.7 },
+      { category: "Research Support & Seed Grants", score: 4.4 },
+      { category: "ICT & Smart Classrooms", score: 4.6 },
+      { category: "Governance & Administration", score: 4.6 },
+    ],
+    atrSummary:
+      "Increased institutional seed grant budget for faculty research to ₹25 Lakhs per annum.",
+  },
+  {
+    stakeholder: "Alumni",
+    totalResponses: 380,
+    averageRating: 4.35,
+    categoryScores: [
+      { category: "Relevance of Courses to Industry", score: 4.3 },
+      { category: "Technical & Soft Skills Imparted", score: 4.4 },
+      { category: "Institutional Reputation & Mentoring", score: 4.5 },
+    ],
+    atrSummary:
+      "Established Alumni Mentorship Cell connecting current 3rd/4th year students with alumni working in top multinationals.",
+  },
+  {
+    stakeholder: "Employer",
+    totalResponses: 48,
+    averageRating: 4.48,
+    categoryScores: [
+      { category: "Technical Competence of Graduates", score: 4.5 },
+      { category: "Communication & Teamwork", score: 4.4 },
+      { category: "Ethical & Professional Values", score: 4.7 },
+      { category: "Adaptability to New Technologies", score: 4.3 },
+    ],
+    atrSummary:
+      "Introduced compulsory business communication and agile project management workshops in 5th semester.",
+  },
+  {
+    stakeholder: "Parent",
+    totalResponses: 620,
+    averageRating: 4.38,
+    categoryScores: [
+      { category: "Campus Safety & Discipline", score: 4.7 },
+      { category: "Holistic Development & Mentorship", score: 4.3 },
+      { category: "Transparency in Fee & Evaluation", score: 4.4 },
+      { category: "Hostel & Canteen Facilities", score: 4.1 },
+    ],
+    atrSummary:
+      "Renovated hostel dining hall and expanded medical first-aid station with 24x7 ambulance tie-up.",
+  },
+];
+
+export const initialFeedbackRecords: NaacFeedbackRecord[] = [
+  {
+    id: "fb-01",
+    stakeholder: "Student",
+    academicYear: "2025-26",
+    department: "Computer Science",
+    respondentName: "Ananya Tripathy",
+    curriculumRating: 5,
+    teachingRating: 4,
+    infrastructureRating: 5,
+    resourcesRating: 5,
+    overallSatisfaction: 4.8,
+    suggestions: "Please include more real-world cloud computing and Docker containers in lab syllabus.",
+    date: "2026-09-14",
+  },
+  {
+    id: "fb-02",
+    stakeholder: "Student",
+    academicYear: "2025-26",
+    department: "Physics",
+    respondentName: "Sourav Mishra",
+    curriculumRating: 4,
+    teachingRating: 5,
+    infrastructureRating: 4,
+    resourcesRating: 4,
+    overallSatisfaction: 4.4,
+    suggestions: "Extended library hours during mid-term and semester examinations would be very helpful.",
+    date: "2026-09-20",
+  },
+  {
+    id: "fb-03",
+    stakeholder: "Teacher",
+    academicYear: "2025-26",
+    department: "Chemistry",
+    respondentName: "Prof. Satyabrata Dash",
+    curriculumRating: 5,
+    teachingRating: 5,
+    infrastructureRating: 4,
+    resourcesRating: 4,
+    overallSatisfaction: 4.6,
+    suggestions: "Procure high-performance liquid chromatography (HPLC) columns for postgraduate research.",
+    date: "2026-08-30",
+  },
+  {
+    id: "fb-04",
+    stakeholder: "Employer",
+    academicYear: "2025-26",
+    department: "Training & Placement",
+    respondentName: "Infosys Campus Recruitment Team",
+    curriculumRating: 4,
+    teachingRating: 5,
+    infrastructureRating: 5,
+    resourcesRating: 4,
+    overallSatisfaction: 4.6,
+    suggestions: "Candidates demonstrate solid conceptual logic; recommend additional hands-on practice in system design.",
+    date: "2026-10-12",
+  },
+  {
+    id: "fb-05",
+    stakeholder: "Alumni",
+    academicYear: "2025-26",
+    department: "Alumni Association",
+    respondentName: "Rakesh Mohapatra (Batch 2021, Amazon)",
+    curriculumRating: 4,
+    teachingRating: 4,
+    infrastructureRating: 5,
+    resourcesRating: 4,
+    overallSatisfaction: 4.5,
+    suggestions: "Willing to take weekend guest sessions on microservices and DevOps for pre-final students.",
+    date: "2026-07-22",
+  },
+];

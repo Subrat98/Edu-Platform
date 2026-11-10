@@ -83,6 +83,21 @@ const AdminLeaveRequests = lazy(() => import("@/sites/admin/students/LeaveReques
 const AdminCertificateRequests = lazy(() => import("@/sites/admin/students/CertificateRequests"));
 const SetupWizard = lazy(() => import("@/sites/admin/platform/SetupWizard"));
 
+// --- NAAC & IQAC pages (lazy) ---
+const NaacDashboard = lazy(() => import("@/sites/admin/naac/NaacDashboard"));
+const NaacAccreditation = lazy(() => import("@/sites/admin/naac/AccreditationPage"));
+const NaacCriteriaHub = lazy(() => import("@/sites/admin/naac/CriteriaHub"));
+const NaacIqac = lazy(() => import("@/sites/admin/naac/IqacPage"));
+const NaacAqar = lazy(() => import("@/sites/admin/naac/AqarPage"));
+const NaacSsr = lazy(() => import("@/sites/admin/naac/SsrPage"));
+const NaacEvidence = lazy(() => import("@/sites/admin/naac/EvidenceRepositoryPage"));
+const NaacFeedback = lazy(() => import("@/sites/admin/naac/FeedbackPage"));
+const NaacBestPractices = lazy(() => import("@/sites/admin/naac/BestPracticesPage"));
+const NaacTasks = lazy(() => import("@/sites/admin/naac/TasksPage"));
+const NaacApprovals = lazy(() => import("@/sites/admin/naac/ApprovalsPage"));
+const NaacReports = lazy(() => import("@/sites/admin/naac/ReportsPage"));
+const NaacAudit = lazy(() => import("@/sites/admin/naac/AuditTrailPage"));
+
 // --- Unified (Both-mode) public landing (lazy) ---
 const UnifiedLanding = lazy(() => import("@/sites/unified/UnifiedLanding"));
 
@@ -239,6 +254,19 @@ export const router = createBrowserRouter([
       { path: "settings/activity-log", element: <AdminActivityLog /> },
       { path: "students/leave-requests", element: <AdminLeaveRequests /> },
       { path: "students/certificates", element: <AdminCertificateRequests /> },
+      { path: "naac", element: <NaacDashboard /> },
+      { path: "naac/accreditation", element: <NaacAccreditation /> },
+      { path: "naac/criteria", element: <NaacCriteriaHub /> },
+      { path: "naac/iqac", element: <NaacIqac /> },
+      { path: "naac/aqar", element: <NaacAqar /> },
+      { path: "naac/ssr", element: <NaacSsr /> },
+      { path: "naac/evidence", element: <NaacEvidence /> },
+      { path: "naac/feedback", element: <NaacFeedback /> },
+      { path: "naac/best-practices", element: <NaacBestPractices /> },
+      { path: "naac/tasks", element: <NaacTasks /> },
+      { path: "naac/approvals", element: <NaacApprovals /> },
+      { path: "naac/reports", element: <NaacReports /> },
+      { path: "naac/audit", element: <NaacAudit /> },
       {
         path: "platform/setup-wizard",
         element: (
