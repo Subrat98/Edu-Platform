@@ -6,3 +6,4 @@ export * from "./aqar";
 export * from "./feedback";
 export * from "./bestPractices";
 export * from "./tasks";
+export * from "./curriculumPlanning";

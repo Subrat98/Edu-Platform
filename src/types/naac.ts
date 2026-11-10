@@ -326,3 +326,77 @@ export interface NaacAuditLog {
   newValue?: string;
   remarks?: string;
 }
+
+export interface AcademicCouncilMeeting {
+  id: string;
+  meetingNumber: string;
+  meetingDate: string;
+  chairperson: string;
+  totalMembersPresent: number;
+  agenda: string;
+  keyResolutions: string[];
+  programmesApproved: string[];
+  syllabusRevisionSummary: string;
+  minutesDocumentUrl: string;
+  evidenceId: string;
+  status: "Approved" | "Notified" | "Draft";
+}
+
+export interface SemesterAcademicCalendar {
+  id: string;
+  academicYear: string;
+  semester: "Odd Semester" | "Even Semester" | "Annual";
+  programmesCovered: string[];
+  startDate: string;
+  endDate: string;
+  instructionalDays: number;
+  continuousInternalEvaluationDates: string;
+  endSemesterExamDates: string;
+  coCurricularWindows: string;
+  status: "Statutory Approved" | "In Progress";
+  evidenceId: string;
+  calendarPdfUrl: string;
+}
+
+export interface ProgrammeSyllabusStructure {
+  id: string;
+  programmeId: string;
+  programmeCode: string;
+  programmeName: string;
+  department: string;
+  framework: "LOCF - NEP 2020" | "CBCS (UGC)" | "Autonomous Regulations";
+  totalCredits: number;
+  coreCredits: number;
+  disciplineElectiveCredits: number;
+  genericElectiveCredits: number;
+  skillEnhancementCredits: number;
+  internshipCredits: number;
+  coPoMappingStatus: "100% Mapped" | "In Review";
+  revisionYear: string;
+  lastRevisedPercentage: number;
+  syllabusDocumentUrl: string;
+  evidenceId: string;
+}
+
+export interface LessonPlanAdherence {
+  id: string;
+  departmentId: string;
+  departmentName: string;
+  academicYear: string;
+  semester: "Odd" | "Even";
+  totalCoursesOffered: number;
+  lessonPlansSubmitted: number;
+  adherencePercentage: number;
+  courseFilesAudited: number;
+  hodSignOffDate: string;
+  iqacAuditor: string;
+  status: "Audited & Verified" | "Partially Verified";
+  evidenceId: string;
+}
+
+export interface CurriculumPlanningData {
+  councilMeetings: AcademicCouncilMeeting[];
+  academicCalendars: SemesterAcademicCalendar[];
+  syllabusStructures: ProgrammeSyllabusStructure[];
+  lessonPlanAdherence: LessonPlanAdherence[];
+}

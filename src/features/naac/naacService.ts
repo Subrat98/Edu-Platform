@@ -16,6 +16,10 @@ import {
   initialNaacTasks,
   initialNaacApprovals,
   initialNaacAuditLogs,
+  initialAcademicCouncilMeetings,
+  initialSemesterCalendars,
+  initialProgrammeSyllabusStructures,
+  initialLessonPlanAdherence,
 } from "@/mocks/data/naac";
 import type {
   AccreditationCycle,
@@ -39,6 +43,11 @@ import type {
   TaskStatus,
   NaacApproval,
   NaacAuditLog,
+  AcademicCouncilMeeting,
+  SemesterAcademicCalendar,
+  ProgrammeSyllabusStructure,
+  LessonPlanAdherence,
+  CurriculumPlanningData,
 } from "@/types";
 
 let accreditationCycles = [...initialAccreditationCycles];
@@ -57,6 +66,10 @@ let institutionalDistinctiveness = { ...initialInstitutionalDistinctiveness };
 let tasks = [...initialNaacTasks];
 let approvals = [...initialNaacApprovals];
 let auditLogs = [...initialNaacAuditLogs];
+let councilMeetings = [...initialAcademicCouncilMeetings];
+let semesterCalendars = [...initialSemesterCalendars];
+let syllabusStructures = [...initialProgrammeSyllabusStructures];
+let lessonPlanAdherence = [...initialLessonPlanAdherence];
 
 function logAudit(
   actorName: string,
@@ -554,5 +567,54 @@ export async function getAuditLogsList(moduleFilter?: string): Promise<NaacAudit
   return mockRequest(() => {
     if (!moduleFilter || moduleFilter === "All") return [...auditLogs];
     return auditLogs.filter((l) => l.module.toLowerCase().includes(moduleFilter.toLowerCase()));
+  });
+}
+
+// ==========================================
+// METRIC 1.1.1 CURRICULUM PLANNING & IMPLEMENTATION
+// ==========================================
+
+export async function getCurriculumPlanningData(): Promise<CurriculumPlanningData> {
+  return mockRequest(() => ({
+    councilMeetings: [...councilMeetings],
+    academicCalendars: [...semesterCalendars],
+    syllabusStructures: [...syllabusStructures],
+    lessonPlanAdherence: [...lessonPlanAdherence],
+  }));
+}
+
+export async function addAcademicCouncilMeeting(
+  data: Omit<AcademicCouncilMeeting, "id">,
+  actor: { name: string; role: string }
+): Promise<AcademicCouncilMeeting> {
+  return mockRequest(() => {
+    const newMeeting: AcademicCouncilMeeting = {
+      ...data,
+      id: `acm-${Date.now()}`,
+    };
+    councilMeetings.unshift(newMeeting);
+    logAudit(actor.name, actor.role, "Curriculum (1.1.1)", "Created", `Academic Council Meeting ${newMeeting.meetingNumber}`);
+    return newMeeting;
+  });
+}
+
+export async function addSemesterCalendar(
+  data: Omit<SemesterAcademicCalendar, "id">,
+  actor: { name: string; role: string }
+): Promise<SemesterAcademicCalendar> {
+  return mockRequest(() => {
+    const newCal: SemesterAcademicCalendar = {
+      ...data,
+      id: `sem-cal-${Date.now()}`,
+    };
+    semesterCalendars.unshift(newCal);
+    logAudit(actor.name, actor.role, "Curriculum (1.1.1)", "Created", `Semester Calendar ${newCal.academicYear} ${newCal.semester}`);
+    return newCal;
+  });
+}
+
+export async function getEvidenceForMetric(metricCode: string): Promise<NaacEvidenceDocument[]> {
+  return mockRequest(() => {
+    return evidenceList.filter((e) => e.metricCode === metricCode);
   });
 }

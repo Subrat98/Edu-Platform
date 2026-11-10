@@ -19,6 +19,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ResponsiveTableContainer } from "@/components/admin/ResponsiveTableContainer";
+import { CurriculumPlanningConsole } from "./CurriculumPlanningConsole";
 import {
   getCriteriaList,
   updateMetricValue,
@@ -33,6 +34,7 @@ export default function CriteriaHub() {
   const [, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(initialCriterion);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showConsole111, setShowConsole111] = useState(false);
 
   const [editingMetric, setEditingMetric] = useState<NaacMetric | null>(null);
   const [metricValue, setMetricValue] = useState("");
@@ -184,6 +186,37 @@ export default function CriteriaHub() {
               />
             </div>
 
+            {/* Special Integration: Metric 1.1.1 Curriculum Planning Console */}
+            {currentCriterion.id === 1 && (
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3.5 rounded-lg border border-primary/20 bg-primary/5 shadow-2xs">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground font-mono text-xs font-bold shrink-0">
+                    1.1.1
+                  </span>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-bold text-foreground">
+                      Curriculum Planning & Implementation Console
+                    </h4>
+                    <p className="text-[11px] text-muted-foreground">
+                      Academic Council resolutions, semester calendars (≥90 days), LOCF-NEP syllabus structures, and evidence attachments.
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  size="sm"
+                  variant={showConsole111 ? "default" : "outline"}
+                  onClick={() => setShowConsole111(!showConsole111)}
+                  className="gap-1.5 text-xs shrink-0"
+                >
+                  {showConsole111 ? "Hide 1.1.1 Console" : "Open 1.1.1 Console & Evidences 📋"}
+                </Button>
+              </div>
+            )}
+
+            {currentCriterion.id === 1 && showConsole111 && (
+              <CurriculumPlanningConsole onEvidenceUpdated={loadData} />
+            )}
+
             {/* Key Indicators & Metric Tables */}
             <div className="space-y-6">
               {currentCriterion.keyIndicators.map((ki) => {
@@ -267,13 +300,25 @@ export default function CriteriaHub() {
                               </span>
                             </div>
 
-                            <div className="flex items-center justify-between gap-2 pt-1 border-t border-border/40">
-                              <Button asChild size="xs" variant="outline" className="gap-1 text-xs">
-                                <Link to={`/admin/naac/evidence?criterion=${currentCriterion.id}`}>
-                                  <FolderOpen className="size-3" />
-                                  <span>{m.evidenceCount} Files</span>
-                                </Link>
-                              </Button>
+                            <div className="flex items-center justify-between gap-2 pt-1 border-t border-border/40 flex-wrap">
+                              <div className="flex items-center gap-1.5">
+                                <Button asChild size="xs" variant="outline" className="gap-1 text-xs">
+                                  <Link to={`/admin/naac/evidence?criterion=${currentCriterion.id}`}>
+                                    <FolderOpen className="size-3" />
+                                    <span>{m.evidenceCount} Files</span>
+                                  </Link>
+                                </Button>
+                                {m.code === "1.1.1" && (
+                                  <Button
+                                    size="xs"
+                                    variant="secondary"
+                                    onClick={() => setShowConsole111(true)}
+                                    className="gap-1 text-[11px] bg-primary/10 text-primary border border-primary/20"
+                                  >
+                                    1.1.1 Console
+                                  </Button>
+                                )}
+                              </div>
 
                               <Button size="xs" variant="ghost" onClick={() => openMetricEditor(m)} className="gap-1">
                                 <Edit2 className="size-3" />
@@ -372,10 +417,23 @@ export default function CriteriaHub() {
                                     </Button>
                                   </TableCell>
                                   <TableCell className="text-right align-top">
-                                    <Button size="xs" variant="ghost" onClick={() => openMetricEditor(m)} className="gap-1">
-                                      <Edit2 className="size-3" />
-                                      <span>Edit</span>
-                                    </Button>
+                                    <div className="flex items-center justify-end gap-1">
+                                      {m.code === "1.1.1" && (
+                                        <Button
+                                          size="xs"
+                                          variant="secondary"
+                                          onClick={() => setShowConsole111(true)}
+                                          className="gap-1 text-xs bg-primary/10 text-primary hover:bg-primary/20 border border-primary/30"
+                                          title="Open 1.1.1 Curriculum Planning Console"
+                                        >
+                                          <span>1.1.1 Console</span>
+                                        </Button>
+                                      )}
+                                      <Button size="xs" variant="ghost" onClick={() => openMetricEditor(m)} className="gap-1">
+                                        <Edit2 className="size-3" />
+                                        <span>Edit</span>
+                                      </Button>
+                                    </div>
                                   </TableCell>
                                 </TableRow>
                               ))}
