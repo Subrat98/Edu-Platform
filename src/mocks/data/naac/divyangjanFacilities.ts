@@ -1,0 +1,93 @@
+import type { DivyangjanInclusionData } from "@/types";
+
+export const initialDivyangjanInclusionData: DivyangjanInclusionData = {
+  academicYear: "2025-26",
+  totalRampsWithHandrailsCount: 14,
+  brailleElevatorsCount: 4,
+  dedicatedDisabledWashroomsCount: 8,
+  screenReaderWorkstationsCount: 12,
+  tactilePavingLengthMeters: 850,
+  facilities: [
+    {
+      id: "div-01",
+      facilityCategory: "Built Environment with Ramps / Lifts",
+      facilityName: "Gentle Gradient Access Ramps with Dual-Height Handrails",
+      buildingLocation: "All Academic Blocks, Library, Administrative Building & Canteen",
+      technicalSpecs: "1:12 gentle gradient ramps compliant with CPWD Barrier-Free Guidelines, anti-skid rubberized flooring, and stainless steel grab bars at 750 mm & 900 mm heights.",
+      geoTaggedPhotoUrl: "https://documents.eduplatform.ac.in/naac/7.1.7/ramps_handrails_photo.jpg",
+      complianceStandard: "Harmonized Guidelines & CPWD Norms",
+    },
+    {
+      id: "div-02",
+      facilityCategory: "Built Environment with Ramps / Lifts",
+      facilityName: "Braille-Enabled Passenger Elevators with Audio Announcements",
+      buildingLocation: "Academic Block A, Science Complex, Central Library & Hostels",
+      technicalSpecs: "8-passenger elevators equipped with embossed Braille control buttons, multi-lingual audio floor announcements, emergency lowering, and low-height controls.",
+      geoTaggedPhotoUrl: "https://documents.eduplatform.ac.in/naac/7.1.7/braille_lift_photo.jpg",
+      complianceStandard: "Harmonized Guidelines & CPWD Norms",
+    },
+    {
+      id: "div-03",
+      facilityCategory: "Divyangjan-Friendly Washrooms",
+      facilityName: "Wheelchair-Accessible Dedicated Restrooms with Emergency Alarm",
+      buildingLocation: "Ground Floor of each Academic Block, Central Library & Admin Secretariat",
+      technicalSpecs: "Wide 1000 mm outward opening doors, low-height washbasins, horizontal and vertical grab bars beside EWC, anti-slip tiles, and pull-cord emergency audio siren.",
+      geoTaggedPhotoUrl: "https://documents.eduplatform.ac.in/naac/7.1.7/accessible_washroom_photo.jpg",
+      complianceStandard: "Harmonized Guidelines & CPWD Norms",
+    },
+    {
+      id: "div-04",
+      facilityCategory: "Illuminated Signage & Tactile Paths",
+      facilityName: "Continuous Tactile Guiding Pathways & High-Contrast Braille Signage",
+      buildingLocation: "Main Entrance Portico through Corridors to Classrooms and Laboratories",
+      technicalSpecs: "850 meters of yellow warning and directional polyurethane tactile tiles, illuminated evacuation route maps, and bilingual tactile door plates.",
+      geoTaggedPhotoUrl: "https://documents.eduplatform.ac.in/naac/7.1.7/tactile_pathway_photo.jpg",
+      complianceStandard: "Harmonized Guidelines & CPWD Norms",
+    },
+    {
+      id: "div-05",
+      facilityCategory: "Barrier-Free Vehicle Accessibility",
+      facilityName: "Reserved Divyangjan Parking & Battery-Operated Campus Shuttles",
+      buildingLocation: "Designated Porch Area within 20 meters of Main Building Entrances",
+      technicalSpecs: "Four reserved wheelchair-accessible car parking bays with international symbol of access markings and on-demand e-rickshaw transport.",
+      geoTaggedPhotoUrl: "https://documents.eduplatform.ac.in/naac/7.1.7/disabled_parking_shuttle_photo.jpg",
+      complianceStandard: "Harmonized Guidelines & CPWD Norms",
+    },
+  ],
+  assistiveTools: [
+    {
+      id: "tool-01",
+      softwareOrToolName: "NVDA (NonVisual Desktop Access) & JAWS Screen Reader",
+      type: "Screen Reading Software (NVDA / JAWS)",
+      workstationsConfigured: 8,
+      location: "Central Library Digital Accessibility Wing (Room 102)",
+      licenseDetails: "Open Source NVDA 2025.1 & Perpetual Campus Multi-User JAWS Pro License",
+    },
+    {
+      id: "tool-02",
+      softwareOrToolName: "Braille Embosser & Refreshable Braille Display Terminal",
+      type: "Braille Signage & Tactile Display",
+      workstationsConfigured: 2,
+      location: "Assistive Learning Center",
+      licenseDetails: "Index Everest-D V5 High-Speed Braille Embosser with Duxbury Translation Software",
+    },
+    {
+      id: "tool-03",
+      softwareOrToolName: "ClaroRead Plus & High-Definition Electronic Video Magnifier",
+      type: "Magnification Equipment",
+      workstationsConfigured: 2,
+      location: "Humanities Digital Language Lab",
+      licenseDetails: "ClaroRead v11 Suite with OCR and speech synthesis support",
+    },
+    {
+      id: "tool-04",
+      softwareOrToolName: "Sugamya Pustakalaya & DAISY Audio Book Player Kiosk",
+      type: "Audiobook Recording & Kiosk",
+      workstationsConfigured: 4,
+      location: "Central Library Ground Floor Kiosk",
+      licenseDetails: "Institutional Membership with Daisy Forum of India (DFI)",
+    },
+  ],
+};
+
+export const MOCK_DIVYANGJAN_FACILITIES_DATA = initialDivyangjanInclusionData;

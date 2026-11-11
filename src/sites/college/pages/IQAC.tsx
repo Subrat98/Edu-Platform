@@ -59,20 +59,20 @@ export default function CollegeIQAC() {
     {
       id: 2,
       title: "Criterion 2: Teaching-Learning & Evaluation",
-      score: "3.48 / 4.00",
+      score: "3.58 / 4.00",
       weightage: 350,
       description:
-        "Student-centric pedagogy, 1:18 faculty ratio, experiential learning, centralized Continuous Internal Evaluation (CIE), and Student Satisfaction Survey (SSS).",
-      highlight: "88.4% Student Satisfaction Rating across 1,420 responses",
+        "Student-centric pedagogy, 16:1 teacher ratio, experiential learning, transparent CIE (100% resolved), 92.8% pass percentage, and national Student Satisfaction Survey (SSS).",
+      highlight: "92.8% Pass Rate & 94.5% SSS Satisfaction Rating (1,840 responses)",
     },
     {
       id: 3,
       title: "Criterion 3: Research, Innovations & Extension",
-      score: "3.35 / 4.00",
+      score: "3.82 / 4.00",
       weightage: 110,
       description:
-        "Faculty publications in Scopus/Web of Science, funded research projects, active community extension through NSS and NCC.",
-      highlight: "48 Scopus/UGC-CARE indexed publications in 2025-26",
+        "₹142.50L research grants (DST, CSIR, UGC), 68 Scopus/WoS publications, 8 patents & 6 startups (IIC 4.5★), ₹28.4L consultancy, 14 community drives, and 16 functional MoUs.",
+      highlight: "₹142.50L Research Grants & 68 Scopus/UGC-CARE Publications",
     },
     {
       id: 4,
@@ -86,11 +86,11 @@ export default function CollegeIQAC() {
     {
       id: 5,
       title: "Criterion 5: Student Support & Progression",
-      score: "3.42 / 4.00",
+      score: "3.74 / 4.00",
       weightage: 140,
       description:
-        "Government and institutional scholarships, career guidance cell, competitive exam coaching, and active Alumni Association.",
-      highlight: "₹1.42 Cr disbursed in financial aid & scholarships",
+        "Government and institutional scholarships (68.2% covered), career guidance & competitive exam coaching, and 428 campus recruitment offers.",
+      highlight: "428 Campus Offers (76.4% Progression) & ₹1.43 Cr Scholarships",
     },
     {
       id: 6,
@@ -792,6 +792,104 @@ export default function CollegeIQAC() {
                       </div>
                     </div>
                   </div>
+
+                  {/* Metric 2.3.1 Highlight Card: Student-Centric Pedagogy */}
+                  <div className="rounded-lg border border-teal-200/80 dark:border-teal-900/50 bg-background p-4 shadow-xs">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center gap-2">
+                          <Badge variant="outline" className="border-teal-400 text-teal-700 dark:text-teal-300 font-mono text-[10px]">
+                            Metric 2.3.1
+                          </Badge>
+                          <span className="text-xs font-bold text-foreground">
+                            Student-Centric Learning Methodologies & Industrial Field Expeditions
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground max-w-2xl">
+                          Experiential learning through 18 documented industrial field visits (Tata Steel, Infosys, NALCO, CSIR-IMMT) with geo-tagged verification, multidisciplinary capstones, and participative learning.
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-3 shrink-0">
+                        <div className="text-center p-2 rounded-md bg-teal-50 dark:bg-teal-950/40 border border-teal-100 dark:border-teal-900/50">
+                          <div className="text-2xl font-black text-teal-600 dark:text-teal-400">18</div>
+                          <div className="text-[10px] text-muted-foreground">Field Visits</div>
+                        </div>
+                        <div className="text-center p-2 rounded-md bg-sky-50 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900/50">
+                          <div className="text-2xl font-black text-sky-600 dark:text-sky-400">1,048+</div>
+                          <div className="text-[10px] text-muted-foreground">Students Benefitted</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-3 pt-3 border-t grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Geo-Tagged Photos:</span>
+                        <div className="font-bold text-foreground text-sm">100% Verified</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Capstone Projects:</span>
+                        <div className="font-bold text-teal-600 dark:text-teal-400 text-sm">24 Industry Cases</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Collaborative Hackathons:</span>
+                        <div className="font-bold text-foreground text-sm">Annual 36-Hr Event</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Peer Tutoring Circles:</span>
+                        <div className="font-bold text-foreground text-sm">Calculus & Mechanics</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Metric 2.3.2 Highlight Card: ICT Classrooms & LMS */}
+                  <div className="rounded-lg border border-cyan-200/80 dark:border-cyan-900/50 bg-background p-4 shadow-xs">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center gap-2">
+                          <Badge variant="outline" className="border-cyan-400 text-cyan-700 dark:text-cyan-300 font-mono text-[10px]">
+                            Metric 2.3.2
+                          </Badge>
+                          <span className="text-xs font-bold text-foreground">
+                            ICT-Enabled Classrooms & EduPlatform LMS Utilization (89.5% ICT)
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground max-w-2xl">
+                          Smart classrooms with 75-inch interactive flat panels, video lecture capture studios, campus-wide Wi-Fi 6, 142 course portals on EduPlatform LMS with 100% faculty engagement.
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-3 shrink-0">
+                        <div className="text-center p-2 rounded-md bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-100 dark:border-cyan-900/50">
+                          <div className="text-2xl font-black text-cyan-600 dark:text-cyan-400">89.5%</div>
+                          <div className="text-[10px] text-muted-foreground">ICT Classrooms</div>
+                        </div>
+                        <div className="text-center p-2 rounded-md bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50">
+                          <div className="text-2xl font-black text-blue-600 dark:text-blue-400">142</div>
+                          <div className="text-[10px] text-muted-foreground">LMS Courses</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-3 pt-3 border-t grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Smart Classrooms:</span>
+                        <div className="font-bold text-foreground text-sm">34 / 38 Spaces</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Teacher Adoption:</span>
+                        <div className="font-bold text-cyan-600 dark:text-cyan-400 text-sm">100% (135/135)</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Flipped Modules:</span>
+                        <div className="font-bold text-foreground text-sm">42 E-Lectures</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">E-Library Access:</span>
+                        <div className="font-bold text-foreground text-sm">DELNET, IEEE, NDLI</div>
+                      </div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>
@@ -850,7 +948,7 @@ export default function CollegeIQAC() {
                 </h3>
                 <p className="text-xs text-muted-foreground max-w-2xl">
                   Enrolled students evaluate teaching quality, laboratory facilities, mentoring, and outcome-based curriculum delivery.
-                  Current participation: 1,420 responses with an average institutional satisfaction score of 4.42 / 5.00 (88.4%).
+                  Current participation: 1,840 responses with an average institutional satisfaction score of 3.78 / 4.00 (94.5%).
                 </p>
               </div>
 

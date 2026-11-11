@@ -104,7 +104,7 @@ export function StudentEnrolmentConsole({ onEvidenceUpdated }: StudentEnrolmentC
       setEnrolmentData(data);
       setProgrammeRecords(data.programmeRecords);
 
-      const evis = await getEvidenceForMetric(2, "2.1.1");
+      const evis = await getEvidenceForMetric("2.1.1");
       setEvidenceList(evis);
     } catch (err) {
       console.error("Failed to load student enrolment data", err);
