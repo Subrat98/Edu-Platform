@@ -20,6 +20,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ResponsiveTableContainer } from "@/components/admin/ResponsiveTableContainer";
 import { CurriculumPlanningConsole } from "./CurriculumPlanningConsole";
+import { CurriculumRevisionConsole } from "./CurriculumRevisionConsole";
+import { CbcsManagementConsole } from "./CbcsManagementConsole";
+import { ValueAddedCoursesConsole } from "./ValueAddedCoursesConsole";
+import { CrosscuttingIssuesConsole } from "./CrosscuttingIssuesConsole";
+import { StakeholderFeedbackConsole } from "./StakeholderFeedbackConsole";
+import { StudentEnrolmentConsole } from "./StudentEnrolmentConsole";
+import { FacultyRatioConsole } from "./FacultyRatioConsole";
 import {
   getCriteriaList,
   updateMetricValue,
@@ -35,6 +42,13 @@ export default function CriteriaHub() {
   const [activeTab, setActiveTab] = useState(initialCriterion);
   const [searchQuery, setSearchQuery] = useState("");
   const [showConsole111, setShowConsole111] = useState(false);
+  const [showConsole112, setShowConsole112] = useState(false);
+  const [showConsole121, setShowConsole121] = useState(false);
+  const [showConsole122, setShowConsole122] = useState(false);
+  const [showConsole131, setShowConsole131] = useState(false);
+  const [showConsole141, setShowConsole141] = useState(false);
+  const [showConsole211, setShowConsole211] = useState(false);
+  const [showConsole221, setShowConsole221] = useState(false);
 
   const [editingMetric, setEditingMetric] = useState<NaacMetric | null>(null);
   const [metricValue, setMetricValue] = useState("");
@@ -205,7 +219,10 @@ export default function CriteriaHub() {
                 <Button
                   size="sm"
                   variant={showConsole111 ? "default" : "outline"}
-                  onClick={() => setShowConsole111(!showConsole111)}
+                  onClick={() => {
+                    setShowConsole111(!showConsole111);
+                    if (!showConsole111) setShowConsole112(false);
+                  }}
                   className="gap-1.5 text-xs shrink-0"
                 >
                   {showConsole111 ? "Hide 1.1.1 Console" : "Open 1.1.1 Console & Evidences 📋"}
@@ -215,6 +232,308 @@ export default function CriteriaHub() {
 
             {currentCriterion.id === 1 && showConsole111 && (
               <CurriculumPlanningConsole onEvidenceUpdated={loadData} />
+            )}
+
+            {/* Special Integration: Metric 1.1.2 Programme Revision Console */}
+            {currentCriterion.id === 1 && (
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3.5 rounded-lg border border-blue-500/20 bg-blue-500/5 shadow-2xs">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex size-8 items-center justify-center rounded-md bg-blue-600 text-white font-mono text-xs font-bold shrink-0">
+                    1.1.2
+                  </span>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-xs sm:text-sm font-bold text-foreground">
+                        5-Year Programme Revision & BoS Console
+                      </h4>
+                      <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px]">
+                        78.4% ≥ 70% Benchmark Verified
+                      </Badge>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground">
+                      Board of Studies (BoS) minutes, comparative syllabus analysis (old vs new), and quantitative 5-year DVV calculation.
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  size="sm"
+                  variant={showConsole112 ? "default" : "outline"}
+                  onClick={() => {
+                    setShowConsole112(!showConsole112);
+                    if (!showConsole112) setShowConsole111(false);
+                  }}
+                  className="gap-1.5 text-xs shrink-0"
+                >
+                  {showConsole112 ? "Hide 1.1.2 Console" : "Open 1.1.2 Revision Console 🔄"}
+                </Button>
+              </div>
+            )}
+
+            {currentCriterion.id === 1 && showConsole112 && (
+              <CurriculumRevisionConsole onEvidenceUpdated={loadData} />
+            )}
+
+            {/* Special Integration: Metric 1.2.1 Choice Based Credit System (CBCS) Console */}
+            {currentCriterion.id === 1 && (
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3.5 rounded-lg border border-indigo-500/20 bg-indigo-500/5 shadow-2xs">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex size-8 items-center justify-center rounded-md bg-indigo-600 text-white font-mono text-xs font-bold shrink-0">
+                    1.2.1
+                  </span>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-xs sm:text-sm font-bold text-foreground">
+                        Choice Based Credit System (CBCS) & Academic Flexibility Console
+                      </h4>
+                      <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px]">
+                        100% Adoption Verified
+                      </Badge>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground">
+                      UGC circulars, affiliating university gazettes, 14-programme credit audits (Core, DSE, GE, SEC), and SWAYAM credit transfer.
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  size="sm"
+                  variant={showConsole121 ? "default" : "outline"}
+                  onClick={() => {
+                    setShowConsole121(!showConsole121);
+                    if (!showConsole121) {
+                      setShowConsole111(false);
+                      setShowConsole112(false);
+                    }
+                  }}
+                  className="gap-1.5 text-xs shrink-0"
+                >
+                  {showConsole121 ? "Hide 1.2.1 Console" : "Open 1.2.1 CBCS Console 🎓"}
+                </Button>
+              </div>
+            )}
+
+            {currentCriterion.id === 1 && showConsole121 && (
+              <CbcsManagementConsole onEvidenceUpdated={loadData} />
+            )}
+
+            {/* Special Integration: Metric 1.2.2 Value-Added Courses Console */}
+            {currentCriterion.id === 1 && (
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3.5 rounded-lg border border-teal-500/20 bg-teal-500/5 shadow-2xs">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex size-8 items-center justify-center rounded-md bg-teal-600 text-white font-mono text-xs font-bold shrink-0">
+                    1.2.2
+                  </span>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-xs sm:text-sm font-bold text-foreground">
+                        Certificate & Value-Added Courses Console
+                      </h4>
+                      <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px]">
+                        42 Courses (1,840 Students) Verified
+                      </Badge>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground">
+                      Consolidated 5-year directory (all ≥30 contact hours), SWAYAM/NPTEL local chapter, and 1,840 student completion records.
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  size="sm"
+                  variant={showConsole122 ? "default" : "outline"}
+                  onClick={() => {
+                    setShowConsole122(!showConsole122);
+                    if (!showConsole122) {
+                      setShowConsole111(false);
+                      setShowConsole112(false);
+                      setShowConsole121(false);
+                    }
+                  }}
+                  className="gap-1.5 text-xs shrink-0"
+                >
+                  {showConsole122 ? "Hide 1.2.2 Console" : "Open 1.2.2 Courses Console 📚"}
+                </Button>
+              </div>
+            )}
+
+            {currentCriterion.id === 1 && showConsole122 && (
+              <ValueAddedCoursesConsole onEvidenceUpdated={loadData} />
+            )}
+
+            {/* Special Integration: Metric 1.3.1 Crosscutting Issues Console */}
+            {currentCriterion.id === 1 && (
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3.5 rounded-lg border border-emerald-500/20 bg-emerald-500/5 shadow-2xs">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex size-8 items-center justify-center rounded-md bg-emerald-600 text-white font-mono text-xs font-bold shrink-0">
+                    1.3.1
+                  </span>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-xs sm:text-sm font-bold text-foreground">
+                        Crosscutting Issues Integration Console (Gender, Environment, Values, Ethics)
+                      </h4>
+                      <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px]">
+                        28 Courses Mapped • 100% UG Covered
+                      </Badge>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground">
+                      Course-by-course unit mapping with highlighted syllabi, statutory policy handbooks, and 6 co-curricular student outreach initiatives.
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  size="sm"
+                  variant={showConsole131 ? "default" : "outline"}
+                  onClick={() => {
+                    setShowConsole131(!showConsole131);
+                    if (!showConsole131) {
+                      setShowConsole111(false);
+                      setShowConsole112(false);
+                      setShowConsole121(false);
+                      setShowConsole122(false);
+                    }
+                  }}
+                  className="gap-1.5 text-xs shrink-0"
+                >
+                  {showConsole131 ? "Hide 1.3.1 Console" : "Open 1.3.1 Crosscutting Console 🌿"}
+                </Button>
+              </div>
+            )}
+
+            {currentCriterion.id === 1 && showConsole131 && (
+              <CrosscuttingIssuesConsole onEvidenceUpdated={loadData} />
+            )}
+
+            {/* Special Integration: Metric 1.4.1 Stakeholder Feedback Console */}
+            {currentCriterion.id === 1 && (
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3.5 rounded-lg border border-sky-500/20 bg-sky-500/5 shadow-2xs">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex size-8 items-center justify-center rounded-md bg-sky-600 text-white font-mono text-xs font-bold shrink-0">
+                    1.4.1
+                  </span>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-xs sm:text-sm font-bold text-foreground">
+                        Stakeholder Feedback & Action Taken Report (ATR) Console
+                      </h4>
+                      <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10px]">
+                        Option A Verified (2,582 Responses)
+                      </Badge>
+                    </div>
+                    <p className="text-[11px] text-muted-foreground">
+                      Structured 5-stakeholder feedback (Students, Teachers, Alumni, Employers, Parents) & published website Action Taken Reports.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Button
+                    size="sm"
+                    variant={showConsole141 ? "default" : "outline"}
+                    onClick={() => {
+                      setShowConsole141(!showConsole141);
+                      if (!showConsole141) {
+                        setShowConsole111(false);
+                        setShowConsole112(false);
+                        setShowConsole121(false);
+                        setShowConsole122(false);
+                        setShowConsole131(false);
+                      }
+                    }}
+                    className="gap-1.5 text-xs"
+                  >
+                    {showConsole141 ? "Hide 1.4.1 Console" : "Open 1.4.1 Feedback Console 💬"}
+                  </Button>
+                  <Button size="sm" variant="outline" asChild className="text-xs gap-1">
+                    <Link to="/admin/naac/feedback">
+                      <span>Full Page</span>
+                      <ExternalLink className="size-3" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {currentCriterion.id === 1 && showConsole141 && (
+              <StakeholderFeedbackConsole onEvidenceUpdated={loadData} />
+            )}
+
+            {/* Special Integration: Metric 2.1.1 Student Enrolment & Reservation Compliance Console */}
+            {currentCriterion.id === 2 && (
+              <div className="rounded-xl border border-indigo-200 dark:border-indigo-900/60 bg-gradient-to-r from-indigo-50/70 via-slate-50 to-sky-50/70 dark:from-indigo-950/30 dark:via-background dark:to-sky-950/30 p-4 md:p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-indigo-600 text-white text-[11px]">
+                      Metric 2.1.1
+                    </Badge>
+                    <Badge variant="outline" className="border-indigo-400/40 text-indigo-700 dark:text-indigo-300 bg-indigo-500/10 text-[11px]">
+                      Student Profile Enrolment (94.6%)
+                    </Badge>
+                    <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                      <CheckCircle2 className="size-3.5" /> High Benchmark (3,122 / 3,300)
+                    </span>
+                  </div>
+                  <h3 className="text-sm md:text-base font-bold text-foreground">
+                    Student Enrolment & Reservation Compliance Console (2.1.1)
+                  </h3>
+                  <p className="text-xs text-muted-foreground max-w-2xl">
+                    5-year quantitative DVV calculation (94.6%), Odisha state reservation registers (SC 16.25%, ST 22.50%, OBC 11.25%, PwD 5%), and SAMS centralized admissions.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Button
+                    size="sm"
+                    variant={showConsole211 ? "secondary" : "default"}
+                    onClick={() => setShowConsole211(!showConsole211)}
+                    className="gap-1.5 text-xs bg-indigo-600 text-white hover:bg-indigo-700"
+                  >
+                    {showConsole211 ? "Hide 2.1.1 Console" : "Open 2.1.1 Enrolment Console 📊"}
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {currentCriterion.id === 2 && showConsole211 && (
+              <StudentEnrolmentConsole onEvidenceUpdated={loadData} />
+            )}
+
+            {/* Special Integration: Metric 2.2.1 Student - Full Time Teacher Ratio Console */}
+            {currentCriterion.id === 2 && (
+              <div className="rounded-xl border border-blue-200 dark:border-blue-900/60 bg-gradient-to-r from-blue-50/70 via-slate-50 to-indigo-50/70 dark:from-blue-950/30 dark:via-background dark:to-indigo-950/30 p-4 md:p-5 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-blue-600 text-white text-[11px]">
+                      Metric 2.2.1
+                    </Badge>
+                    <Badge variant="outline" className="border-blue-400/40 text-blue-700 dark:text-blue-300 bg-blue-500/10 text-[11px]">
+                      Faculty Ratio (16:1)
+                    </Badge>
+                    <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                      <CheckCircle2 className="size-3.5" /> UGC/AICTE Cadre Norms (2,160 / 135)
+                    </span>
+                  </div>
+                  <h3 className="text-sm md:text-base font-bold text-foreground">
+                    Student – Full Time Teacher Ratio Console (2.2.1)
+                  </h3>
+                  <p className="text-xs text-muted-foreground max-w-2xl">
+                    Institutional ratio calculation (16:1), 135 approved full-time faculty roster with appointment orders, 2,160 active student cohort rolls, and 1:16 proctorial mentorship.
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Button
+                    size="sm"
+                    variant={showConsole221 ? "secondary" : "default"}
+                    onClick={() => {
+                      setShowConsole221(!showConsole221);
+                      if (!showConsole221) setShowConsole211(false);
+                    }}
+                    className="gap-1.5 text-xs bg-blue-600 text-white hover:bg-blue-700"
+                  >
+                    {showConsole221 ? "Hide 2.2.1 Console" : "Open 2.2.1 Faculty Ratio Console 👥"}
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {currentCriterion.id === 2 && showConsole221 && (
+              <FacultyRatioConsole onEvidenceUpdated={loadData} />
             )}
 
             {/* Key Indicators & Metric Tables */}
@@ -316,6 +635,76 @@ export default function CriteriaHub() {
                                     className="gap-1 text-[11px] bg-primary/10 text-primary border border-primary/20"
                                   >
                                     1.1.1 Console
+                                  </Button>
+                                )}
+                                {m.code === "1.1.2" && (
+                                  <Button
+                                    size="xs"
+                                    variant="secondary"
+                                    onClick={() => setShowConsole112(true)}
+                                    className="gap-1 text-[11px] bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"
+                                  >
+                                    1.1.2 Revision
+                                  </Button>
+                                )}
+                                {m.code === "1.2.1" && (
+                                  <Button
+                                    size="xs"
+                                    variant="secondary"
+                                    onClick={() => setShowConsole121(true)}
+                                    className="gap-1 text-[11px] bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20"
+                                  >
+                                    1.2.1 CBCS
+                                  </Button>
+                                )}
+                                {m.code === "1.2.2" && (
+                                  <Button
+                                    size="xs"
+                                    variant="secondary"
+                                    onClick={() => setShowConsole122(true)}
+                                    className="gap-1 text-[11px] bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-500/20"
+                                  >
+                                    1.2.2 VAC
+                                  </Button>
+                                )}
+                                {m.code === "1.3.1" && (
+                                  <Button
+                                    size="xs"
+                                    variant="secondary"
+                                    onClick={() => setShowConsole131(true)}
+                                    className="gap-1 text-[11px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
+                                  >
+                                    1.3.1 Crosscutting
+                                  </Button>
+                                )}
+                                {m.code === "1.4.1" && (
+                                  <Button
+                                    size="xs"
+                                    variant="secondary"
+                                    onClick={() => setShowConsole141(true)}
+                                    className="gap-1 text-[11px] bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20"
+                                  >
+                                    1.4.1 Feedback
+                                  </Button>
+                                )}
+                                {m.code === "2.1.1" && (
+                                  <Button
+                                    size="xs"
+                                    variant="secondary"
+                                    onClick={() => setShowConsole211(true)}
+                                    className="gap-1 text-[11px] bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20"
+                                  >
+                                    2.1.1 Enrolment
+                                  </Button>
+                                )}
+                                {m.code === "2.2.1" && (
+                                  <Button
+                                    size="xs"
+                                    variant="secondary"
+                                    onClick={() => setShowConsole221(true)}
+                                    className="gap-1 text-[11px] bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"
+                                  >
+                                    2.2.1 Faculty Ratio
                                   </Button>
                                 )}
                               </div>
@@ -427,6 +816,83 @@ export default function CriteriaHub() {
                                           title="Open 1.1.1 Curriculum Planning Console"
                                         >
                                           <span>1.1.1 Console</span>
+                                        </Button>
+                                      )}
+                                      {m.code === "1.1.2" && (
+                                        <Button
+                                          size="xs"
+                                          variant="secondary"
+                                          onClick={() => setShowConsole112(true)}
+                                          className="gap-1 text-xs bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 border border-blue-500/30"
+                                          title="Open 1.1.2 Programme Revision Console"
+                                        >
+                                          <span>1.1.2 Revision</span>
+                                        </Button>
+                                      )}
+                                      {m.code === "1.2.1" && (
+                                        <Button
+                                          size="xs"
+                                          variant="secondary"
+                                          onClick={() => setShowConsole121(true)}
+                                          className="gap-1 text-xs bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/20 border border-indigo-500/30"
+                                          title="Open 1.2.1 CBCS & Academic Flexibility Console"
+                                        >
+                                          <span>1.2.1 CBCS</span>
+                                        </Button>
+                                      )}
+                                      {m.code === "1.2.2" && (
+                                        <Button
+                                          size="xs"
+                                          variant="secondary"
+                                          onClick={() => setShowConsole122(true)}
+                                          className="gap-1 text-xs bg-teal-500/10 text-teal-600 dark:text-teal-400 hover:bg-teal-500/20 border border-teal-500/30"
+                                          title="Open 1.2.2 Certificate & Value-Added Courses Console"
+                                        >
+                                          <span>1.2.2 VAC</span>
+                                        </Button>
+                                      )}
+                                      {m.code === "1.3.1" && (
+                                        <Button
+                                          size="xs"
+                                          variant="secondary"
+                                          onClick={() => setShowConsole131(true)}
+                                          className="gap-1 text-xs bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/30"
+                                          title="Open 1.3.1 Crosscutting Issues Console"
+                                        >
+                                          <span>1.3.1 Crosscutting</span>
+                                        </Button>
+                                      )}
+                                      {m.code === "1.4.1" && (
+                                        <Button
+                                          size="xs"
+                                          variant="secondary"
+                                          onClick={() => setShowConsole141(true)}
+                                          className="gap-1 text-xs bg-sky-500/10 text-sky-600 dark:text-sky-400 hover:bg-sky-500/20 border border-sky-500/30"
+                                          title="Open 1.4.1 Stakeholder Feedback Console"
+                                        >
+                                          <span>1.4.1 Feedback</span>
+                                        </Button>
+                                      )}
+                                      {m.code === "2.1.1" && (
+                                        <Button
+                                          size="xs"
+                                          variant="secondary"
+                                          onClick={() => setShowConsole211(true)}
+                                          className="gap-1 text-xs bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500/20 border border-indigo-500/30"
+                                          title="Open 2.1.1 Student Enrolment Console"
+                                        >
+                                          <span>2.1.1 Enrolment</span>
+                                        </Button>
+                                      )}
+                                      {m.code === "2.2.1" && (
+                                        <Button
+                                          size="xs"
+                                          variant="secondary"
+                                          onClick={() => setShowConsole221(true)}
+                                          className="gap-1 text-xs bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 border border-blue-500/30"
+                                          title="Open 2.2.1 Student-Full Time Teacher Ratio Console"
+                                        >
+                                          <span>2.2.1 Faculty Ratio</span>
                                         </Button>
                                       )}
                                       <Button size="xs" variant="ghost" onClick={() => openMetricEditor(m)} className="gap-1">

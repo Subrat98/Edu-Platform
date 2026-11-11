@@ -20,6 +20,24 @@ import {
   initialSemesterCalendars,
   initialProgrammeSyllabusStructures,
   initialLessonPlanAdherence,
+  initialFiveYearSummaries,
+  initialBosMeetings,
+  initialProgrammeRevisions,
+  initialComparativeSyllabusItems,
+  initialUniversityNotifications,
+  initialCbcsProgrammes,
+  initialElectiveCourseOptions,
+  initialValueAddedCourses,
+  initialValueAddedEnrolmentSummaries,
+  initialStudentCertificates,
+  initialCrosscuttingCourseMappings,
+  initialCrosscuttingActivities,
+  initialEnrolmentYearRecords,
+  initialProgrammeEnrolmentRecords,
+  initialDepartmentFacultyRatios,
+  initialFacultyRoster,
+  initialCohortBreakdown,
+  initialFiveYearRatioTrend,
 } from "@/mocks/data/naac";
 import type {
   AccreditationCycle,
@@ -48,6 +66,29 @@ import type {
   ProgrammeSyllabusStructure,
   LessonPlanAdherence,
   CurriculumPlanningData,
+  BoardOfStudiesMeeting,
+  ProgrammeRevisionRecord,
+  ComparativeSyllabusItem,
+  FiveYearRevisionSummary,
+  CurriculumRevisionData,
+  CbcsProgrammeRecord,
+  UniversityNotification,
+  ElectiveCourseOption,
+  CbcsSummaryData,
+  ValueAddedCourse,
+  ValueAddedEnrolmentSummary,
+  StudentCertificateRecord,
+  ValueAddedCoursesData,
+  CrosscuttingCourseMapping,
+  CrosscuttingCoCurricularActivity,
+  CrosscuttingSummaryData,
+  EnrolmentYearRecord,
+  ProgrammeEnrolmentRecord,
+  StudentProfileEnrolmentData,
+  DepartmentFacultyRatio,
+  FullTimeFacultyMember,
+  CohortStudentCount,
+  StudentTeacherRatioData,
 } from "@/types";
 
 let accreditationCycles = [...initialAccreditationCycles];
@@ -70,6 +111,23 @@ let councilMeetings = [...initialAcademicCouncilMeetings];
 let semesterCalendars = [...initialSemesterCalendars];
 let syllabusStructures = [...initialProgrammeSyllabusStructures];
 let lessonPlanAdherence = [...initialLessonPlanAdherence];
+let fiveYearSummaries = [...initialFiveYearSummaries];
+let bosMeetings = [...initialBosMeetings];
+let programmeRevisions = [...initialProgrammeRevisions];
+let comparativeSyllabusItems = [...initialComparativeSyllabusItems];
+let cbcsProgrammes = [...initialCbcsProgrammes];
+let universityNotifications = [...initialUniversityNotifications];
+let electiveCourses = [...initialElectiveCourseOptions];
+let valueAddedCourses = [...initialValueAddedCourses];
+let valueAddedEnrolmentSummaries = [...initialValueAddedEnrolmentSummaries];
+let studentCertificates = [...initialStudentCertificates];
+let crosscuttingMappings = [...initialCrosscuttingCourseMappings];
+let crosscuttingActivities = [...initialCrosscuttingActivities];
+let enrolmentYearRecords = [...initialEnrolmentYearRecords];
+let programmeEnrolmentRecords = [...initialProgrammeEnrolmentRecords];
+let facultyRoster = [...initialFacultyRoster];
+let departmentRatios = [...initialDepartmentFacultyRatios];
+let cohortBreakdown = [...initialCohortBreakdown];
 
 function logAudit(
   actorName: string,
@@ -616,5 +674,395 @@ export async function addSemesterCalendar(
 export async function getEvidenceForMetric(metricCode: string): Promise<NaacEvidenceDocument[]> {
   return mockRequest(() => {
     return evidenceList.filter((e) => e.metricCode === metricCode);
+  });
+}
+
+// ==========================================
+// METRIC 1.1.2 CURRICULUM REVISION OVER 5 YEARS
+// ==========================================
+
+export async function getCurriculumRevisionData(): Promise<CurriculumRevisionData> {
+  return mockRequest(() => {
+    const overallPct = 78.57; // 11 programmes revised out of 14 in 5-year cycle
+    const benchmark = 70.0;
+    return {
+      fiveYearSummaries: [...fiveYearSummaries],
+      overallRevisionPercentage: overallPct,
+      benchmarkPercentage: benchmark,
+      benchmarkStatus: overallPct >= benchmark ? "Exceeds NAAC Benchmark" : "Below Benchmark",
+      bosMeetings: [...bosMeetings],
+      programmeRevisions: [...programmeRevisions],
+      comparativeSyllabusItems: [...comparativeSyllabusItems],
+    };
+  });
+}
+
+export async function addBosMeeting(
+  data: Omit<BoardOfStudiesMeeting, "id">,
+  actor: { name: string; role: string }
+): Promise<BoardOfStudiesMeeting> {
+  return mockRequest(() => {
+    const newBos: BoardOfStudiesMeeting = {
+      ...data,
+      id: `bos-${Date.now()}`,
+    };
+    bosMeetings.unshift(newBos);
+    logAudit(actor.name, actor.role, "Curriculum (1.1.2)", "Created", `BoS Meeting ${newBos.meetingNumber} (${newBos.departmentName})`);
+    return newBos;
+  });
+}
+
+export async function addComparativeSyllabusItem(
+  data: Omit<ComparativeSyllabusItem, "id">,
+  actor: { name: string; role: string }
+): Promise<ComparativeSyllabusItem> {
+  return mockRequest(() => {
+    const newItem: ComparativeSyllabusItem = {
+      ...data,
+      id: `csi-${Date.now()}`,
+    };
+    comparativeSyllabusItems.unshift(newItem);
+    logAudit(actor.name, actor.role, "Curriculum (1.1.2)", "Created", `Comparative Syllabus Analysis for ${newItem.courseCode}: ${newItem.courseTitle}`);
+    return newItem;
+  });
+}
+
+export async function addProgrammeRevision(
+  data: Omit<ProgrammeRevisionRecord, "id">,
+  actor: { name: string; role: string }
+): Promise<ProgrammeRevisionRecord> {
+  return mockRequest(() => {
+    const newRev: ProgrammeRevisionRecord = {
+      ...data,
+      id: `rev-${Date.now()}`,
+    };
+    programmeRevisions.unshift(newRev);
+    logAudit(actor.name, actor.role, "Curriculum (1.1.2)", "Created", `Programme Revision Record for ${newRev.programmeName}`);
+    return newRev;
+  });
+}
+
+// ==========================================
+// METRIC 1.2.1 CHOICE BASED CREDIT SYSTEM (CBCS)
+// ==========================================
+
+export async function getCbcsData(): Promise<CbcsSummaryData> {
+  return mockRequest(() => {
+    const total = cbcsProgrammes.length;
+    const withCbcs = cbcsProgrammes.filter(
+      (p) => p.cbcsType === "Choice Based Credit System (CBCS)" || p.cbcsType === "Elective Course System"
+    ).length;
+    const adoptionPct = Number(((withCbcs / (total || 1)) * 100).toFixed(1));
+    const totalStudents = electiveCourses.reduce((acc, c) => acc + c.enrolledStudentsCount, 0);
+
+    return {
+      totalProgrammesOffered: total,
+      programmesWithCbcs: withCbcs,
+      adoptionPercentage: adoptionPct,
+      benchmarkPercentage: 100.0,
+      totalElectiveCoursesOffered: electiveCourses.length,
+      totalStudentsEnrolledInElectives: totalStudents,
+      programmeRecords: [...cbcsProgrammes],
+      notifications: [...universityNotifications],
+      electiveCourses: [...electiveCourses],
+    };
+  });
+}
+
+export async function addCbcsProgrammeRecord(
+  data: Omit<CbcsProgrammeRecord, "id">,
+  actor: { name: string; role: string }
+): Promise<CbcsProgrammeRecord> {
+  return mockRequest(() => {
+    const newProg: CbcsProgrammeRecord = {
+      ...data,
+      id: `cbcs-prog-${Date.now()}`,
+    };
+    cbcsProgrammes.unshift(newProg);
+    logAudit(actor.name, actor.role, "Academic Flexibility (1.2.1)", "Created", `CBCS Programme Record ${newProg.programmeName}`);
+    return newProg;
+  });
+}
+
+export async function addUniversityNotification(
+  data: Omit<UniversityNotification, "id">,
+  actor: { name: string; role: string }
+): Promise<UniversityNotification> {
+  return mockRequest(() => {
+    const newNotif: UniversityNotification = {
+      ...data,
+      id: `notif-${Date.now()}`,
+    };
+    universityNotifications.unshift(newNotif);
+    logAudit(actor.name, actor.role, "Academic Flexibility (1.2.1)", "Created", `University Notification ${newNotif.notificationNumber}`);
+    return newNotif;
+  });
+}
+
+export async function addElectiveCourseOption(
+  data: Omit<ElectiveCourseOption, "id">,
+  actor: { name: string; role: string }
+): Promise<ElectiveCourseOption> {
+  return mockRequest(() => {
+    const newCourse: ElectiveCourseOption = {
+      ...data,
+      id: `elec-${Date.now()}`,
+    };
+    electiveCourses.unshift(newCourse);
+    logAudit(actor.name, actor.role, "Academic Flexibility (1.2.1)", "Created", `Elective Course ${newCourse.courseCode} (${newCourse.courseTitle})`);
+    return newCourse;
+  });
+}
+
+export async function getValueAddedCoursesData(): Promise<ValueAddedCoursesData> {
+  return mockRequest(() => {
+    const totalCourses = valueAddedCourses.length;
+    const totalStudents = valueAddedCourses.reduce((acc, c) => acc + c.enrolledStudentsCount, 0);
+    const totalCompleted = valueAddedCourses.reduce((acc, c) => acc + c.completedStudentsCount, 0);
+    const completionRate = Number(((totalCompleted / (totalStudents || 1)) * 100).toFixed(1));
+
+    return {
+      totalCourses,
+      totalStudents,
+      benchmarkCourses: 35,
+      benchmarkStudents: 1500,
+      overallCompletionRate: completionRate,
+      courses: [...valueAddedCourses],
+      enrolmentSummaries: [...valueAddedEnrolmentSummaries],
+      studentCertificates: [...studentCertificates],
+    };
+  });
+}
+
+export async function addValueAddedCourse(
+  course: Omit<ValueAddedCourse, "id">,
+  actor: { name: string; role: string }
+): Promise<ValueAddedCourse> {
+  return mockRequest(() => {
+    const newCourse: ValueAddedCourse = {
+      ...course,
+      id: `vac-${Date.now()}`,
+    };
+    valueAddedCourses.unshift(newCourse);
+    logAudit(actor.name, actor.role, "Value-Added Courses (1.2.2)", "Created", `Course ${newCourse.courseCode} (${newCourse.courseName})`);
+    return newCourse;
+  });
+}
+
+export async function addStudentCertificateRecord(
+  record: Omit<StudentCertificateRecord, "id">,
+  actor: { name: string; role: string }
+): Promise<StudentCertificateRecord> {
+  return mockRequest(() => {
+    const newRecord: StudentCertificateRecord = {
+      ...record,
+      id: `sc-${Date.now()}`,
+    };
+    studentCertificates.unshift(newRecord);
+    logAudit(actor.name, actor.role, "Value-Added Courses (1.2.2)", "Created", `Certificate Issued to ${newRecord.studentName} (${newRecord.rollNumber})`);
+    return newRecord;
+  });
+}
+
+export async function getCrosscuttingIssuesData(): Promise<CrosscuttingSummaryData> {
+  return mockRequest(() => {
+    const totalMappedCourses = crosscuttingMappings.length;
+    const gender = crosscuttingMappings.filter((c) => c.theme === "Gender Sensitization & Equity").length;
+    const environment = crosscuttingMappings.filter((c) => c.theme === "Environment & Sustainability").length;
+    const humanValues = crosscuttingMappings.filter((c) => c.theme === "Human Values & Constitutional Rights").length;
+    const professionalEthics = crosscuttingMappings.filter((c) => c.theme === "Professional Ethics & Integrity").length;
+    const totalActivities = crosscuttingActivities.length;
+    const totalParticipants = crosscuttingActivities.reduce((acc, a) => acc + a.participantsCount, 0);
+
+    return {
+      totalMappedCourses,
+      programmesCoveredPercentage: 100.0,
+      coursesByTheme: {
+        gender,
+        environment,
+        humanValues,
+        professionalEthics,
+      },
+      totalActivities,
+      totalParticipants,
+      courseMappings: [...crosscuttingMappings],
+      activities: [...crosscuttingActivities],
+    };
+  });
+}
+
+export async function addCrosscuttingCourseMapping(
+  mapping: Omit<CrosscuttingCourseMapping, "id">,
+  actor: { name: string; role: string }
+): Promise<CrosscuttingCourseMapping> {
+  return mockRequest(() => {
+    const newMapping: CrosscuttingCourseMapping = {
+      ...mapping,
+      id: `cc-${Date.now()}`,
+    };
+    crosscuttingMappings.unshift(newMapping);
+    logAudit(actor.name, actor.role, "Curriculum Enrichment (1.3.1)", "Created", `Course Mapping ${newMapping.courseCode} (${newMapping.courseTitle})`);
+    return newMapping;
+  });
+}
+
+export async function addCrosscuttingActivity(
+  activity: Omit<CrosscuttingCoCurricularActivity, "id">,
+  actor: { name: string; role: string }
+): Promise<CrosscuttingCoCurricularActivity> {
+  return mockRequest(() => {
+    const newAct: CrosscuttingCoCurricularActivity = {
+      ...activity,
+      id: `act-${Date.now()}`,
+    };
+    crosscuttingActivities.unshift(newAct);
+    logAudit(actor.name, actor.role, "Curriculum Enrichment (1.3.1)", "Created", `Activity ${newAct.title} (${newAct.theme})`);
+    return newAct;
+  });
+}
+
+export async function getStudentEnrolmentData(): Promise<StudentProfileEnrolmentData> {
+  return mockRequest(() => {
+    const totalSanctionedFiveYears = enrolmentYearRecords.reduce(
+      (acc, y) => acc + y.sanctionedSeats,
+      0
+    );
+    const totalAdmittedFiveYears = enrolmentYearRecords.reduce(
+      (acc, y) => acc + y.admittedStudents,
+      0
+    );
+    const fiveYearEnrolmentPercentage = Number(
+      ((totalAdmittedFiveYears / (totalSanctionedFiveYears || 1)) * 100).toFixed(1)
+    );
+
+    return {
+      fiveYearEnrolmentPercentage,
+      benchmarkPercentage: 90.0,
+      totalSanctionedFiveYears,
+      totalAdmittedFiveYears,
+      yearlyRecords: [...enrolmentYearRecords],
+      programmeRecords: [...programmeEnrolmentRecords],
+      reservationPolicy: {
+        scPercent: 16.25,
+        stPercent: 22.50,
+        obcPercent: 11.25,
+        openPercent: 50.00,
+        pwdPercent: 5.00,
+      },
+    };
+  });
+}
+
+export async function addProgrammeEnrolmentRecord(
+  record: Omit<ProgrammeEnrolmentRecord, "id">,
+  actor: { name: string; role: string }
+): Promise<ProgrammeEnrolmentRecord> {
+  return mockRequest(() => {
+    const newRecord: ProgrammeEnrolmentRecord = {
+      ...record,
+      id: `prog-enr-${Date.now()}`,
+    };
+    programmeEnrolmentRecords.unshift(newRecord);
+    logAudit(
+      actor.name,
+      actor.role,
+      "Student Enrolment (2.1.1)",
+      "Created",
+      `Intake Record for ${newRecord.programmeName} (${newRecord.programmeCode})`
+    );
+    return newRecord;
+  });
+}
+
+export async function updateEnrolmentYearRecord(
+  yearRecord: EnrolmentYearRecord,
+  actor: { name: string; role: string }
+): Promise<EnrolmentYearRecord> {
+  return mockRequest(() => {
+    const index = enrolmentYearRecords.findIndex(
+      (y) => y.academicYear === yearRecord.academicYear
+    );
+    if (index !== -1) {
+      enrolmentYearRecords[index] = { ...yearRecord };
+    } else {
+      enrolmentYearRecords.push({ ...yearRecord });
+    }
+    logAudit(
+      actor.name,
+      actor.role,
+      "Student Enrolment (2.1.1)",
+      "Updated",
+      `Enrolment for AY ${yearRecord.academicYear}: ${yearRecord.admittedStudents}/${yearRecord.sanctionedSeats} (${yearRecord.enrolmentPercentage}%)`
+    );
+    return { ...yearRecord };
+  });
+}
+
+export async function getStudentTeacherRatioData(): Promise<StudentTeacherRatioData> {
+  return mockRequest(() => {
+    const totalStudents = cohortBreakdown.reduce((acc, c) => acc + c.totalEnrolled, 0);
+    const totalFullTimeFaculty = facultyRoster.length;
+    const ratioNumeric = Number((totalStudents / (totalFullTimeFaculty || 1)).toFixed(1));
+    const ratio = `${Math.round(ratioNumeric)}:1`;
+    const phdFacultyCount = facultyRoster.filter((f) => f.isPhd).length;
+    const phdFacultyPercentage = Number(((phdFacultyCount / totalFullTimeFaculty) * 100).toFixed(1));
+
+    return {
+      academicYear: "2025-26",
+      totalStudents,
+      totalFullTimeFaculty,
+      ratio,
+      ratioNumeric,
+      ugcBenchmark: "≤ 20:1",
+      benchmarkCompliant: ratioNumeric <= 20.0,
+      phdFacultyCount,
+      phdFacultyPercentage,
+      mentorMenteeRatio: "1:16",
+      departmentRatios: [...departmentRatios],
+      facultyRoster: [...facultyRoster],
+      cohortBreakdown: [...cohortBreakdown],
+      fiveYearRatioTrend: [...initialFiveYearRatioTrend],
+    };
+  });
+}
+
+export async function addFacultyMember(
+  member: Omit<FullTimeFacultyMember, "id">,
+  actor: { name: string; role: string }
+): Promise<FullTimeFacultyMember> {
+  return mockRequest(() => {
+    const newFaculty: FullTimeFacultyMember = {
+      ...member,
+      id: `fac-${Date.now()}`,
+    };
+    facultyRoster.unshift(newFaculty);
+    logAudit(
+      actor.name,
+      actor.role,
+      "Faculty Ratio (2.2.1)",
+      "Created",
+      `Faculty Member ${newFaculty.name} (${newFaculty.empId}) in ${newFaculty.department}`
+    );
+    return newFaculty;
+  });
+}
+
+export async function updateFacultyMember(
+  member: FullTimeFacultyMember,
+  actor: { name: string; role: string }
+): Promise<FullTimeFacultyMember> {
+  return mockRequest(() => {
+    const index = facultyRoster.findIndex((f) => f.id === member.id);
+    if (index !== -1) {
+      facultyRoster[index] = { ...member };
+    }
+    logAudit(
+      actor.name,
+      actor.role,
+      "Faculty Ratio (2.2.1)",
+      "Updated",
+      `Faculty Member ${member.name} (${member.empId}) details updated`
+    );
+    return { ...member };
   });
 }

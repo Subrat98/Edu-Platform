@@ -11,6 +11,12 @@ import {
   Users,
   GraduationCap,
   Sparkles,
+  Heart,
+  Leaf,
+  Scale,
+  Star,
+  Globe,
+  MessageSquare,
 } from "lucide-react";
 import { Hero } from "@/components/sections/Hero";
 import { RichText } from "@/components/sections/RichText";
@@ -30,6 +36,12 @@ import {
   initialSemesterCalendars,
   initialProgrammeSyllabusStructures,
 } from "@/mocks/data/naac/curriculumPlanning";
+import { initialBosMeetings } from "@/mocks/data/naac/curriculumRevision";
+import {
+  initialUniversityNotifications,
+  initialElectiveCourseOptions,
+} from "@/mocks/data/naac/cbcs";
+import { initialValueAddedCourses } from "@/mocks/data/naac/valueAddedCourses";
 
 export default function CollegeIQAC() {
   const [activeCriterion, setActiveCriterion] = useState<number>(1);
@@ -258,6 +270,376 @@ export default function CollegeIQAC() {
                   </div>
                 </div>
 
+                {/* Metric 1.1.2 Highlights: Programme Revision (78.4% >= 70%) */}
+                <div className="rounded-lg border border-blue-500/30 bg-blue-500/5 p-4 space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-blue-600 text-white font-mono text-xs">Metric 1.1.2</Badge>
+                        <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs">
+                          78.4% ≥ 70% Benchmark Verified
+                        </Badge>
+                      </div>
+                      <h4 className="text-sm font-bold text-foreground mt-1">
+                        Programme Revision over Last Five Years (2021 – 2026)
+                      </h4>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Statutory Board of Studies (BoS) records ratifying syllabus modernization across 11 out of 14 offered programmes.
+                      </p>
+                    </div>
+
+                    <Button variant="outline" size="sm" asChild className="text-xs gap-1 self-start sm:self-auto">
+                      <Link to="/admin/naac/criteria?tab=1">
+                        <span>View 1.1.2 Revision Console</span>
+                        <ExternalLink className="size-3" />
+                      </Link>
+                    </Button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <Users className="size-3.5 text-primary" />
+                        BoS CS & Management Minutes
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        Introduced Generative AI, Cloud DevOps, Business Analytics, and E-Commerce GST.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href={initialBosMeetings[0].minutesDocumentUrl} target="_blank" rel="noreferrer">
+                          Download BoS Minutes →
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <FileText className="size-3.5 text-purple-600" />
+                        5-Year Comparative Syllabus Matrix
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        Course-by-course audit (old vs new) certifying 135 updated courses in 2025-26.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href="/documents/naac/evidence/Five_Year_Syllabus_Revision_Comparative_Matrix_2021_2026.pdf" target="_blank" rel="noreferrer">
+                          View Comparative Matrix →
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Metric 1.2.1 Highlights: Choice Based Credit System (CBCS) & Academic Flexibility */}
+                <div className="rounded-lg border border-indigo-500/30 bg-indigo-500/5 p-4 space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-indigo-600 text-white font-mono text-xs">Metric 1.2.1</Badge>
+                        <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs">
+                          100% CBCS Adoption Across 14 Programmes
+                        </Badge>
+                      </div>
+                      <h4 className="text-sm font-bold text-foreground mt-1">
+                        Choice Based Credit System (CBCS) & Elective Course Flexibility
+                      </h4>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Statutory UGC guidelines & Utkal University regulations governing Core, Discipline Specific (DSE), Generic Elective (GE), and Skill Enhancement (SEC) courses.
+                      </p>
+                    </div>
+
+                    <Button variant="outline" size="sm" asChild className="text-xs gap-1 self-start sm:self-auto">
+                      <Link to="/admin/naac/criteria?tab=1">
+                        <span>View 1.2.1 CBCS Console</span>
+                        <ExternalLink className="size-3" />
+                      </Link>
+                    </Button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <Award className="size-3.5 text-indigo-600" />
+                        Statutory Notifications
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        UGC CBCS Gazette 2015 & Utkal Univ NEP-CBCS Notification 2023.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href={initialUniversityNotifications[0].gazetteOrderUrl} target="_blank" rel="noreferrer">
+                          Download UGC Gazette →
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <BookOpen className="size-3.5 text-emerald-600" />
+                        Interdisciplinary Electives
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        6 cross-departmental electives with 1,196 student enrollments.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href="/documents/naac/evidence/Interdisciplinary_Elective_Enrollment_Summary_2025_26.pdf" target="_blank" rel="noreferrer">
+                          View Enrollment Register →
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <Sparkles className="size-3.5 text-amber-600" />
+                        SWAYAM & MOOCs Credit
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        Up to 20% credits transferable through NPTEL / SWAYAM national portal.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href={initialUniversityNotifications[2].gazetteOrderUrl} target="_blank" rel="noreferrer">
+                          Credit Transfer Policy →
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Metric 1.2.2 Highlights: Certificate & Value-Added Courses */}
+                <div className="rounded-lg border border-teal-500/30 bg-teal-500/5 p-4 space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-teal-600 text-white font-mono text-xs">Metric 1.2.2</Badge>
+                        <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs">
+                          42 Courses (1,840 Students) Verified
+                        </Badge>
+                      </div>
+                      <h4 className="text-sm font-bold text-foreground mt-1">
+                        Certificate & Value-Added Courses with Minimum 30 Contact Hours
+                      </h4>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Transferable skills, industry micro-certifications, and online MOOCs offered via SWAYAM/NPTEL (LC ID: 4128), AWS Academy, and Cambridge English.
+                      </p>
+                    </div>
+
+                    <Button variant="outline" size="sm" asChild className="text-xs gap-1 self-start sm:self-auto">
+                      <Link to="/admin/naac/criteria?tab=1">
+                        <span>View 1.2.2 Courses Console</span>
+                        <ExternalLink className="size-3" />
+                      </Link>
+                    </Button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <BookOpen className="size-3.5 text-teal-600" />
+                        42 Course Directory
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        100% compliance with NAAC guideline requiring ≥30 contact hours.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href="/documents/naac/evidence/Consolidated_42_Value_Added_Courses_Catalog_2021_2026.pdf" target="_blank" rel="noreferrer">
+                          Course Brochures & Catalog →
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <Users className="size-3.5 text-blue-600" />
+                        1,840 Enrolled Students
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        95.2% certification rate with verified attendance (≥75%) logs.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href="/documents/naac/evidence/Master_Enrolment_Register_1840_Students_Value_Added.xlsx" target="_blank" rel="noreferrer">
+                          Enrolment Register (XLSX) →
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <Sparkles className="size-3.5 text-purple-600" />
+                        NPTEL Local Chapter
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        LC ID: 4128 with 364 MOOC completions & credit transfers.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href="/documents/naac/evidence/SWAYAM_NPTEL_Institutional_Chapter_Dossier_2025_26.pdf" target="_blank" rel="noreferrer">
+                          View Chapter Dossier →
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Metric 1.3.1 Highlights: Crosscutting Issues Integration */}
+                <div className="rounded-lg border border-emerald-500/30 bg-emerald-500/5 p-4 space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-emerald-600 text-white font-mono text-xs">Metric 1.3.1</Badge>
+                        <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs">
+                          28 Courses Mapped • 100% UG Covered
+                        </Badge>
+                      </div>
+                      <h4 className="text-sm font-bold text-foreground mt-1">
+                        Integration of Crosscutting Issues (Gender, Environment, Values & Ethics)
+                      </h4>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Statutory curriculum mapping with highlighted syllabus units, supported by ICC, Eco Club, NSS, and Research Ethics Board.
+                      </p>
+                    </div>
+
+                    <Button variant="outline" size="sm" asChild className="text-xs gap-1 self-start sm:self-auto">
+                      <Link to="/admin/naac/criteria?tab=1">
+                        <span>View 1.3.1 Crosscutting Console</span>
+                        <ExternalLink className="size-3" />
+                      </Link>
+                    </Button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-1">
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <Heart className="size-3.5 text-rose-600" />
+                        Gender Equity (6 Courses)
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        POSH Act 2013, Women in Literature, Grassroots Panchayati Raj & Inclusive Workplaces.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href="/documents/naac/evidence/Crosscutting_Issues_Curriculum_Mapping_Matrix_2025_26.pdf" target="_blank" rel="noreferrer">
+                          View Syllabus Units →
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <Leaf className="size-3.5 text-emerald-600" />
+                        Environment (8 Courses)
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        Compulsory AECC Environmental Studies, Green Chemistry, Renewable Energy & Carbon Accounting.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href="/documents/naac/evidence/Sample_Color_Coded_Crosscutting_Syllabi_Excerpts.pdf" target="_blank" rel="noreferrer">
+                          Green Syllabi Excerpts →
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <Users className="size-3.5 text-amber-600" />
+                        Human Values (7 Courses)
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        Universal Human Values (UHV), Indian Constitution, Gandhian Peace & Digital Civics.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href="/documents/naac/evidence/Code_of_Conduct_and_Institutional_Policies_Handbook.pdf" target="_blank" rel="noreferrer">
+                          Values & Ethics Charter →
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <Scale className="size-3.5 text-blue-600" />
+                        Ethics & IPR (7 Courses)
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        DPDP Act 2023, ACM Software Ethics, Turnitin Anti-Plagiarism & Corporate Governance.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href="/documents/naac/evidence/CoCurricular_Crosscutting_Activities_Report_2025_26.pdf" target="_blank" rel="noreferrer">
+                          Activity Reports →
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Metric 1.4.1 Highlights: Stakeholder Feedback & Action Taken Reports (ATRs) */}
+                <div id="feedback" className="rounded-lg border border-sky-500/30 bg-sky-500/5 p-4 space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-sky-600 text-white font-mono text-xs">Metric 1.4.1</Badge>
+                        <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs">
+                          Option A Verified (All 5 Stakeholder Groups)
+                        </Badge>
+                      </div>
+                      <h4 className="text-sm font-bold text-foreground mt-1">
+                        Stakeholder Feedback System & Public Action Taken Reports (ATRs)
+                      </h4>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Statutory 5-stakeholder feedback (Students, Teachers, Employers, Alumni, Parents) with 2,582 responses tabulated and annual ATRs hosted on the institutional portal.
+                      </p>
+                    </div>
+
+                    <Button variant="outline" size="sm" asChild className="text-xs gap-1 self-start sm:self-auto">
+                      <Link to="/admin/naac/feedback">
+                        <span>View 1.4.1 Feedback Console</span>
+                        <ExternalLink className="size-3" />
+                      </Link>
+                    </Button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <Users className="size-3.5 text-sky-600" />
+                        2,582 Responses Tabulated
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        Overall Satisfaction: 4.44 / 5.00 (Students 1,420, Parents 620, Alumni 380).
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href="/documents/naac/evidence/Curriculum_Feedback_ATR_2025_26.pdf" target="_blank" rel="noreferrer">
+                          Statistical Feedback Report →
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <FileText className="size-3.5 text-purple-600" />
+                        Published ATRs (5 Years)
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        Formal resolutions ratified by Governing Body from 2021-22 to 2025-26.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <a href="/documents/naac/evidence/Curriculum_Feedback_ATR_2025_26.pdf" target="_blank" rel="noreferrer">
+                          Download 2025-26 ATR PDF →
+                        </a>
+                      </Button>
+                    </div>
+
+                    <div className="rounded bg-card border border-border/60 p-3 text-xs space-y-1">
+                      <span className="font-semibold text-foreground flex items-center gap-1.5">
+                        <Globe className="size-3.5 text-emerald-600" />
+                        Option A Full Compliance
+                      </span>
+                      <p className="text-muted-foreground text-[11px]">
+                        Feedback collected, analysed, action implemented & hosted on website.
+                      </p>
+                      <Button variant="ghost" size="xs" asChild className="text-primary text-[11px] p-0 h-auto">
+                        <Link to="/admin/naac/feedback">
+                          Audit Trail & Analysis →
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Evidence Linkage Strip */}
                 <div className="rounded-lg border border-primary/20 bg-primary/5 p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <div className="space-y-0.5">
@@ -280,7 +662,142 @@ export default function CollegeIQAC() {
             </Card>
           )}
 
-          {activeCriterion !== 1 && (
+          {activeCriterion === 2 && (
+            <div className="space-y-4">
+              <Card className="border-indigo-200 dark:border-indigo-900/60 bg-gradient-to-br from-indigo-50/50 via-card to-sky-50/40 dark:from-indigo-950/20 dark:via-card dark:to-sky-950/20 shadow-xs">
+                <CardHeader className="pb-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <Badge className="bg-indigo-600 text-white text-[11px]">Criterion 2</Badge>
+                        <Badge variant="outline" className="border-indigo-300 text-indigo-700 dark:text-indigo-300 text-[11px]">
+                          Teaching-Learning and Evaluation
+                        </Badge>
+                        <Badge className="bg-emerald-500/10 text-emerald-700 border-emerald-500/20 text-[11px]">
+                          Score: 3.82 / 4.00
+                        </Badge>
+                      </div>
+                      <CardTitle className="text-xl font-bold text-foreground mt-2">
+                        Student Enrolment, Profile & Experiential Pedagogy
+                      </CardTitle>
+                      <CardDescription className="text-xs">
+                        Centralized merit-based admissions through SAMS Odisha, full statutory reservation compliance, and 1:15 faculty-student mentor ratio.
+                      </CardDescription>
+                    </div>
+                    <Button asChild size="sm" className="bg-indigo-600 text-white hover:bg-indigo-700 text-xs gap-1.5 shrink-0">
+                      <Link to="/admin/naac/criteria?tab=2">
+                        <span>Criterion 2 Hub</span>
+                        <ExternalLink className="size-3" />
+                      </Link>
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Metric 2.1.1 Highlight Card */}
+                  <div className="rounded-lg border border-indigo-200/80 dark:border-indigo-900/50 bg-background p-4 shadow-xs">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center gap-2">
+                          <Badge variant="outline" className="border-indigo-400 text-indigo-700 dark:text-indigo-300 font-mono text-[10px]">
+                            Metric 2.1.1
+                          </Badge>
+                          <span className="text-xs font-bold text-foreground">
+                            Student Enrolment & Reservation Compliance (DVV Certified)
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground max-w-2xl">
+                          Enrolment percentage against sanctioned seats over 5 assessment years (2021-22 to 2025-26):{" "}
+                          <strong>3,122 admitted / 3,300 sanctioned = 94.6%</strong> (NAAC high benchmark slab &ge; 90%).
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-3 shrink-0">
+                        <div className="text-center p-2 rounded-md bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50">
+                          <div className="text-2xl font-black text-indigo-600 dark:text-indigo-400">94.6%</div>
+                          <div className="text-[10px] text-muted-foreground">5-Yr Fill Rate</div>
+                        </div>
+                        <div className="text-center p-2 rounded-md bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/50">
+                          <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400">100%</div>
+                          <div className="text-[10px] text-muted-foreground">State Quota Adherence</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-3 pt-3 border-t grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Sanctioned Seats (5 Yrs):</span>
+                        <div className="font-bold text-foreground text-sm">3,300 Seats</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Admitted Students (5 Yrs):</span>
+                        <div className="font-bold text-emerald-600 dark:text-emerald-400 text-sm">3,122 Students</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Centralized SAMS:</span>
+                        <div className="font-bold text-foreground text-sm">Govt. of Odisha Portal</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Reserved Quotas:</span>
+                        <div className="font-bold text-foreground text-sm">SC/ST/OBC/SEBC/PwD</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Metric 2.2.1 Highlight Card: Faculty Ratio */}
+                  <div className="rounded-lg border border-blue-200/80 dark:border-blue-900/50 bg-background p-4 shadow-xs">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      <div className="space-y-1.5">
+                        <div className="flex items-center gap-2">
+                          <Badge variant="outline" className="border-blue-400 text-blue-700 dark:text-blue-300 font-mono text-[10px]">
+                            Metric 2.2.1
+                          </Badge>
+                          <span className="text-xs font-bold text-foreground">
+                            Student – Full Time Teacher Ratio (DVV Certified 16:1)
+                          </span>
+                        </div>
+                        <p className="text-xs text-muted-foreground max-w-2xl">
+                          Total active students across all degree cohorts divided by total approved full-time faculty on institutional payroll:{" "}
+                          <strong>2,160 students / 135 teachers = 16:1</strong> (Exceeds UGC/AICTE norms &le; 20:1).
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-3 shrink-0">
+                        <div className="text-center p-2 rounded-md bg-blue-50 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/50">
+                          <div className="text-2xl font-black text-blue-600 dark:text-blue-400">16:1</div>
+                          <div className="text-[10px] text-muted-foreground">Student:Teacher</div>
+                        </div>
+                        <div className="text-center p-2 rounded-md bg-amber-50 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900/50">
+                          <div className="text-2xl font-black text-amber-600 dark:text-amber-400">60.7%</div>
+                          <div className="text-[10px] text-muted-foreground">Ph.D. Qualified</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-3 pt-3 border-t grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Enrolled Students:</span>
+                        <div className="font-bold text-foreground text-sm">2,160 Students</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Full-Time Faculty:</span>
+                        <div className="font-bold text-blue-600 dark:text-blue-400 text-sm">135 Teachers</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Proctorial Ratio:</span>
+                        <div className="font-bold text-foreground text-sm">1:16 Mentor-Mentee</div>
+                      </div>
+                      <div className="p-2 rounded bg-muted/30">
+                        <span className="text-muted-foreground text-[11px]">Doctorate Holders:</span>
+                        <div className="font-bold text-amber-600 dark:text-amber-400 text-sm">82 Ph.D. Faculty</div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {activeCriterion !== 1 && activeCriterion !== 2 && (
             <Card className="border-border/60 bg-card shadow-xs">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
