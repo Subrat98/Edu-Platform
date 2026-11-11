@@ -97,6 +97,7 @@ const NaacTasks = lazy(() => import("@/sites/admin/naac/TasksPage"));
 const NaacApprovals = lazy(() => import("@/sites/admin/naac/ApprovalsPage"));
 const NaacReports = lazy(() => import("@/sites/admin/naac/ReportsPage"));
 const NaacAudit = lazy(() => import("@/sites/admin/naac/AuditTrailPage"));
+const NaacPermissions = lazy(() => import("@/sites/admin/naac/NaacPermissionMatrixConsole"));
 
 // --- Unified (Both-mode) public landing (lazy) ---
 const UnifiedLanding = lazy(() => import("@/sites/unified/UnifiedLanding"));
@@ -267,6 +268,7 @@ export const router = createBrowserRouter([
       { path: "naac/approvals", element: <NaacApprovals /> },
       { path: "naac/reports", element: <NaacReports /> },
       { path: "naac/audit", element: <NaacAudit /> },
+      { path: "naac/permissions", element: <NaacPermissions /> },
       {
         path: "platform/setup-wizard",
         element: (

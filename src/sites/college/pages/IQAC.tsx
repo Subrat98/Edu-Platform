@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
   BookOpen,
@@ -17,6 +17,16 @@ import {
   Star,
   Globe,
   MessageSquare,
+  Search,
+  Download,
+  Mail,
+  Phone,
+  Clock,
+  ShieldCheck,
+  Building2,
+  Check,
+  History,
+  FileCheck2,
 } from "lucide-react";
 import { Hero } from "@/components/sections/Hero";
 import { RichText } from "@/components/sections/RichText";
@@ -28,9 +38,23 @@ import { Container } from "@/components/common/Container";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
 import { collegeHeroUrl } from "@/mocks/data/images";
 import { accreditationBadges } from "@/mocks/data/accreditation";
-import { initialIqacMembers } from "@/mocks/data/naac/iqac";
+import {
+  initialIqacMembers,
+  initialIqacMeetings,
+  initialIqacActionTaken,
+} from "@/mocks/data/naac/iqac";
+import { initialAqarRecords, initialSsrRecord } from "@/mocks/data/naac/aqar";
+import { initialAccreditationCycles } from "@/mocks/data/naac/accreditation";
 import {
   initialAcademicCouncilMeetings,
   initialSemesterCalendars,
@@ -45,6 +69,28 @@ import { initialValueAddedCourses } from "@/mocks/data/naac/valueAddedCourses";
 
 export default function CollegeIQAC() {
   const [activeCriterion, setActiveCriterion] = useState<number>(1);
+  const [meetingSearch, setMeetingSearch] = useState("");
+  const [atrFilter, setAtrFilter] = useState<"All" | "Completed" | "In Progress">("All");
+  const [downloadCategory, setDownloadCategory] = useState<"All" | "AQAR" | "SSR" | "Accreditation">("All");
+
+  const filteredMeetings = useMemo(() => {
+    return initialIqacMeetings.filter((m) => {
+      const q = meetingSearch.toLowerCase();
+      return (
+        m.meetingNumber.toLowerCase().includes(q) ||
+        m.meetingDate.toLowerCase().includes(q) ||
+        m.agenda.some((a) => a.toLowerCase().includes(q)) ||
+        m.decisions.some((d) => d.toLowerCase().includes(q))
+      );
+    });
+  }, [meetingSearch]);
+
+  const filteredAtrs = useMemo(() => {
+    return initialIqacActionTaken.filter((a) => {
+      if (atrFilter === "All") return true;
+      return a.status === atrFilter;
+    });
+  }, [atrFilter]);
 
   const sevenCriteria = [
     {
@@ -128,17 +174,569 @@ export default function CollegeIQAC() {
         ]}
       />
 
-      {/* Statutory IQAC Committee Roster (8 NAAC Statutory Members) */}
-      <FacultyGrid
-        eyebrow="Statutory Roster"
-        title="Statutory IQAC Composition"
-        institutionId="college"
-        items={initialIqacMembers.map((m) => ({
-          name: m.name,
-          role: `${m.role} (${m.designation})`,
-          meta: `${m.department} · Tenure: ${m.tenure}`,
-        }))}
-      />
+      {/* Statutory IQAC Governance Portal: Dynamic Accordion */}
+      <Container className="py-8">
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-border/50 pb-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary text-xs">
+                  Statutory Transparency & Public Disclosure
+                </Badge>
+                <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs">
+                  NAAC HEI Disclosure Compliant
+                </Badge>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground mt-2">
+                IQAC Governance Portal & Public Compliance Repository
+              </h2>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-0.5 max-w-3xl">
+                Official institutional records: statutory committee composition, archive of quarterly IQAC meetings with signed minutes, Action Taken Reports (ATRs) on stakeholder resolutions, and published AQAR / SSR accreditation dossiers.
+              </p>
+            </div>
+
+            <Button asChild size="sm" variant="outline" className="gap-1.5 self-start sm:self-auto text-xs shrink-0">
+              <Link to="/admin/naac">
+                <ShieldCheck className="size-3.5 text-primary" />
+                <span>Admin IQAC Console</span>
+              </Link>
+            </Button>
+          </div>
+
+          <Accordion
+            type="multiple"
+            defaultValue={["committee", "meetings", "atr", "downloads"]}
+            className="w-full space-y-4"
+          >
+            {/* 1. Committee Composition */}
+            <AccordionItem value="committee" className="border border-border/70 rounded-xl px-4 sm:px-6 bg-card shadow-xs">
+              <AccordionTrigger className="hover:no-underline py-4">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <Users className="size-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm sm:text-base font-bold text-foreground">
+                        Public Committee Composition (Statutory Roster 2023–2028)
+                      </span>
+                      <Badge variant="secondary" className="text-[10px]">
+                        {initialIqacMembers.length} Statutory Members
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Statutory IQAC structure complying with NAAC guidelines (Chairperson, Coordinator, Faculty, Administrative, Industry & Alumni).
+                    </p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="pt-2 pb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  {initialIqacMembers.map((m) => (
+                    <div
+                      key={m.id}
+                      className="rounded-lg border border-border/60 bg-muted/20 p-3.5 space-y-2.5 flex flex-col justify-between"
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between gap-1">
+                          <Badge
+                            variant={m.role === "Chairperson" || m.role === "Coordinator" ? "default" : "secondary"}
+                            className="text-[10px] font-semibold"
+                          >
+                            {m.role}
+                          </Badge>
+                          <span className="text-[10px] text-muted-foreground font-mono">
+                            Tenure: {m.tenure}
+                          </span>
+                        </div>
+                        <h4 className="text-xs sm:text-sm font-bold text-foreground pt-1">
+                          {m.name}
+                        </h4>
+                        <p className="text-[11px] font-medium text-primary">
+                          {m.designation}
+                        </p>
+                        <p className="text-[11px] text-muted-foreground">
+                          {m.department}
+                        </p>
+                      </div>
+
+                      <div className="pt-2 border-t border-border/40 space-y-1 text-[11px]">
+                        <a
+                          href={`mailto:${m.email}`}
+                          className="flex items-center gap-1.5 text-muted-foreground hover:text-primary truncate"
+                        >
+                          <Mail className="size-3 shrink-0" />
+                          <span className="truncate">{m.email}</span>
+                        </a>
+                        <a
+                          href={`tel:${m.contact}`}
+                          className="flex items-center gap-1.5 text-muted-foreground hover:text-primary"
+                        >
+                          <Phone className="size-3 shrink-0" />
+                          <span>{m.contact}</span>
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* 2. Meetings Archive & Minutes */}
+            <AccordionItem value="meetings" className="border border-border/70 rounded-xl px-4 sm:px-6 bg-card shadow-xs">
+              <AccordionTrigger className="hover:no-underline py-4">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="size-9 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
+                    <Calendar className="size-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm sm:text-base font-bold text-foreground">
+                        IQAC Meetings Archive & Signed Minutes of Meetings (MoM)
+                      </span>
+                      <Badge className="bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 text-[10px] border-indigo-500/20">
+                        Quarterly Releases
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Chronological archive of statutory meetings, approved agendas, institutional resolutions, and signed proceedings.
+                    </p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="pt-2 pb-6 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="relative w-full sm:w-72">
+                    <Search className="absolute left-2.5 top-2.5 size-3.5 text-muted-foreground" />
+                    <Input
+                      type="text"
+                      placeholder="Search meeting agenda, number..."
+                      value={meetingSearch}
+                      onChange={(e) => setMeetingSearch(e.target.value)}
+                      className="pl-8 h-8 text-xs"
+                    />
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    Showing {filteredMeetings.length} of {initialIqacMeetings.length} statutory proceedings
+                  </span>
+                </div>
+
+                <div className="space-y-3">
+                  {filteredMeetings.map((m) => (
+                    <Card key={m.id} className="border border-border/60 bg-muted/10 shadow-xs">
+                      <CardHeader className="p-4 pb-2 border-b border-border/40">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            <Badge className="bg-indigo-600 text-white font-mono text-xs">
+                              {m.meetingNumber}
+                            </Badge>
+                            <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                              <Calendar className="size-3.5 text-muted-foreground" />
+                              {new Date(m.meetingDate).toLocaleDateString("en-IN", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                              })}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline" className="text-[11px]">
+                              {m.membersPresent.length} Members Attended
+                            </Badge>
+                            {m.documents && m.documents[0] && (
+                              <Button
+                                size="xs"
+                                variant="outline"
+                                asChild
+                                className="gap-1 text-xs text-primary h-7"
+                              >
+                                <a href={m.documents[0].url} target="_blank" rel="noreferrer">
+                                  <Download className="size-3" />
+                                  <span>Signed Minutes PDF</span>
+                                </a>
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="p-4 pt-3 space-y-3 text-xs">
+                        <div>
+                          <span className="font-bold text-foreground text-[11px] uppercase tracking-wider text-muted-foreground">
+                            Agendas Discussed:
+                          </span>
+                          <ul className="list-disc list-inside mt-1 space-y-0.5 text-muted-foreground">
+                            {m.agenda.map((ag, i) => (
+                              <li key={i}>{ag}</li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div>
+                          <span className="font-bold text-foreground text-[11px] uppercase tracking-wider text-muted-foreground">
+                            Unanimous Decisions & Resolutions:
+                          </span>
+                          <ul className="list-disc list-inside mt-1 space-y-0.5 text-foreground font-medium">
+                            {m.decisions.map((dec, i) => (
+                              <li key={i}>{dec}</li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        {m.actionItems && m.actionItems.length > 0 && (
+                          <div className="pt-2 border-t border-border/40">
+                            <span className="font-bold text-foreground text-[11px] uppercase tracking-wider text-muted-foreground">
+                              Assigned Directives:
+                            </span>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1.5">
+                              {m.actionItems.map((ai, i) => (
+                                <div
+                                  key={i}
+                                  className="p-2 rounded bg-card border border-border/50 flex items-center justify-between text-[11px]"
+                                >
+                                  <div>
+                                    <div className="font-medium text-foreground">{ai.task}</div>
+                                    <div className="text-muted-foreground text-[10px]">
+                                      Assignee: {ai.assignee} · Due: {ai.deadline}
+                                    </div>
+                                  </div>
+                                  <Badge
+                                    variant={ai.status === "Done" ? "default" : "secondary"}
+                                    className={`text-[9px] shrink-0 ${
+                                      ai.status === "Done"
+                                        ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
+                                        : ""
+                                    }`}
+                                  >
+                                    {ai.status}
+                                  </Badge>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* 3. Action Taken Reports (ATR) */}
+            <AccordionItem value="atr" className="border border-border/70 rounded-xl px-4 sm:px-6 bg-card shadow-xs">
+              <AccordionTrigger className="hover:no-underline py-4">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="size-9 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 shrink-0">
+                    <CheckCircle2 className="size-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm sm:text-base font-bold text-foreground">
+                        Action Taken Reports (ATR) Releases
+                      </span>
+                      <Badge className="bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 text-[10px] border-emerald-500/20">
+                        Verified Implementation
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Formal implementation audit following IQAC resolutions, stakeholder feedback, and academic investments.
+                    </p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="pt-2 pb-6 space-y-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold text-muted-foreground">Status Filter:</span>
+                  {(["All", "Completed", "In Progress"] as const).map((st) => (
+                    <Button
+                      key={st}
+                      variant={atrFilter === st ? "default" : "outline"}
+                      size="xs"
+                      onClick={() => setAtrFilter(st)}
+                      className="text-xs h-7"
+                    >
+                      {st}
+                    </Button>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {filteredAtrs.map((atr) => (
+                    <Card key={atr.id} className="border border-border/60 bg-muted/10 shadow-xs flex flex-col justify-between">
+                      <CardHeader className="p-3.5 pb-2 border-b border-border/40">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-1.5">
+                            <Badge variant="outline" className="font-mono text-[10px]">
+                              {atr.meetingNumber}
+                            </Badge>
+                            <span className="text-[11px] font-semibold text-foreground">
+                              {atr.responsiblePerson}
+                            </span>
+                          </div>
+                          <Badge
+                            className={`text-[10px] ${
+                              atr.status === "Completed"
+                                ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30"
+                                : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30"
+                            }`}
+                          >
+                            {atr.status}
+                          </Badge>
+                        </div>
+                      </CardHeader>
+                      <CardContent className="p-3.5 pt-2.5 space-y-2 text-xs flex-1">
+                        <div>
+                          <span className="font-semibold text-muted-foreground text-[10px] uppercase tracking-wider">
+                            Council Resolution / Decision:
+                          </span>
+                          <p className="text-foreground font-medium text-xs mt-0.5">
+                            {atr.decision}
+                          </p>
+                        </div>
+                        <div className="p-2.5 rounded bg-card border border-border/50 space-y-1">
+                          <span className="font-semibold text-emerald-600 dark:text-emerald-400 text-[10px] uppercase tracking-wider flex items-center gap-1">
+                            <Check className="size-3" />
+                            Action Taken & Tangible Output:
+                          </span>
+                          <p className="text-foreground text-xs leading-relaxed">
+                            {atr.actionTaken}
+                          </p>
+                          {atr.remarks && (
+                            <p className="text-muted-foreground text-[11px] italic pt-1">
+                              Note: {atr.remarks}
+                            </p>
+                          )}
+                        </div>
+                      </CardContent>
+                      <div className="p-3.5 pt-0">
+                        {atr.evidenceUrl && (
+                          <Button
+                            size="xs"
+                            variant="outline"
+                            asChild
+                            className="w-full gap-1.5 text-xs text-primary"
+                          >
+                            <a href={atr.evidenceUrl} target="_blank" rel="noreferrer">
+                              <Download className="size-3" />
+                              <span>Download ATR Release & Proof Document</span>
+                            </a>
+                          </Button>
+                        )}
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            {/* 4. Published AQAR & SSR Downloads */}
+            <AccordionItem value="downloads" className="border border-border/70 rounded-xl px-4 sm:px-6 bg-card shadow-xs">
+              <AccordionTrigger className="hover:no-underline py-4">
+                <div className="flex items-center gap-3 text-left">
+                  <div className="size-9 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0">
+                    <FileText className="size-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm sm:text-base font-bold text-foreground">
+                        Published AQAR, SSR & NAAC Accreditation Dossiers
+                      </span>
+                      <Badge className="bg-amber-500/10 text-amber-700 dark:text-amber-300 text-[10px] border-amber-500/20">
+                        Cycle 3 A+ Accredited
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Official statutory submissions acknowledged by NAAC, SSR reports, and Peer Team visit certificates.
+                    </p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="pt-2 pb-6 space-y-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold text-muted-foreground">Document Type:</span>
+                  {(["All", "AQAR", "SSR", "Accreditation"] as const).map((cat) => (
+                    <Button
+                      key={cat}
+                      variant={downloadCategory === cat ? "default" : "outline"}
+                      size="xs"
+                      onClick={() => setDownloadCategory(cat)}
+                      className="text-xs h-7"
+                    >
+                      {cat}
+                    </Button>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {/* AQAR 2024-25 */}
+                  {(downloadCategory === "All" || downloadCategory === "AQAR") && (
+                    <Card className="border border-border/60 bg-muted/10 shadow-xs flex flex-col justify-between">
+                      <CardHeader className="p-3.5 pb-2">
+                        <div className="flex items-center justify-between">
+                          <Badge className="bg-emerald-600 text-white text-[10px]">
+                            AQAR 2024-25
+                          </Badge>
+                          <Badge variant="outline" className="text-emerald-600 text-[10px]">
+                            Submitted & Acknowledged
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-sm font-bold text-foreground mt-2">
+                          Annual Quality Assurance Report 2024-25
+                        </CardTitle>
+                        <CardDescription className="text-xs">
+                          Submitted to NAAC on 28-Nov-2025 · 100% Criteria Completion
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="p-3.5 pt-0 space-y-2">
+                        <p className="text-xs text-muted-foreground">
+                          Comprehensive report covering academic flexibility, research metrics, ERP automation, and green audits.
+                        </p>
+                        <Button size="xs" variant="outline" asChild className="w-full gap-1.5 text-xs text-primary">
+                          <a href="/documents/naac/aqar/AQAR_Final_2024_25.pdf" target="_blank" rel="noreferrer">
+                            <Download className="size-3" />
+                            <span>Download Final AQAR (PDF)</span>
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* AQAR 2023-24 */}
+                  {(downloadCategory === "All" || downloadCategory === "AQAR") && (
+                    <Card className="border border-border/60 bg-muted/10 shadow-xs flex flex-col justify-between">
+                      <CardHeader className="p-3.5 pb-2">
+                        <div className="flex items-center justify-between">
+                          <Badge className="bg-emerald-600 text-white text-[10px]">
+                            AQAR 2023-24
+                          </Badge>
+                          <Badge variant="outline" className="text-emerald-600 text-[10px]">
+                            Acknowledged
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-sm font-bold text-foreground mt-2">
+                          Annual Quality Assurance Report 2023-24
+                        </CardTitle>
+                        <CardDescription className="text-xs">
+                          Submitted on 15-Dec-2024 · First AQAR of Cycle 3
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="p-3.5 pt-0 space-y-2">
+                        <p className="text-xs text-muted-foreground">
+                          Focuses on NEP 2020 LOCF adoption, 42 certificate courses, and student progression benchmarks.
+                        </p>
+                        <Button size="xs" variant="outline" asChild className="w-full gap-1.5 text-xs text-primary">
+                          <a href="/documents/naac/aqar/AQAR_Final_2023_24.pdf" target="_blank" rel="noreferrer">
+                            <Download className="size-3" />
+                            <span>Download Final AQAR (PDF)</span>
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* SSR Cycle 3 */}
+                  {(downloadCategory === "All" || downloadCategory === "SSR") && (
+                    <Card className="border border-border/60 bg-muted/10 shadow-xs flex flex-col justify-between">
+                      <CardHeader className="p-3.5 pb-2">
+                        <div className="flex items-center justify-between">
+                          <Badge className="bg-primary text-primary-foreground text-[10px]">
+                            Cycle 3 SSR
+                          </Badge>
+                          <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">
+                            Grade A+ (CGPA 3.42)
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-sm font-bold text-foreground mt-2">
+                          Self Study Report (SSR) — Cycle 3
+                        </CardTitle>
+                        <CardDescription className="text-xs">
+                          5-Year Assessment (2018–2023) · DVV Verified
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="p-3.5 pt-0 space-y-2">
+                        <p className="text-xs text-muted-foreground">
+                          Complete institutional SSR dossier submitted to NAAC with qualitative & quantitative metrics.
+                        </p>
+                        <Button size="xs" variant="outline" asChild className="w-full gap-1.5 text-xs text-primary">
+                          <a href="/documents/naac/ssr/SSR_Cycle_3_Final.pdf" target="_blank" rel="noreferrer">
+                            <Download className="size-3" />
+                            <span>Download SSR Cycle 3 (PDF)</span>
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* NAAC Peer Team Visit Report & Grade Certificate */}
+                  {(downloadCategory === "All" || downloadCategory === "Accreditation") && (
+                    <Card className="border border-border/60 bg-muted/10 shadow-xs flex flex-col justify-between">
+                      <CardHeader className="p-3.5 pb-2">
+                        <div className="flex items-center justify-between">
+                          <Badge className="bg-amber-600 text-white text-[10px]">
+                            Cycle 3 Certificate
+                          </Badge>
+                          <Badge variant="outline" className="text-amber-600 text-[10px]">
+                            Valid to Nov 2028
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-sm font-bold text-foreground mt-2">
+                          NAAC Grade Certificate & Peer Team Report
+                        </CardTitle>
+                        <CardDescription className="text-xs">
+                          Peer Team Visit: 14-Oct-2023 · CGPA 3.42
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="p-3.5 pt-0 space-y-2">
+                        <p className="text-xs text-muted-foreground">
+                          Official statutory accreditation certificate issued by the National Assessment and Accreditation Council.
+                        </p>
+                        <Button size="xs" variant="outline" asChild className="w-full gap-1.5 text-xs text-primary">
+                          <a href="/documents/naac/naac-cycle-3-certificate.pdf" target="_blank" rel="noreferrer">
+                            <Download className="size-3" />
+                            <span>Download Certificate & Report</span>
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* Cycle 2 Archive */}
+                  {(downloadCategory === "All" || downloadCategory === "Accreditation" || downloadCategory === "SSR") && (
+                    <Card className="border border-border/60 bg-muted/10 shadow-xs flex flex-col justify-between">
+                      <CardHeader className="p-3.5 pb-2">
+                        <div className="flex items-center justify-between">
+                          <Badge variant="outline" className="text-[10px]">
+                            Cycle 2 Archive
+                          </Badge>
+                          <Badge variant="secondary" className="text-[10px]">
+                            Grade A (CGPA 3.16)
+                          </Badge>
+                        </div>
+                        <CardTitle className="text-sm font-bold text-foreground mt-2">
+                          Cycle 2 Accreditation Certificate (2017–2022)
+                        </CardTitle>
+                        <CardDescription className="text-xs">
+                          College with Potential for Excellence (CPE)
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="p-3.5 pt-0 space-y-2">
+                        <p className="text-xs text-muted-foreground">
+                          Historical accreditation records and Peer Team visit evaluation matrix.
+                        </p>
+                        <Button size="xs" variant="outline" asChild className="w-full gap-1.5 text-xs text-primary">
+                          <a href="/documents/naac/naac-cycle-2-certificate.pdf" target="_blank" rel="noreferrer">
+                            <Download className="size-3" />
+                            <span>Download Cycle 2 Certificate</span>
+                          </a>
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </Container>
 
       {/* The 7 NAAC Criteria & Metric 1.1.1 Statutory Documentation Showcase */}
       <Container className="py-12">

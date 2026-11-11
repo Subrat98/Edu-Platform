@@ -12,7 +12,8 @@ export type RoleKey =
   | "student"
   | "parent"
   | "exam_cell"
-  | "hod";
+  | "hod"
+  | "iqac_coordinator";
 
 export interface DemoUser {
   id: string;
@@ -54,4 +55,5 @@ export const ROLE_LABELS: Record<RoleKey, string> = {
   parent: "Parent / Guardian",
   exam_cell: "Examination Cell",
   hod: "HOD / Department Coordinator",
+  iqac_coordinator: "IQAC Coordinator",
 };

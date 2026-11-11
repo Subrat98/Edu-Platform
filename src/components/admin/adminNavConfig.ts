@@ -42,6 +42,7 @@ import {
   MessageSquareQuote,
   Sparkles,
   Clock,
+  KeyRound,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -115,6 +116,7 @@ export const adminNavGroups: AdminNavGroup[] = [
       { label: "Approvals", path: "/admin/naac/approvals", icon: ShieldCheck },
       { label: "NAAC Reports", path: "/admin/naac/reports", icon: BarChart3 },
       { label: "Audit Trail", path: "/admin/naac/audit", icon: History },
+      { label: "Permission Matrix", path: "/admin/naac/permissions", icon: KeyRound },
     ],
   },
   {

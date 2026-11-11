@@ -12,6 +12,7 @@ import {
   Calendar,
   Sparkles,
   Activity,
+  KeyRound,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -75,6 +76,12 @@ export default function NaacDashboard() {
             <Link to="/admin/naac/approvals">
               <ShieldCheck className="size-4" />
               <span>Approvals ({stats.pendingApprovalsCount})</span>
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="sm" className="gap-1.5">
+            <Link to="/admin/naac/permissions">
+              <KeyRound className="size-4" />
+              <span>RBAC Matrix</span>
             </Link>
           </Button>
           <Button asChild size="sm" className="gap-1.5 bg-primary text-primary-foreground shadow-sm">
