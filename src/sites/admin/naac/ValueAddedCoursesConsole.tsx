@@ -13,11 +13,8 @@ import {
   Sparkles,
   TrendingUp,
   Clock,
-  ShieldCheck,
   Building2,
   GraduationCap,
-  Layers,
-  Filter,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -81,7 +78,7 @@ export function ValueAddedCoursesConsole({ onEvidenceUpdated }: ValueAddedCourse
   const [cHours, setCHours] = useState(36);
   const [cMode, setCMode] = useState<ValueAddedCourse["mode"]>("Hybrid");
   const [cYear, setCYear] = useState("2025-26");
-  const [cAudience, setCAudience] = useState("B.Sc. & BCA Final Year Students");
+  const [cAudience] = useState("B.Sc. & BCA Final Year Students");
   const [cEnrolled, setCEnrolled] = useState(50);
   const [cCoordinator, setCCoordinator] = useState("Prof. Satyabrata Dash");
 
@@ -175,7 +172,7 @@ export function ValueAddedCoursesConsole({ onEvidenceUpdated }: ValueAddedCourse
           courseName: matchedCourse ? matchedCourse.courseName : sCourse,
           attendancePercentage: Number(sAttendance),
           gradeOrScore: sGrade,
-          certificateIssueDate: new Date().toISOString().split("T")[0],
+          certificateIssueDate: new Date().toISOString().split("T")[0]!,
           certificateVerificationId: `CERT/VAC/2026/${sRoll}`,
           status: "Verified & Issued",
         },

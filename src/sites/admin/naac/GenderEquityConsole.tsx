@@ -3,7 +3,6 @@ import {
   Shield,
   Heart,
   Camera,
-  Users,
   Baby,
   FileText,
   Search,
@@ -11,8 +10,6 @@ import {
   ExternalLink,
   UploadCloud,
   CheckCircle2,
-  Calendar,
-  Building,
   Activity,
   HeartHandshake,
 } from "lucide-react";
@@ -37,7 +34,6 @@ import {
 import type {
   GenderEquityData,
   GenderSafetyFacilityRecord,
-  GenderSensitizationEventRecord,
   NaacEvidenceDocument,
 } from "@/types";
 
@@ -64,7 +60,7 @@ export function GenderEquityConsole({ onEvidenceUpdated }: GenderEquityConsolePr
   // Add Sensitization Event Modal
   const [showAddEventModal, setShowAddEventModal] = useState(false);
   const [eventTitle, setEventTitle] = useState("");
-  const [dateConducted, setDateConducted] = useState(new Date().toISOString().split("T")[0]);
+  const [dateConducted, setDateConducted] = useState(new Date().toISOString().split("T")[0]!);
   const [organizingBody, setOrganizingBody] = useState("Internal Complaints Committee (ICC) & WDC");
   const [resourcePerson, setResourcePerson] = useState("");
   const [participantsCount, setParticipantsCount] = useState(120);
@@ -508,7 +504,7 @@ export function GenderEquityConsole({ onEvidenceUpdated }: GenderEquityConsolePr
                         variant="outline"
                         size="sm"
                         className="h-8 gap-1 text-xs shrink-0"
-                        onClick={() => window.open(doc.evidenceUrl || doc.url || "#", "_blank")}
+                        onClick={() => window.open(doc.evidenceUrl || "#", "_blank")}
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                         View

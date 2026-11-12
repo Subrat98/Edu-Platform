@@ -2,25 +2,19 @@ import { useState, useEffect } from "react";
 import {
   Compass,
   Trophy,
-  GraduationCap,
   Target,
-  CheckCircle2,
   FileText,
   Search,
   Plus,
   ExternalLink,
   UploadCloud,
-  ShieldCheck,
   Award,
-  Layers,
   Activity,
-  Calendar,
   BookOpen,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
@@ -38,7 +32,6 @@ import {
 import type {
   CompetitiveExamGuidanceData,
   CoachingSessionRecord,
-  ExamQualifierRecord,
   NaacEvidenceDocument,
 } from "@/types";
 
@@ -761,7 +754,7 @@ export function CareerGuidanceConsole({ onEvidenceUpdated }: CareerGuidanceConso
               <Input
                 type="file"
                 accept=".pdf,.png,.jpg,.jpeg"
-                onChange={(e) => setEvidenceFile(e.target.files ? e.target.files[0] : null)}
+                onChange={(e) => setEvidenceFile(e.target.files?.[0] ?? null)}
               />
             </div>
             <DialogFooter className="pt-2">

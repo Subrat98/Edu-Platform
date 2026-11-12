@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import {
   ShieldCheck,
   ShieldAlert,
-  Users,
   CheckCircle2,
   XCircle,
   RotateCcw,
@@ -121,11 +120,6 @@ export default function NaacPermissionMatrixConsole() {
       <AdminPageHeader
         title="NAAC Security & RBAC: Role-Based Permission Matrix"
         description="Statutory Role-Based Access Control matrix defining operational authority across Principal (Full/Sign-off), IQAC Coordinator (Manage/Review), HOD (Dept Data), and Faculty (Upload)."
-        breadcrumbs={[
-          { label: "Dashboard", href: "/admin" },
-          { label: "NAAC", href: "/admin/naac" },
-          { label: "Permission Matrix" },
-        ]}
         actions={
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" onClick={handleReset} className="gap-1.5 text-xs">

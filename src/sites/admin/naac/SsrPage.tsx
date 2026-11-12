@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  CheckCircle2,
   Layers,
   ArrowRight,
   ShieldCheck,
@@ -49,7 +48,7 @@ export default function SsrPage() {
               Self Study Report (SSR) Management
             </h1>
             <Badge variant="outline" className="border-primary/30 bg-primary/10 text-primary">
-              Cycle {ssr.cycleNumber} Dossier
+              Cycle {ssr.cycle} Dossier
             </Badge>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">
@@ -81,7 +80,7 @@ export default function SsrPage() {
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <CardDescription className="text-xs uppercase font-semibold text-primary">
-                NAAC Accreditation Cycle {ssr.cycleNumber}
+                NAAC Accreditation Cycle {ssr.cycle}
               </CardDescription>
               <CardTitle className="text-lg font-bold sm:text-xl text-foreground">
                 SSR Submission Status: {ssr.status}
@@ -90,7 +89,7 @@ export default function SsrPage() {
             <div className="flex items-center gap-2">
               <Badge className="bg-emerald-600 text-white font-medium px-3 py-1">
                 <ShieldCheck className="size-3.5 mr-1" />
-                Overall Readiness: {ssr.overallProgress}%
+                Overall Readiness: {ssr.overallCompletion}%
               </Badge>
             </div>
           </div>
@@ -99,7 +98,9 @@ export default function SsrPage() {
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 pt-1">
             <div className="rounded-lg border border-border/60 bg-muted/20 p-3">
               <span className="text-xs text-muted-foreground">Assessment Window</span>
-              <p className="font-semibold text-sm text-foreground mt-0.5">{ssr.assessmentPeriod}</p>
+              <p className="font-semibold text-sm text-foreground mt-0.5">
+                {ssr.academicYearsCovered[0]} to {ssr.academicYearsCovered[ssr.academicYearsCovered.length - 1]}
+              </p>
             </div>
             <div className="rounded-lg border border-border/60 bg-muted/20 p-3">
               <span className="text-xs text-muted-foreground">Submission Deadline</span>
@@ -118,9 +119,9 @@ export default function SsrPage() {
           <div>
             <div className="flex justify-between text-xs font-semibold mb-1">
               <span className="text-muted-foreground">Cumulative 5-Year Data Validation & Verification (DVV)</span>
-              <span className="text-foreground">{ssr.overallProgress}% Complete</span>
+              <span className="text-foreground">{ssr.overallCompletion}% Complete</span>
             </div>
-            <Progress value={ssr.overallProgress} className="h-2" />
+            <Progress value={ssr.overallCompletion} className="h-2" />
           </div>
 
           {ssr.diasRemarks && (

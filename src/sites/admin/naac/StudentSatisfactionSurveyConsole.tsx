@@ -1,23 +1,16 @@
 import { useState, useEffect } from "react";
 import {
   MessageSquareHeart,
-  Award,
   CheckCircle2,
-  TrendingUp,
   FileText,
   Search,
   Download,
   ExternalLink,
   UploadCloud,
   ShieldCheck,
-  Building2,
-  Filter,
-  BarChart3,
-  Percent,
   Smile,
   HelpCircle,
   Sparkles,
-  ArrowUpRight,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -35,11 +28,7 @@ import {
   getEvidenceForMetric,
   uploadEvidenceDocument,
 } from "@/features/naac/naacService";
-import type {
-  SssSurveyData,
-  SssQuestionItem,
-  NaacEvidenceDocument,
-} from "@/types";
+import type { SssSurveyData, NaacEvidenceDocument } from "@/types";
 
 interface StudentSatisfactionSurveyConsoleProps {
   onEvidenceUpdated?: () => void;

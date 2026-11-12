@@ -10,10 +10,7 @@ import {
   ExternalLink,
   UploadCloud,
   CheckCircle2,
-  Building,
   Activity,
-  Layers,
-  Sparkles,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -36,7 +33,6 @@ import {
 import type {
   EnvironmentalAuditData,
   WasteManagementFacilityRecord,
-  RainwaterHarvestingRecord,
   NaacEvidenceDocument,
 } from "@/types";
 
@@ -488,7 +484,7 @@ export function EnvironmentManagementConsole({ onEvidenceUpdated }: EnvironmentM
                         variant="outline"
                         size="sm"
                         className="h-8 gap-1 text-xs shrink-0"
-                        onClick={() => window.open(doc.evidenceUrl || doc.url || "#", "_blank")}
+                        onClick={() => window.open(doc.evidenceUrl || "#", "_blank")}
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                         View

@@ -128,7 +128,7 @@ export default function CriteriaHub() {
 
   const openMetricEditor = (m: NaacMetric) => {
     setEditingMetric(m);
-    setMetricValue(m.type === "quantitative" ? m.quantitativeValue || "" : m.qualitativeText || "");
+    setMetricValue(m.type === "quantitative" ? String(m.quantitativeValue ?? "") : m.qualitativeText || "");
     setMetricStatus(m.status);
     setMetricRemarks(m.remarks || "");
   };

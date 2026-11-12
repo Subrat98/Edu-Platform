@@ -122,7 +122,7 @@ export const demoUsers: DemoUser[] = [
     role: "principal",
     institutionId: "college",
     avatarUrl: portraitUrl(15),
-    title: "Principal & Head of Institution, Kalinga College",
+    title: "Principal & Head of Institution, Our College",
   },
   {
     id: "user-college-iqac-coord",

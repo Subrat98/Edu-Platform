@@ -4,7 +4,6 @@ import {
   Zap,
   Leaf,
   DollarSign,
-  TrendingUp,
   FileText,
   Search,
   Plus,
@@ -12,7 +11,6 @@ import {
   UploadCloud,
   CheckCircle2,
   Calendar,
-  Building,
   Activity,
   Flame,
   Lightbulb,
@@ -35,8 +33,6 @@ import {
 } from "@/features/naac/naacService";
 import type {
   RenewableEnergyData,
-  EnergyConservationInitiativeRecord,
-  SolarEnergyGenerationRecord,
   NaacEvidenceDocument,
 } from "@/types";
 
@@ -458,7 +454,7 @@ export function RenewableEnergyConsole({ onEvidenceUpdated }: RenewableEnergyCon
                         variant="outline"
                         size="sm"
                         className="h-8 gap-1 text-xs shrink-0"
-                        onClick={() => window.open(doc.evidenceUrl || doc.url || "#", "_blank")}
+                        onClick={() => window.open(doc.evidenceUrl || "#", "_blank")}
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                         View

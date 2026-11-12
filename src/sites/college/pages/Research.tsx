@@ -1,21 +1,13 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
-  BookOpen,
   Search,
   ExternalLink,
   Award,
-  Sparkles,
   Filter,
-  Calendar,
-  Building2,
-  Users,
-  CheckCircle2,
-  TrendingUp,
   Quote,
   FileText,
   FileCheck2,
-  Layers,
   ArrowUpDown,
 } from "lucide-react";
 import { Hero } from "@/components/sections/Hero";
@@ -32,7 +24,6 @@ import { collegeHeroUrl } from "@/mocks/data/images";
 import { collegeStaff } from "@/mocks/data/staff";
 import { MOCK_PUBLICATIONS_DATA } from "@/mocks/data/naac/publications";
 import { MOCK_RESEARCH_FUNDING_DATA } from "@/mocks/data/naac/researchFunding";
-import type { ResearchPublicationRecord } from "@/types/naac";
 
 export default function CollegeResearch() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -106,7 +97,7 @@ export default function CollegeResearch() {
         eyebrow="Research Ecosystem"
         title="Interdisciplinary Research Centres & Innovation Focus Areas"
         paragraphs={[
-          "Kalinga College maintains active, high-impact research clusters in Artificial Intelligence, Materials Chemistry, Perovskite Nanomaterials, Biodiversity Profiling of the Eastern Ghats, and Regional Development Economics. Faculty regularly publish in Q1/Q2 Scopus and Web of Science indexed journals with substantial international impact.",
+          "Our College maintains active, high-impact research clusters in Artificial Intelligence, Materials Chemistry, Perovskite Nanomaterials, Biodiversity Profiling of the Eastern Ghats, and Regional Development Economics. Faculty regularly publish in Q1/Q2 Scopus and Web of Science indexed journals with substantial international impact.",
           "Through our statutory Research Promotion Council and seed grants initiative, undergraduate and postgraduate students are actively embedded in funded projects sponsored by the Department of Science and Technology (DST-SERB), Council of Scientific and Industrial Research (CSIR), and UGC.",
         ]}
       />
@@ -146,7 +137,7 @@ export default function CollegeResearch() {
                 <CardHeader className="p-4 pb-2">
                   <div className="flex items-center justify-between gap-2">
                     <Badge className="bg-blue-600 text-white text-[10px] font-mono">
-                      {grant.fundingAgency.split("-")[0].trim()}
+                      {grant.fundingAgency.split("-")[0]?.trim()}
                     </Badge>
                     <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 text-[10px]">
                       ₹{grant.sanctionedAmountLakhs} Lakhs

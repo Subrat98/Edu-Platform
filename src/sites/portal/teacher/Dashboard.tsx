@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { CalendarCheck, Clock, GraduationCap, PenSquare } from "lucide-react";
+import { Award, CalendarCheck, Clock, GraduationCap, PenSquare } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { StatCard } from "@/components/admin/StatCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -42,6 +42,7 @@ export default function TeacherDashboard() {
 
   const todaysPeriods = (timetable ?? []).filter((e) => e.day === TODAY).sort((a, b) => a.periodIndex - b.periodIndex);
   const classCount = new Set((assignments ?? []).map((a) => `${a.classOrProgrammeId}::${a.section}`)).size;
+  const isNaacFaculty = currentUser?.role === "faculty";
 
   return (
     <div>
@@ -101,6 +102,24 @@ export default function TeacherDashboard() {
             </Link>
           </CardContent>
         </Card>
+
+        {isNaacFaculty ? (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Award className="size-4" /> NAAC & IQAC
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-2">
+              <p className="text-muted-foreground text-sm">
+                Upload research papers, course files, mentor-mentee registers and FDP certificates as accreditation evidence.
+              </p>
+              <Link to="/admin/naac" className="text-accent text-sm font-medium hover:underline">
+                Open NAAC workspace →
+              </Link>
+            </CardContent>
+          </Card>
+        ) : null}
       </div>
     </div>
   );

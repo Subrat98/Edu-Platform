@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import {
   BookOpen,
-  Award,
   CheckCircle2,
   Users,
   Search,
@@ -10,22 +9,17 @@ import {
   ExternalLink,
   UploadCloud,
   FileText,
-  Sparkles,
   Heart,
   Leaf,
   Scale,
   ShieldCheck,
   Building2,
-  GraduationCap,
-  Layers,
-  Filter,
   Eye,
   Calendar,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
@@ -60,8 +54,8 @@ export function CrosscuttingIssuesConsole({ onEvidenceUpdated }: CrosscuttingIss
   const [courseMappings, setCourseMappings] = useState<CrosscuttingCourseMapping[]>([]);
   const [activities, setActivities] = useState<CrosscuttingCoCurricularActivity[]>([]);
   const [themeCounts, setThemeCounts] = useState({ gender: 6, environment: 8, humanValues: 7, professionalEthics: 7 });
-  const [totalActivities, setTotalActivities] = useState(6);
-  const [totalParticipants, setTotalParticipants] = useState(2460);
+  const [, setTotalActivities] = useState(6);
+  const [, setTotalParticipants] = useState(2460);
   const [attachedEvidence, setAttachedEvidence] = useState<NaacEvidenceDocument[]>([]);
 
   // Search & Filters
@@ -79,16 +73,16 @@ export function CrosscuttingIssuesConsole({ onEvidenceUpdated }: CrosscuttingIss
   // Form states - Mapping
   const [mCode, setMCode] = useState("");
   const [mTitle, setMTitle] = useState("");
-  const [mProg, setMProg] = useState("B.Sc. Computer Science (Honours)");
-  const [mDept, setMDept] = useState("Department of Computer Science & Applications");
+  const [mProg] = useState("B.Sc. Computer Science (Honours)");
+  const [mDept] = useState("Department of Computer Science & Applications");
   const [mType, setMType] = useState<CrosscuttingCourseMapping["courseType"]>("Core Course");
   const [mTheme, setMTheme] = useState<CrosscuttingTheme>("Professional Ethics & Integrity");
   const [mUnit, setMUnit] = useState("Unit III: Professional Conduct & Data Protection");
-  const [mUnitTitle, setMUnitTitle] = useState("Legal & Ethical Responsibilities in Computing");
+  const [mUnitTitle] = useState("Legal & Ethical Responsibilities in Computing");
   const [mExcerpt, setMExcerpt] = useState("");
   const [mKeywords, setMKeywords] = useState("Ethics, Data Privacy, IPR");
   const [mHours, setMHours] = useState(14);
-  const [mOutcomes, setMOutcomes] = useState("Students demonstrate professional ethical standards.");
+  const [mOutcomes] = useState("Students demonstrate professional ethical standards.");
 
   // Form states - Activity
   const [actTitle, setActTitle] = useState("");

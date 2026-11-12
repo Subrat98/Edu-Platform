@@ -9,10 +9,6 @@ import {
   ExternalLink,
   UploadCloud,
   CheckCircle2,
-  Users,
-  GraduationCap,
-  Calendar,
-  Layers,
   Activity,
   Check,
 } from "lucide-react";
@@ -36,9 +32,7 @@ import {
 } from "@/features/naac/naacService";
 import type {
   FacultyEmpowermentData,
-  SeedGrantRecord,
   FdpSponsorshipRecord,
-  FacultyAppraisalRecord,
   NaacEvidenceDocument,
 } from "@/types";
 
@@ -59,7 +53,7 @@ export function FacultyEmpowermentConsole({ onEvidenceUpdated }: FacultyEmpowerm
   const [facultyName, setFacultyName] = useState("");
   const [department, setDepartment] = useState("Computer Science & Engineering");
   const [projectTitle, setProjectTitle] = useState("");
-  const [sanctionDate, setSanctionDate] = useState(new Date().toISOString().split("T")[0]);
+  const [sanctionDate, setSanctionDate] = useState(new Date().toISOString().split("T")[0]!);
   const [grantAmountInr, setGrantAmountInr] = useState(150000);
   const [deliverablesOutcome, setDeliverablesOutcome] = useState("2 Scopus indexed publications and 1 prototype");
 
@@ -615,7 +609,7 @@ export function FacultyEmpowermentConsole({ onEvidenceUpdated }: FacultyEmpowerm
                         variant="outline"
                         size="sm"
                         className="h-8 gap-1 text-xs shrink-0"
-                        onClick={() => window.open(doc.evidenceUrl || doc.url || "#", "_blank")}
+                        onClick={() => window.open(doc.evidenceUrl || "#", "_blank")}
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                         View

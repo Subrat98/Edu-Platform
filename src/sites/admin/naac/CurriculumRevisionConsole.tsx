@@ -12,7 +12,6 @@ import {
   Building2,
   ExternalLink,
   Percent,
-  CheckSquare,
   Sparkles,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -71,7 +70,7 @@ export function CurriculumRevisionConsole({ onEvidenceUpdated }: CurriculumRevis
   const [bosNumber, setBosNumber] = useState("");
   const [bosDept, setBosDept] = useState("Department of Computer Science & Applications");
   const [bosDate, setBosDate] = useState("");
-  const [bosYear, setBosYear] = useState("2025-26");
+  const [bosYear] = useState("2025-26");
   const [bosExperts, setBosExperts] = useState("");
   const [bosIndustry, setBosIndustry] = useState("");
   const [bosAlumni, setBosAlumni] = useState("");
@@ -81,8 +80,8 @@ export function CurriculumRevisionConsole({ onEvidenceUpdated }: CurriculumRevis
 
   // Comparative form state
   const [compProgCode, setCompProgCode] = useState("BSC-CS");
-  const [compProgName, setCompProgName] = useState("B.Sc. (Honours) Computer Science");
-  const [compDept, setCompDept] = useState("Computer Science");
+  const [compProgName] = useState("B.Sc. (Honours) Computer Science");
+  const [compDept] = useState("Computer Science");
   const [compCourseCode, setCompCourseCode] = useState("");
   const [compCourseTitle, setCompCourseTitle] = useState("");
   const [compOldCode, setCompOldCode] = useState("");
@@ -91,19 +90,19 @@ export function CurriculumRevisionConsole({ onEvidenceUpdated }: CurriculumRevis
   const [compPct, setCompPct] = useState(40);
   const [compAdditions, setCompAdditions] = useState("");
   const [compDeletions, setCompDeletions] = useState("");
-  const [compYear, setCompYear] = useState("2025-26");
-  const [compBosDate, setCompBosDate] = useState("2025-06-18");
+  const [compYear] = useState("2025-26");
+  const [compBosDate] = useState("2025-06-18");
 
   // Programme revision form state
   const [revProgName, setRevProgName] = useState("");
   const [revProgCode, setRevProgCode] = useState("");
-  const [revDept, setRevDept] = useState("Computer Science");
+  const [revDept] = useState("Computer Science");
   const [revTotalCourses, setRevTotalCourses] = useState(48);
   const [revRevisedCount, setRevRevisedCount] = useState(14);
   const [revNewCount, setRevNewCount] = useState(4);
   const [revBosRes, setRevBosRes] = useState("");
   const [revCouncilNotif, setRevCouncilNotif] = useState("");
-  const [revYear, setRevYear] = useState("2025-26");
+  const [revYear] = useState("2025-26");
 
   // Evidence upload form state
   const [eviTitle, setEviTitle] = useState("");

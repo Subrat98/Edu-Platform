@@ -2,27 +2,17 @@ import { useState, useEffect } from "react";
 import {
   Lightbulb,
   Rocket,
-  ShieldCheck,
-  CheckCircle2,
-  TrendingUp,
   FileText,
   Search,
   Plus,
-  Download,
   ExternalLink,
   UploadCloud,
-  Building2,
-  Filter,
-  Eye,
   Award,
-  Layers,
   Sparkles,
-  Zap,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
@@ -164,7 +154,7 @@ export function InnovationEcosystemConsole({ onEvidenceUpdated }: InnovationEcos
           startupName,
           founders: founders.split(",").map((s) => s.trim()),
           founderType,
-          incubationDate: new Date().toISOString().split("T")[0],
+          incubationDate: new Date().toISOString().split("T")[0]!,
           sector,
           seedGrantReceivedInr: Number(seedGrant),
           annualTurnoverInr: Number(turnover),

@@ -7,21 +7,13 @@ import {
   FileText,
   Search,
   Plus,
-  Download,
   ExternalLink,
   UploadCloud,
-  ShieldCheck,
   Building2,
-  Filter,
-  BarChart3,
-  Percent,
-  Layers,
-  Sparkles,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
@@ -35,12 +27,7 @@ import {
   getEvidenceForMetric,
   uploadEvidenceDocument,
 } from "@/features/naac/naacService";
-import type {
-  PassPercentageData,
-  ProgrammePassRecord,
-  PoCoAttainmentRecord,
-  NaacEvidenceDocument,
-} from "@/types";
+import type { PassPercentageData, NaacEvidenceDocument } from "@/types";
 
 interface PassPercentageConsoleProps {
   onEvidenceUpdated?: () => void;

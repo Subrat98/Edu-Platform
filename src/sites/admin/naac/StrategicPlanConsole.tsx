@@ -2,17 +2,12 @@ import { useState, useEffect } from "react";
 import {
   Compass,
   Target,
-  CheckCircle2,
-  FileText,
   Search,
   Plus,
   ExternalLink,
   UploadCloud,
-  ShieldCheck,
-  Layers,
   Activity,
   Users,
-  Building,
   GitBranch,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -36,7 +31,6 @@ import {
 import type {
   StrategicPlanData,
   StrategicGoalRecord,
-  GovernanceCommitteeRecord,
   NaacEvidenceDocument,
 } from "@/types";
 
@@ -140,7 +134,7 @@ export function StrategicPlanConsole({ onEvidenceUpdated }: StrategicPlanConsole
           studentRepresentativesCount: studentCount,
           externalExpertsCount: externalCount,
           primaryMandate,
-          recentMeetingDate: new Date().toISOString().split("T")[0],
+          recentMeetingDate: new Date().toISOString().split("T")[0]!,
         },
         { name: "Registrar Office", role: "Admin" }
       );
@@ -746,7 +740,7 @@ export function StrategicPlanConsole({ onEvidenceUpdated }: StrategicPlanConsole
               <Input
                 type="file"
                 accept=".pdf,.png,.jpg,.jpeg"
-                onChange={(e) => setEvidenceFile(e.target.files ? e.target.files[0] : null)}
+                onChange={(e) => setEvidenceFile(e.target.files?.[0] ?? null)}
               />
             </div>
             <DialogFooter className="pt-2">

@@ -34,12 +34,7 @@ import {
   getEvidenceForMetric,
   uploadEvidenceDocument,
 } from "@/features/naac/naacService";
-import type {
-  EGovernanceData,
-  EGovernancePillarRecord,
-  ErpModuleAuditRecord,
-  NaacEvidenceDocument,
-} from "@/types";
+import type { EGovernanceData, NaacEvidenceDocument } from "@/types";
 
 interface EGovernanceConsoleProps {
   onEvidenceUpdated?: () => void;
@@ -57,7 +52,7 @@ export function EGovernanceConsole({ onEvidenceUpdated }: EGovernanceConsoleProp
   const [moduleCode, setModuleCode] = useState("ERP-SEC-2025");
   const [domain, setDomain] = useState("Administration & HRMS");
   const [systemName, setSystemName] = useState("");
-  const [lastSecurityAuditDate, setLastSecurityAuditDate] = useState(new Date().toISOString().split("T")[0]);
+  const [lastSecurityAuditDate, setLastSecurityAuditDate] = useState(new Date().toISOString().slice(0, 10));
   const [auditingAgency, setAuditingAgency] = useState("CERT-In Empanelled InfoSec Auditor");
   const [complianceRating, setComplianceRating] = useState("ISO 27001 / PCI-DSS Level 1 Compliant");
   const [dailyActiveTransactions, setDailyActiveTransactions] = useState(500);
@@ -495,7 +490,7 @@ export function EGovernanceConsole({ onEvidenceUpdated }: EGovernanceConsoleProp
                         variant="outline"
                         size="sm"
                         className="h-8 gap-1 text-xs shrink-0"
-                        onClick={() => window.open(doc.evidenceUrl || doc.url || "#", "_blank")}
+                        onClick={() => window.open(doc.evidenceUrl || "#", "_blank")}
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                         View

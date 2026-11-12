@@ -13,7 +13,7 @@ export default function CollegeAbout() {
 
   return (
     <>
-      <Hero variant="compact" title="About Our College" imageUrl={collegeHeroUrl(3)} />
+      <Hero variant="compact" title="About Our College" imageUrl={collegeHeroUrl(4)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "About" }]} />
 
       <RichText

@@ -2,27 +2,19 @@ import { useState, useEffect } from "react";
 import {
   FileCheck2,
   Calendar,
-  AlertCircle,
   CheckCircle2,
-  TrendingUp,
   FileText,
   Search,
   Plus,
-  Download,
   ExternalLink,
   UploadCloud,
   ShieldCheck,
-  Building2,
-  Filter,
-  Eye,
   Clock,
-  UserCheck,
   Scale,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
@@ -39,7 +31,6 @@ import {
 import type {
   CieEvaluationData,
   CieGrievanceRecord,
-  CieAssessmentSchedule,
   NaacEvidenceDocument,
 } from "@/types";
 
@@ -63,7 +54,7 @@ export function CieEvaluationConsole({ onEvidenceUpdated }: CieEvaluationConsole
   const [newSemester, setNewSemester] = useState("Semester V");
   const [newCourseCode, setNewCourseCode] = useState("CS501");
   const [newCourseName, setNewCourseName] = useState("Design & Analysis of Algorithms");
-  const [newEvaluatorName, setNewEvaluatorName] = useState("Dr. Rashmita Mishra");
+  const [newEvaluatorName] = useState("Dr. Rashmita Mishra");
   const [newGrievanceType, setNewGrievanceType] = useState<CieGrievanceRecord["grievanceType"]>("Totaling Error");
   const [newOriginalMarks, setNewOriginalMarks] = useState(24);
   const [newRevisedMarks, setNewRevisedMarks] = useState(27);
@@ -116,7 +107,7 @@ export function CieEvaluationConsole({ onEvidenceUpdated }: CieEvaluationConsole
       await addCieGrievanceRecord(
         {
           grievanceCode: `CIE-2025-${String((data?.grievances.length || 0) + 1).padStart(3, "0")}`,
-          filingDate: new Date().toISOString().split("T")[0],
+          filingDate: new Date().toISOString().slice(0, 10),
           studentId: newStudentId || "STU2025GEN",
           studentName: newStudentName,
           programme: newProgramme,
@@ -128,7 +119,7 @@ export function CieEvaluationConsole({ onEvidenceUpdated }: CieEvaluationConsole
           originalMarks: Number(newOriginalMarks),
           revisedMarks: Number(newRevisedMarks),
           tier: newTier,
-          resolutionDate: new Date().toISOString().split("T")[0],
+          resolutionDate: new Date().toISOString().slice(0, 10),
           turnaroundDays: 2,
           resolutionRemarks: newRemarks,
           status: "Resolved",

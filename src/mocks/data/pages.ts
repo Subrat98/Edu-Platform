@@ -161,7 +161,7 @@ export const collegeHomePage: Page = {
       id: "col-home-notices",
       type: "noticeBoard",
       order: 5,
-      props: { institutionId: "college", limit: 5, title: "Notices & Circulars", viewAllHref: "/college/news-events" },
+      props: { institutionId: "college", limit: 5, title: "Notices & Circulars", viewAllHref: "/college/notices" },
     },
     {
       id: "col-home-events",

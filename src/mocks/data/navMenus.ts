@@ -74,6 +74,7 @@ export const collegeNavMenu: NavMenu = {
       label: "More",
       path: "/college/news-events",
       children: [
+        { label: "Notices & Circulars", path: "/college/notices" },
         { label: "Research & Publications", path: "/college/research" },
         { label: "Placements & Career Cell", path: "/college/placements" },
         { label: "Student Corner", path: "/college/student-corner" },
@@ -89,6 +90,7 @@ export const collegeNavMenu: NavMenu = {
     { label: "Departments", path: "/college/departments" },
     { label: "Programmes & Courses", path: "/college/programmes" },
     { label: "Admissions", path: "/college/admissions" },
+    { label: "Notices & Circulars", path: "/college/notices" },
     { label: "Placements", path: "/college/placements" },
     { label: "Contact", path: "/college/contact" },
   ],

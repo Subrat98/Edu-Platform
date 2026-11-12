@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import {
   Accessibility,
-  Eye,
-  Volume2,
   FileText,
   Search,
   Plus,
@@ -11,7 +9,6 @@ import {
   CheckCircle2,
   Building,
   Activity,
-  Compass,
   Monitor,
   Footprints,
 } from "lucide-react";
@@ -495,7 +492,7 @@ export function DivyangjanFacilitiesConsole({ onEvidenceUpdated }: DivyangjanFac
                         variant="outline"
                         size="sm"
                         className="h-8 gap-1 text-xs shrink-0"
-                        onClick={() => window.open(doc.evidenceUrl || doc.url || "#", "_blank")}
+                        onClick={() => window.open(doc.evidenceUrl || "#", "_blank")}
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                         View

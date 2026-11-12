@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Search,
   UploadCloud,
   FileText,
+  FileUp,
   Eye,
   Trash2,
   Download,
@@ -32,7 +33,9 @@ export default function EvidenceRepositoryPage() {
   const [selectedCriterion, setSelectedCriterion] = useState<string>("all");
   const [selectedStatus, setSelectedStatus] = useState<string>("all");
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  const [docFile, setDocFile] = useState<File | null>(null);
   const [docTitle, setDocTitle] = useState("");
   const [docCriterion, setDocCriterion] = useState<NaacCriterionId>(1);
   const [docMetric, setDocMetric] = useState("1.1.1");
@@ -61,6 +64,7 @@ export default function EvidenceRepositoryPage() {
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!docFile) return;
     await uploadEvidenceDocument(
       {
         criterionId: docCriterion,
@@ -72,14 +76,16 @@ export default function EvidenceRepositoryPage() {
         documentType: docType,
         description: docDesc,
         remarks: docRemarks,
-        fileName: `${docTitle.replace(/\s+/g, "_")}.pdf`,
-        fileSize: "2.4 MB",
-        evidenceUrl: `/documents/naac/evidence/${docTitle.replace(/\s+/g, "_")}.pdf`,
+        fileName: docFile.name,
+        fileSize: `${Math.max(1, Math.round(docFile.size / 1024))} KB`,
+        evidenceUrl: URL.createObjectURL(docFile),
         uploadedBy: "Dr. Snigdha Mohanty",
       },
       { name: "Dr. Snigdha Mohanty", role: "IQAC Coordinator" }
     );
     setUploadModalOpen(false);
+    setDocFile(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
     loadData();
   };
 
@@ -347,6 +353,31 @@ export default function EvidenceRepositoryPage() {
 
           <form onSubmit={handleUpload} className="space-y-4 pt-2">
             <div>
+              <Label>File</Label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="application/pdf,image/*,.doc,.docx,.xls,.xlsx"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) setDocFile(file);
+                }}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="w-full justify-start gap-1.5 font-normal"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <FileUp className="size-4" />
+                {docFile ? docFile.name : "Choose a file to attach…"}
+              </Button>
+              {!docFile && <p className="text-muted-foreground mt-1 text-xs">Required — pick the evidence document from your device.</p>}
+            </div>
+
+            <div>
               <Label htmlFor="docTitle">Document Title</Label>
               <Input
                 id="docTitle"
@@ -445,7 +476,9 @@ export default function EvidenceRepositoryPage() {
               <Button type="button" variant="outline" onClick={() => setUploadModalOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit">Submit & Index File</Button>
+              <Button type="submit" disabled={!docFile}>
+                Submit & Index File
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>

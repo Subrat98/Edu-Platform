@@ -8,17 +8,13 @@ import {
   Search,
   Plus,
   Download,
-  ExternalLink,
   UploadCloud,
   ShieldCheck,
   Building2,
   Calendar,
-  Layers,
   Award,
   Filter,
   Eye,
-  AlertCircle,
-  FileSpreadsheet,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -117,8 +113,8 @@ export function StudentEnrolmentConsole({ onEvidenceUpdated }: StudentEnrolmentC
     e.preventDefault();
     if (!newProg.programmeCode || !newProg.programmeName) return;
 
-    const fillRate = Number(
-      ((newProg.admittedStudents / (newProg.sanctionedSeats || 1)) * 100).toFixed(1)
+    const enrolmentPercentage = Number(
+      ((Number(newProg.admittedStudents) / (Number(newProg.sanctionedSeats) || 1)) * 100).toFixed(1)
     );
 
     const record: Omit<ProgrammeEnrolmentRecord, "id"> = {
@@ -127,17 +123,14 @@ export function StudentEnrolmentConsole({ onEvidenceUpdated }: StudentEnrolmentC
       programmeName: newProg.programmeName,
       level: newProg.level,
       department: newProg.department,
-      sanctionedSeats: Number(newProg.sanctionedSeats),
-      admittedStudents: Number(newProg.admittedStudents),
-      fillRatePercentage: fillRate,
-      categoryBreakdown: {
-        sc: Number(newProg.scAdmitted),
-        st: Number(newProg.stAdmitted),
-        obc: Number(newProg.obcAdmitted),
-        general: Number(newProg.generalAdmitted),
-        pwd: Number(newProg.pwdAdmitted),
-        ews: 0,
-      },
+      sanctionedIntake: Number(newProg.sanctionedSeats),
+      admittedCount: Number(newProg.admittedStudents),
+      enrolmentPercentage,
+      scCount: Number(newProg.scAdmitted),
+      stCount: Number(newProg.stAdmitted),
+      obcCount: Number(newProg.obcAdmitted),
+      genCount: Number(newProg.generalAdmitted),
+      pwdCount: Number(newProg.pwdAdmitted),
       samsCutoffMarks: newProg.samsCutoffMarks,
       status: "Admissions Closed & Verified",
     };
@@ -710,29 +703,29 @@ export function StudentEnrolmentConsole({ onEvidenceUpdated }: StudentEnrolmentC
                               </span>
                             </div>
                           </TableCell>
-                          <TableCell className="text-center font-medium">{p.sanctionedSeats}</TableCell>
+                          <TableCell className="text-center font-medium">{p.sanctionedIntake}</TableCell>
                           <TableCell className="text-center font-bold text-emerald-600 dark:text-emerald-400">
-                            {p.admittedStudents}
+                            {p.admittedCount}
                           </TableCell>
                           <TableCell className="text-center">
                             <Badge
                               variant="outline"
                               className={
-                                p.fillRatePercentage >= 95
+                                p.enrolmentPercentage >= 95
                                   ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 font-semibold"
                                   : "border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-300"
                               }
                             >
-                              {p.fillRatePercentage}%
+                              {p.enrolmentPercentage}%
                             </Badge>
                           </TableCell>
                           <TableCell>
                             <div className="text-xs text-muted-foreground">
-                              SC: <span className="font-medium text-foreground">{p.categoryBreakdown.sc}</span> · ST:{" "}
-                              <span className="font-medium text-foreground">{p.categoryBreakdown.st}</span> · OBC:{" "}
-                              <span className="font-medium text-foreground">{p.categoryBreakdown.obc}</span> · Gen:{" "}
-                              <span className="font-medium text-foreground">{p.categoryBreakdown.general}</span> · PwD:{" "}
-                              <span className="font-medium text-foreground">{p.categoryBreakdown.pwd}</span>
+                              SC: <span className="font-medium text-foreground">{p.scCount}</span> · ST:{" "}
+                              <span className="font-medium text-foreground">{p.stCount}</span> · OBC:{" "}
+                              <span className="font-medium text-foreground">{p.obcCount}</span> · Gen:{" "}
+                              <span className="font-medium text-foreground">{p.genCount}</span> · PwD:{" "}
+                              <span className="font-medium text-foreground">{p.pwdCount}</span>
                             </div>
                           </TableCell>
                           <TableCell>

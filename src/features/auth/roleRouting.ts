@@ -26,6 +26,8 @@ export function landingPathFor(role: RoleKey): string {
       return "/portal/examcell";
     case "hod":
       return "/portal/hod";
+    case "iqac_coordinator":
+      return "/admin/naac";
     default:
       return "/portal";
   }

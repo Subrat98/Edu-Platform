@@ -4,7 +4,7 @@ export const initialAccreditationCycles: AccreditationCycle[] = [
   {
     id: "cycle-3",
     cycleNumber: 3,
-    institutionName: "Kalinga Institute of Higher Studies (Autonomous)",
+    institutionName: "Our College (Autonomous)",
     accreditationBody: "NAAC",
     status: "Accredited",
     grade: "A+",
@@ -20,7 +20,7 @@ export const initialAccreditationCycles: AccreditationCycle[] = [
   {
     id: "cycle-2",
     cycleNumber: 2,
-    institutionName: "Kalinga Institute of Higher Studies",
+    institutionName: "Our College",
     accreditationBody: "NAAC",
     status: "Expired",
     grade: "A",
@@ -36,7 +36,7 @@ export const initialAccreditationCycles: AccreditationCycle[] = [
   {
     id: "cycle-1",
     cycleNumber: 1,
-    institutionName: "Kalinga Institute of Higher Studies",
+    institutionName: "Our College",
     accreditationBody: "NAAC",
     status: "Expired",
     grade: "B++",

@@ -11,11 +11,8 @@ import {
   ExternalLink,
   UploadCloud,
   ShieldCheck,
-  Filter,
   Zap,
   Activity,
-  Layers,
-  HardDrive,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,7 +23,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ResponsiveTableContainer } from "@/components/admin/ResponsiveTableContainer";
 import {
   getItFacilityData,
@@ -35,12 +31,7 @@ import {
   getEvidenceForMetric,
   uploadEvidenceDocument,
 } from "@/features/naac/naacService";
-import type {
-  ItFacilityData,
-  ComputerLabAssetRecord,
-  WifiAccessPointRecord,
-  NaacEvidenceDocument,
-} from "@/types";
+import type { ItFacilityData, NaacEvidenceDocument } from "@/types";
 
 interface ItInfrastructureConsoleProps {
   onEvidenceUpdated?: () => void;
@@ -60,7 +51,7 @@ export function ItInfrastructureConsole({ onEvidenceUpdated }: ItInfrastructureC
   const [totalWorkstations, setTotalWorkstations] = useState(60);
   const [processorSpecs, setProcessorSpecs] = useState("Intel Core i5-13500 (14-Core)");
   const [ramGb, setRamGb] = useState(16);
-  const [storageType, setStorageType] = useState("512 GB NVMe SSD");
+  const [storageType] = useState("512 GB NVMe SSD");
   const [osInstalled, setOsInstalled] = useState("Dual Boot (Ubuntu / Windows 11)");
   const [primaryUsage, setPrimaryUsage] = useState("Full-Stack Programming & Cloud Tools");
 
@@ -815,7 +806,7 @@ export function ItInfrastructureConsole({ onEvidenceUpdated }: ItInfrastructureC
               <Input
                 type="file"
                 accept=".pdf,.png,.jpg,.jpeg"
-                onChange={(e) => setEvidenceFile(e.target.files ? e.target.files[0] : null)}
+                onChange={(e) => setEvidenceFile(e.target.files?.[0] ?? null)}
               />
             </div>
             <DialogFooter className="pt-2">

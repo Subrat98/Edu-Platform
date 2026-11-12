@@ -158,6 +158,14 @@ export const accountantNavGroups: AdminNavGroup[] = [
   adminNavGroups.find((g) => g.label === "Reports")!,
 ];
 
+// IQAC Coordinator, HOD and Faculty only need the NAAC & IQAC workspace —
+// they don't manage Admissions/Finance/Settings/etc., so they get this
+// narrow slice instead of the full institution_admin/principal nav.
+export const naacRoleNavGroups: AdminNavGroup[] = [
+  adminNavGroups[0]!,
+  adminNavGroups.find((g) => g.label === "NAAC & IQAC")!,
+];
+
 // Only ever shown to platform_admin — see AdminLayout.tsx. Creating a new
 // institution is a platform-level action, not something any individual
 // institution's own admin should be able to do.

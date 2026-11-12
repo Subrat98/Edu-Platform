@@ -2,26 +2,18 @@ import { useState, useEffect } from "react";
 import {
   HeartHandshake,
   MapPin,
-  CheckCircle2,
   TrendingUp,
   FileText,
   Search,
   Plus,
-  Download,
   ExternalLink,
   UploadCloud,
-  ShieldCheck,
-  Building2,
-  Filter,
-  Eye,
   Users,
-  Calendar,
   Sparkles,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
@@ -61,10 +53,10 @@ export function CommunityOutreachConsole({ onEvidenceUpdated }: CommunityOutreac
   const [location, setLocation] = useState("Giri Village, Khordha");
   const [activityDate, setActivityDate] = useState("2025-10-15");
   const [volunteers, setVolunteers] = useState(120);
-  const [coordinators, setCoordinators] = useState("Dr. B. K. Ray");
+  const [coordinators] = useState("Dr. B. K. Ray");
   const [beneficiaries, setBeneficiaries] = useState(450);
-  const [lat, setLat] = useState(20.2961);
-  const [lng, setLng] = useState(85.8245);
+  const [lat] = useState(20.2961);
+  const [lng] = useState(85.8245);
   const [brief, setBrief] = useState("Community health and literacy extension activity.");
 
   // Upload Evidence Modal

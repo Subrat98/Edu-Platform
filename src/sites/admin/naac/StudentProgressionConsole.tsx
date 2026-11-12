@@ -5,16 +5,12 @@ import {
   TrendingUp,
   Building2,
   CheckCircle2,
-  FileText,
   Search,
   Plus,
   ExternalLink,
   UploadCloud,
-  ShieldCheck,
   BadgeIndianRupee,
-  Layers,
   Activity,
-  Award,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -37,7 +33,6 @@ import {
 import type {
   PlacementProgressionData,
   PlacementOfferRecord,
-  HigherStudiesAdmitRecord,
   NaacEvidenceDocument,
 } from "@/types";
 
@@ -113,7 +108,7 @@ export function StudentProgressionConsole({ onEvidenceUpdated }: StudentProgress
           companyName,
           jobRole,
           ctcLakhsPerAnnum,
-          offerDate: new Date().toISOString().split("T")[0],
+          offerDate: new Date().toISOString().split("T")[0]!,
           appointmentLetterRef,
           driveType,
         },
@@ -755,7 +750,7 @@ export function StudentProgressionConsole({ onEvidenceUpdated }: StudentProgress
               <Input
                 type="file"
                 accept=".pdf,.png,.jpg,.jpeg"
-                onChange={(e) => setEvidenceFile(e.target.files ? e.target.files[0] : null)}
+                onChange={(e) => setEvidenceFile(e.target.files?.[0] ?? null)}
               />
             </div>
             <DialogFooter className="pt-2">

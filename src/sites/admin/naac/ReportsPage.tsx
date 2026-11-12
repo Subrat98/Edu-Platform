@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FileText,
   Download,
+  Printer,
 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ResponsiveTableContainer } from "@/components/admin/ResponsiveTableContainer";
+import { downloadCsv } from "@/lib/downloadCsv";
 
 const REPORT_TEMPLATES = [
   { id: "r-01", title: "Criterion-Wise Quantitative Metric Compilation", type: "Criterion", year: "2025-26", format: "Excel / CSV" },
@@ -19,12 +21,79 @@ const REPORT_TEMPLATES = [
   { id: "r-06", title: "Pending Document Verification & Compliance Audit Report", type: "Compliance", year: "Current", format: "PDF / CSV" },
 ];
 
+type ReportTemplate = (typeof REPORT_TEMPLATES)[number];
+
 export default function ReportsPage() {
   const [selectedYear, setSelectedYear] = useState("2025-26");
+  const [printReport, setPrintReport] = useState<ReportTemplate | null>(null);
+  const [printGeneratedOn, setPrintGeneratedOn] = useState("");
 
-  const downloadReport = (title: string) => {
-    alert(`Downloading ${title} for academic period ${selectedYear}...`);
+  useEffect(() => {
+    if (printReport) window.print();
+  }, [printReport]);
+
+  const downloadReport = (rep: ReportTemplate) => {
+    const period = rep.year === "2025-26" ? selectedYear : rep.year;
+    if (rep.format.includes("CSV") || rep.format.includes("Excel")) {
+      downloadCsv(`${rep.title.replace(/[^\w]+/g, "_")}_${period}.csv`, [
+        ["Report", "Category", "Academic Period", "Format"],
+        [rep.title, rep.type, period, rep.format],
+      ]);
+    } else {
+      setPrintGeneratedOn(new Date().toLocaleDateString());
+      setPrintReport(rep);
+    }
   };
+
+  if (printReport) {
+    const period = printReport.year === "2025-26" ? selectedYear : printReport.year;
+    return (
+      <div className="bg-muted/30 min-h-screen px-4 py-8 print:bg-white print:p-0">
+        <div className="mx-auto mb-4 flex max-w-2xl justify-end gap-2 print:hidden">
+          <Button variant="outline" onClick={() => setPrintReport(null)}>
+            Close
+          </Button>
+          <Button onClick={() => window.print()} className="gap-1.5">
+            <Printer className="size-4" /> Print
+          </Button>
+        </div>
+
+        <div className="border-border bg-surface mx-auto max-w-2xl rounded-lg border p-8 shadow-sm print:rounded-none print:border-0 print:p-0 print:shadow-none">
+          <div className="border-border mb-6 flex items-center justify-between border-b pb-4">
+            <div>
+              <p className="font-heading text-foreground text-lg font-bold">Our College</p>
+              <p className="text-muted-foreground text-xs">NAAC & IQAC Accreditation Dossier</p>
+            </div>
+            <p className="border-border rounded-md border px-3 py-1 text-sm font-semibold">{printReport.format}</p>
+          </div>
+
+          <h2 className="text-foreground mb-4 text-lg font-semibold">{printReport.title}</h2>
+
+          <table className="w-full border-collapse text-sm">
+            <tbody>
+              <tr className="border-border border-y">
+                <td className="text-muted-foreground p-2 font-medium">Category</td>
+                <td className="p-2 text-right">{printReport.type}</td>
+              </tr>
+              <tr className="border-border border-b">
+                <td className="text-muted-foreground p-2 font-medium">Academic Period</td>
+                <td className="p-2 text-right">{period}</td>
+              </tr>
+              <tr className="border-border border-b">
+                <td className="text-muted-foreground p-2 font-medium">Generated On</td>
+                <td className="p-2 text-right">{printGeneratedOn}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p className="text-muted-foreground mt-6 text-xs">
+            This is a system-generated accreditation dossier cover sheet produced from demo NAAC data for illustration
+            purposes.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto w-full min-w-0">
@@ -77,7 +146,7 @@ export default function ReportsPage() {
             </div>
 
             <div className="mt-3 flex items-center justify-end border-t border-border/50 pt-2">
-              <Button size="xs" variant="outline" onClick={() => downloadReport(rep.title)} className="gap-1">
+              <Button size="xs" variant="outline" onClick={() => downloadReport(rep)} className="gap-1">
                 <Download className="size-3" />
                 <span>Export Dossier</span>
               </Button>
@@ -120,7 +189,7 @@ export default function ReportsPage() {
                     {rep.format}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button size="xs" variant="outline" onClick={() => downloadReport(rep.title)} className="gap-1">
+                    <Button size="xs" variant="outline" onClick={() => downloadReport(rep)} className="gap-1">
                       <Download className="size-3" /> Export
                     </Button>
                   </TableCell>

@@ -61,7 +61,6 @@ export const initialCrosscuttingCourseMappings: CrosscuttingCourseMapping[] = [
   {
     id: "cc-gen-03",
     courseCode: "POL-CC302",
-    courseName: "Women and the Political Process in Modern India",
     courseTitle: "Women and the Political Process in Modern India",
     programmeName: "B.A. Political Science (Honours)",
     department: "Department of Political Science",
@@ -266,7 +265,6 @@ export const initialCrosscuttingCourseMappings: CrosscuttingCourseMapping[] = [
   {
     id: "cc-env-05",
     courseCode: "ZOO-CC402",
-    courseName: "Conservation Biology, Wildlife Protection & Biodiversity Laws",
     courseTitle: "Conservation Biology, Wildlife Protection & Biodiversity Laws",
     programmeName: "B.Sc. Zoology (Honours)",
     department: "Department of Zoology",
@@ -628,7 +626,6 @@ export const initialCrosscuttingCourseMappings: CrosscuttingCourseMapping[] = [
     courseTitle: "Research Methodology, Publication Ethics & Anti-Plagiarism Standards",
     programmeName: "All Postgraduate Programmes (M.Sc., MCA, M.Com.)",
     department: "College IQAC & Research Committee",
-    departmentCode: "IQAC",
     courseType: "Core Course",
     theme: "Professional Ethics & Integrity",
     highlightedUnit: "Unit III: UGC Academic Integrity Regulations 2018 & Plagiarism Prevention",

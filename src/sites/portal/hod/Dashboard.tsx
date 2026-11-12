@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { Building2, GraduationCap, Megaphone, Users } from "lucide-react";
+import { Award, Building2, GraduationCap, Megaphone, Users } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { StatCard } from "@/components/admin/StatCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -101,6 +101,20 @@ export default function HodDashboard() {
             </Link>
             <Link to="/college/notices" className="text-accent text-sm hover:underline">
               College notices →
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Award className="size-4" /> NAAC & IQAC
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-2">
+            <p className="text-muted-foreground text-sm">Curate departmental metrics, verify faculty files and review evidence for accreditation.</p>
+            <Link to="/admin/naac" className="text-accent text-sm font-medium hover:underline">
+              Open NAAC workspace →
             </Link>
           </CardContent>
         </Card>

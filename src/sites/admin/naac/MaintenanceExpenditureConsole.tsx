@@ -3,17 +3,14 @@ import {
   Wrench,
   Building,
   CheckCircle2,
-  FileText,
   Search,
   Plus,
   ExternalLink,
   UploadCloud,
   ShieldCheck,
   BadgeIndianRupee,
-  Layers,
   Activity,
   Calculator,
-  CalendarCheck,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -58,7 +55,7 @@ export function MaintenanceExpenditureConsole({ onEvidenceUpdated }: Maintenance
   const [annualContractValueLakhs, setAnnualContractValueLakhs] = useState(5.0);
   const [startDate, setStartDate] = useState("2025-04-01");
   const [endDate, setEndDate] = useState("2026-03-31");
-  const [paymentTerms, setPaymentTerms] = useState("Quarterly upon engineer certification");
+  const [paymentTerms] = useState("Quarterly upon engineer certification");
   const [contactPerson, setContactPerson] = useState("");
 
   // Upload Evidence Modal
@@ -636,7 +633,7 @@ export function MaintenanceExpenditureConsole({ onEvidenceUpdated }: Maintenance
               <Input
                 type="file"
                 accept=".pdf,.png,.jpg,.jpeg"
-                onChange={(e) => setEvidenceFile(e.target.files ? e.target.files[0] : null)}
+                onChange={(e) => setEvidenceFile(e.target.files?.[0] ?? null)}
               />
             </div>
             <DialogFooter className="pt-2">

@@ -4,17 +4,12 @@ import {
   MessageSquare,
   HeartPulse,
   Laptop,
-  CheckCircle2,
   FileText,
   Search,
   Plus,
   ExternalLink,
   UploadCloud,
-  ShieldCheck,
-  Award,
-  Layers,
   Activity,
-  Calendar,
   Users,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -56,7 +51,7 @@ export function SkillEnhancementConsole({ onEvidenceUpdated }: SkillEnhancementC
   const [showAddModal, setShowAddModal] = useState(false);
   const [programmeTitle, setProgrammeTitle] = useState("");
   const [capabilityType, setCapabilityType] = useState<SkillProgrammeRecord["capabilityType"]>("Soft Skills");
-  const [organizingDepartment, setOrganizingDepartment] = useState("Training & Placement Cell");
+  const [organizingDepartment] = useState("Training & Placement Cell");
   const [agencyOrTrainer, setAgencyOrTrainer] = useState("GTT Foundation & Barclays LifeSkills");
   const [startDate, setStartDate] = useState("2025-09-15");
   const [endDate, setEndDate] = useState("2025-09-25");
@@ -624,7 +619,7 @@ export function SkillEnhancementConsole({ onEvidenceUpdated }: SkillEnhancementC
               <Input
                 type="file"
                 accept=".pdf,.png,.jpg,.jpeg"
-                onChange={(e) => setEvidenceFile(e.target.files ? e.target.files[0] : null)}
+                onChange={(e) => setEvidenceFile(e.target.files?.[0] ?? null)}
               />
             </div>
             <DialogFooter className="pt-2">

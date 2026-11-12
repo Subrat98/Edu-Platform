@@ -11,7 +11,16 @@ export const heroSchoolFiles = [
   "school-hero-07.png",
 ];
 
-export const heroCollegeFiles = ["college-hero-02.jpg", "college-hero-03.png", "college-hero-04.png"];
+export const heroCollegeFiles = [
+  "college-hero-02.jpg",
+  "college-hero-03.png",
+  "college-hero-04.png",
+  "college-hero-05.jpg",
+  "college-hero-06.jpg",
+  "college-hero-07.jpg",
+  "college-hero-08.jpg",
+  "college-hero-09.jpg",
+];
 
 export const gallerySchoolFiles = [
   "school-gallery-02.jpg",

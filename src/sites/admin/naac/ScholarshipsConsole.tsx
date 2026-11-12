@@ -3,14 +3,11 @@ import {
   GraduationCap,
   Users,
   CheckCircle2,
-  FileText,
   Search,
   Plus,
   ExternalLink,
   UploadCloud,
-  ShieldCheck,
   BadgeIndianRupee,
-  Layers,
   Activity,
   Award,
   Wallet,
@@ -101,7 +98,7 @@ export function ScholarshipsConsole({ onEvidenceUpdated }: ScholarshipsConsolePr
           scholarshipScheme,
           sanctionAuthority,
           amountPerYear,
-          disbursalDate: new Date().toISOString().split("T")[0],
+          disbursalDate: new Date().toISOString().slice(0, 10),
           bankReferenceOrTransactionId: bankRef,
           verificationStatus: "Disbursed",
         },
@@ -629,7 +626,7 @@ export function ScholarshipsConsole({ onEvidenceUpdated }: ScholarshipsConsolePr
               <Input
                 type="file"
                 accept=".pdf,.png,.jpg,.jpeg"
-                onChange={(e) => setEvidenceFile(e.target.files ? e.target.files[0] : null)}
+                onChange={(e) => setEvidenceFile(e.target.files?.[0] ?? null)}
               />
             </div>
             <DialogFooter className="pt-2">

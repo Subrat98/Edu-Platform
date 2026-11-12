@@ -50,7 +50,7 @@ export default function AqarPage() {
     getAqarRecords()
       .then((records) => {
         setAqarList(records);
-        if (records.length > 0 && !selectedYear) {
+        if (records[0] && !selectedYear) {
           setSelectedYear(records[0].academicYear);
         }
       })
@@ -81,8 +81,9 @@ export default function AqarPage() {
   const openAdvanceModal = () => {
     if (!currentAqar) return;
     const nextIdx = Math.min(currentStageIdx + 1, AQAR_STAGES.length - 1);
-    setTargetStatus(AQAR_STAGES[nextIdx]);
-    setAdvanceRemarks(`Transitioning to ${AQAR_STAGES[nextIdx]} following review.`);
+    const nextStage = AQAR_STAGES[nextIdx] ?? AQAR_STAGES[0]!;
+    setTargetStatus(nextStage);
+    setAdvanceRemarks(`Transitioning to ${nextStage} following review.`);
     setAdvanceModalOpen(true);
   };
 

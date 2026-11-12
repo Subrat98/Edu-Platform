@@ -3,12 +3,6 @@ import {
   ShieldCheck,
   History,
   Plus,
-  Calendar,
-  Award,
-  FileCheck2,
-  Clock,
-  Sparkles,
-  Download,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -99,7 +93,7 @@ export default function AccreditationPage() {
         {
           cycleNumber: Number(formCycleNo),
           institutionName: formInstName,
-          accreditationBody: formBody,
+          accreditationBody: formBody as AccreditationCycle["accreditationBody"],
           status: formStatus,
           grade: formGrade,
           cgpa: parseFloat(formCgpa) || 3.0,
@@ -116,7 +110,7 @@ export default function AccreditationPage() {
         {
           cycleNumber: Number(formCycleNo),
           institutionName: formInstName,
-          accreditationBody: formBody,
+          accreditationBody: formBody as AccreditationCycle["accreditationBody"],
           status: formStatus,
           grade: formGrade,
           cgpa: parseFloat(formCgpa) || 3.0,

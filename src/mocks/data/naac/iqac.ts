@@ -15,7 +15,7 @@ export const initialIqacMembers: IqacCommitteeMember[] = [
     appointmentDate: "2023-01-10",
     tenure: "2023 – 2028",
     contact: "+91 94370 12345",
-    email: "principal@kalinga.edu.in",
+    email: "principal@psc.eduplatform.demo",
   },
   {
     id: "iqac-m-2",
@@ -26,7 +26,7 @@ export const initialIqacMembers: IqacCommitteeMember[] = [
     appointmentDate: "2023-01-10",
     tenure: "2023 – 2028",
     contact: "+91 94371 67890",
-    email: "iqac.coordinator@kalinga.edu.in",
+    email: "iqac.coordinator@psc.eduplatform.demo",
   },
   {
     id: "iqac-m-3",
@@ -37,7 +37,7 @@ export const initialIqacMembers: IqacCommitteeMember[] = [
     appointmentDate: "2023-01-10",
     tenure: "2023 – 2026",
     contact: "+91 98610 23456",
-    email: "dean.academics@kalinga.edu.in",
+    email: "dean.academics@psc.eduplatform.demo",
   },
   {
     id: "iqac-m-4",
@@ -48,7 +48,7 @@ export const initialIqacMembers: IqacCommitteeMember[] = [
     appointmentDate: "2023-01-10",
     tenure: "2023 – 2026",
     contact: "+91 94380 34567",
-    email: "r.mishra@kalinga.edu.in",
+    email: "r.mishra@psc.eduplatform.demo",
   },
   {
     id: "iqac-m-5",
@@ -59,7 +59,7 @@ export const initialIqacMembers: IqacCommitteeMember[] = [
     appointmentDate: "2023-01-10",
     tenure: "2023 – 2028",
     contact: "+91 94370 98765",
-    email: "ao@kalinga.edu.in",
+    email: "ao@psc.eduplatform.demo",
   },
   {
     id: "iqac-m-6",
@@ -81,7 +81,7 @@ export const initialIqacMembers: IqacCommitteeMember[] = [
     appointmentDate: "2023-06-15",
     tenure: "2023 – 2026",
     contact: "+91 98611 44556",
-    email: "alumni.president@kalinga.edu.in",
+    email: "alumni.president@psc.eduplatform.demo",
   },
   {
     id: "iqac-m-8",
@@ -92,7 +92,7 @@ export const initialIqacMembers: IqacCommitteeMember[] = [
     appointmentDate: "2025-08-01",
     tenure: "2025 – 2026",
     contact: "+91 70081 77889",
-    email: "ananya.tripathy@student.kalinga.edu.in",
+    email: "ananya.tripathy@student.psc.eduplatform.demo",
   },
 ];
 

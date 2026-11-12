@@ -46,6 +46,7 @@ const CollegeScholarships = lazy(() => import("@/sites/college/pages/Scholarship
 const CollegeStudentCorner = lazy(() => import("@/sites/college/pages/StudentCorner"));
 const CollegeLibraryPublic = lazy(() => import("@/sites/college/pages/LibraryPublic"));
 const CollegeNewsEvents = lazy(() => import("@/sites/college/pages/NewsEvents"));
+const CollegeNotices = lazy(() => import("@/sites/college/pages/Notices"));
 const CollegeGallery = lazy(() => import("@/sites/college/pages/GalleryPage"));
 const CollegeDisclosure = lazy(() => import("@/sites/college/pages/Disclosure"));
 const CollegeContact = lazy(() => import("@/sites/college/pages/Contact"));
@@ -199,6 +200,7 @@ export const router = createBrowserRouter([
       { path: "student-corner", element: <CollegeStudentCorner /> },
       { path: "library", element: <CollegeLibraryPublic /> },
       { path: "news-events", element: <CollegeNewsEvents /> },
+      { path: "notices", element: <CollegeNotices /> },
       { path: "gallery", element: <CollegeGallery /> },
       { path: "disclosure", element: <CollegeDisclosure /> },
       { path: "contact", element: <CollegeContact /> },
@@ -223,7 +225,10 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <RequireRole roles={["platform_admin", "institution_admin", "principal", "admission_officer", "accountant"]} fallback={<AdminLoginRedirect />}>
+      <RequireRole
+        roles={["platform_admin", "institution_admin", "principal", "admission_officer", "accountant", "iqac_coordinator", "hod", "faculty"]}
+        fallback={<AdminLoginRedirect />}
+      >
         <AdminLayout />
       </RequireRole>
     ),

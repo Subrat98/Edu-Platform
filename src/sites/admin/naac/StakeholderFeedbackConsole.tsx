@@ -10,9 +10,6 @@ import {
   UploadCloud,
   Award,
   Globe,
-  Building2,
-  TrendingUp,
-  Filter,
   Search,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -25,7 +22,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogD
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ResponsiveTableContainer } from "@/components/admin/ResponsiveTableContainer";
 import {
   getFeedbackBundle,
@@ -52,7 +48,6 @@ export function StakeholderFeedbackConsole({ onEvidenceUpdated }: StakeholderFee
 
   // Modals
   const [recordModalOpen, setRecordModalOpen] = useState(false);
-  const [atrModalOpen, setAtrModalOpen] = useState(false);
   const [evidenceModalOpen, setEvidenceModalOpen] = useState(false);
 
   // Form states - Record
@@ -63,12 +58,6 @@ export function StakeholderFeedbackConsole({ onEvidenceUpdated }: StakeholderFee
   const [infraRating, setInfraRating] = useState("5");
   const [resRating, setResRating] = useState("4");
   const [respSug, setRespSug] = useState("");
-
-  // Form states - ATR
-  const [atrYear, setAtrYear] = useState("2025-26");
-  const [atrTarget, setAtrTarget] = useState<StakeholderType>("Student");
-  const [atrFinding, setAtrFinding] = useState("");
-  const [atrAction, setAtrAction] = useState("");
 
   // Form states - Evidence
   const [evidenceTitle, setEvidenceTitle] = useState("");
@@ -167,6 +156,9 @@ export function StakeholderFeedbackConsole({ onEvidenceUpdated }: StakeholderFee
 
   const currentSummary =
     data.summaries.find((s) => s.stakeholder === activeStakeholder) ?? data.summaries[0];
+  if (!currentSummary) {
+    return <div className="p-4 text-xs text-muted-foreground">No stakeholder feedback summaries available.</div>;
+  }
   const filteredRecords = data.records.filter(
     (r) =>
       r.stakeholder === activeStakeholder &&

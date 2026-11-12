@@ -1,27 +1,18 @@
 import { useState, useEffect } from "react";
 import {
-  Coins,
   Building2,
   CheckCircle2,
-  TrendingUp,
   FileText,
   Search,
   Plus,
-  Download,
   ExternalLink,
   UploadCloud,
   ShieldCheck,
   BadgeIndianRupee,
-  Filter,
-  Eye,
-  Calendar,
-  Layers,
-  Award,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
@@ -63,7 +54,7 @@ export function ResearchFundingConsole({ onEvidenceUpdated }: ResearchFundingCon
   const [agencyType, setAgencyType] = useState<ResearchGrantRecord["agencyType"]>("Government (Central/State)");
   const [sanctionNumber, setSanctionNumber] = useState("");
   const [sanctionDate, setSanctionDate] = useState("2025-04-10");
-  const [durationMonths, setDurationMonths] = useState(36);
+  const [durationMonths] = useState(36);
   const [sanctionedLakhs, setSanctionedLakhs] = useState(25.0);
   const [receivedLakhs, setReceivedLakhs] = useState(15.0);
 

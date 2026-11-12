@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import {
-  Compass,
   MapPin,
-  Calendar,
   Building2,
   Users,
   CheckCircle2,
@@ -14,12 +12,8 @@ import {
   Search,
   Filter,
   Eye,
-  Award,
-  Layers,
   Code2,
   Lightbulb,
-  Sparkles,
-  Link as LinkIcon,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

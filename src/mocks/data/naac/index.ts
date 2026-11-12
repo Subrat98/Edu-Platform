@@ -39,6 +39,7 @@ export * from "./genderEquity";
 export * from "./renewableEnergy";
 export * from "./environmentManagement";
 export * from "./divyangjanFacilities";
+export * from "./documentDirectory";
 
 
 

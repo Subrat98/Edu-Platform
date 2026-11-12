@@ -47,7 +47,7 @@ export default function IqacPage() {
   const [actDate, setActDate] = useState(new Date().toISOString().slice(0, 10));
   const [actCategory, setActCategory] = useState<IqacActivity["category"]>("Workshop");
   const [actObjective, setActObjective] = useState("");
-  const [actDesc, setActDesc] = useState("");
+  const [actDesc] = useState("");
   const [actParticipants, setActParticipants] = useState(60);
   const [actOutcome, setActOutcome] = useState("");
 
@@ -78,6 +78,7 @@ export default function IqacPage() {
         membersPresent: ["Dr. Himansu Sekhar Das", "Dr. Snigdha Mohanty", "Prof. Animesh Senapati"],
         minutes: meetMinutes,
         decisions: meetDecisions.split("\n").filter(Boolean),
+        actionItems: [],
         documents: [{ name: `${meetNo.replace(/\//g, "_")}_Minutes.pdf`, url: "/documents/sample.pdf" }],
       },
       { name: "Dr. Snigdha Mohanty", role: "IQAC Coordinator" }
@@ -228,7 +229,7 @@ export default function IqacPage() {
                       </p>
                       <p className="flex items-center gap-1.5">
                         <Phone className="size-3 shrink-0" />
-                        <span>{m.contactNumber}</span>
+                        <span>{m.contact}</span>
                       </p>
                       <div className="flex justify-between pt-1 text-[10px]">
                         <span>Tenure: {m.tenure}</span>

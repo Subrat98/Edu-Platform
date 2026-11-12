@@ -1,20 +1,15 @@
 import { useState, useEffect } from "react";
 import {
-  BookOpen,
   FileText,
   Plus,
   Download,
   Users,
-  CheckCircle2,
-  TrendingUp,
   Layers,
   UploadCloud,
   Building2,
   ExternalLink,
   Award,
-  Sparkles,
   Network,
-  Share2,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -56,7 +51,7 @@ export function CbcsManagementConsole({ onEvidenceUpdated }: CbcsManagementConso
   const [notifications, setNotifications] = useState<UniversityNotification[]>([]);
   const [electiveCourses, setElectiveCourses] = useState<ElectiveCourseOption[]>([]);
   const [adoptionPct, setAdoptionPct] = useState(100.0);
-  const [benchmarkPct, setBenchmarkPct] = useState(100.0);
+  const [, setBenchmarkPct] = useState(100.0);
   const [totalStudentsEnrolled, setTotalStudentsEnrolled] = useState(1196);
   const [attachedEvidence, setAttachedEvidence] = useState<NaacEvidenceDocument[]>([]);
 
@@ -72,7 +67,7 @@ export function CbcsManagementConsole({ onEvidenceUpdated }: CbcsManagementConso
   const [progDept, setProgDept] = useState("Computer Science");
   const [progLevel, setProgLevel] = useState<CbcsProgrammeRecord["level"]>("UG");
   const [progYear, setProgYear] = useState("2025-26");
-  const [progCbcsType, setProgCbcsType] = useState<CbcsProgrammeRecord["cbcsType"]>("Choice Based Credit System (CBCS)");
+  const [progCbcsType] = useState<CbcsProgrammeRecord["cbcsType"]>("Choice Based Credit System (CBCS)");
   const [progTotalCredits, setProgTotalCredits] = useState(140);
   const [progCoreCredits, setProgCoreCredits] = useState(80);
   const [progDseCredits, setProgDseCredits] = useState(24);
@@ -95,9 +90,9 @@ export function CbcsManagementConsole({ onEvidenceUpdated }: CbcsManagementConso
   const [elecDept, setElecDept] = useState("Computer Science");
   const [elecType, setElecType] = useState<ElectiveCourseOption["electiveType"]>("Generic Elective (GE / Open Elective)");
   const [elecCredits, setElecCredits] = useState(4);
-  const [elecSemester, setElecSemester] = useState("Semester III");
+  const [elecSemester] = useState("Semester III");
   const [elecTarget, setElecTarget] = useState("B.Sc., B.Com., BBA, B.A.");
-  const [elecSwayam, setElecSwayam] = useState(true);
+  const [elecSwayam] = useState(true);
 
   // Evidence Form state
   const [eviTitle, setEviTitle] = useState("");

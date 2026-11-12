@@ -6,7 +6,7 @@ import { collegeHeroUrl } from "@/mocks/data/images";
 export default function CollegeContact() {
   return (
     <>
-      <Hero variant="compact" title="Contact Us" imageUrl={collegeHeroUrl(1)} />
+      <Hero variant="compact" title="Contact Us" imageUrl={collegeHeroUrl(6)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Contact" }]} />
       <ContactForm title="We'd love to hear from you" />
     </>

@@ -86,4 +86,7 @@ export const initialSsrRecord: SsrRecord = {
   submissionDeadline: "2023-05-15",
   diasRemarks:
     "Data Validation & Verification (DVV) queries successfully answered in July 2023 leading to Peer Team Visit in October 2023.",
+  compiledBy: "Dr. Rashmita Mishra, IQAC Coordinator",
+  approvedBy: "Prof. (Dr.) B. K. Ray, Principal",
+  finalPdfUrl: "/documents/naac/ssr/SSR_Cycle_3_NAAC_Generated.pdf",
 };

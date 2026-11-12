@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import {
   Users,
   GraduationCap,
-  Award,
   Building,
   CheckCircle2,
   FileText,
@@ -14,14 +13,12 @@ import {
   BadgeIndianRupee,
   Activity,
   Calendar,
-  Globe,
   Handshake,
   HeartHandshake,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
@@ -41,7 +38,6 @@ import type {
   AlumniAssociationData,
   AlumniProfileRecord,
   AlumniChapterMeetingRecord,
-  AlumniContributionCategory,
   NaacEvidenceDocument,
 } from "@/types";
 
@@ -1003,7 +999,7 @@ export function AlumniAssociationConsole({ onEvidenceUpdated }: AlumniAssociatio
               <Input
                 type="file"
                 accept=".pdf,.png,.jpg,.jpeg"
-                onChange={(e) => setEvidenceFile(e.target.files ? e.target.files[0] : null)}
+                onChange={(e) => setEvidenceFile(e.target.files?.[0] ?? null)}
               />
             </div>
             <DialogFooter className="pt-2">

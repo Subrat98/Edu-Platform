@@ -17,6 +17,8 @@ export interface AccreditationCycle {
   certificateUrl?: string;
 }
 
+export type AccreditationStatus = AccreditationCycle["status"];
+
 export interface NaacMetric {
   id: string;
   criterionId: NaacCriterionId;
@@ -36,6 +38,7 @@ export interface NaacMetric {
   benchmark?: string;
   lastUpdated: string;
   updatedBy: string;
+  remarks?: string;
 }
 
 export interface NaacKeyIndicator {
@@ -205,6 +208,9 @@ export interface SsrRecord {
   criteriaProgress: Record<NaacCriterionId, number>;
   submissionDeadline: string;
   diasRemarks?: string;
+  compiledBy: string;
+  approvedBy: string;
+  finalPdfUrl?: string;
 }
 
 export type StakeholderType = "Student" | "Teacher" | "Alumni" | "Employer" | "Parent";

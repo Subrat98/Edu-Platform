@@ -94,20 +94,16 @@ import type {
   NaacAuditLog,
   AcademicCouncilMeeting,
   SemesterAcademicCalendar,
-  ProgrammeSyllabusStructure,
-  LessonPlanAdherence,
   CurriculumPlanningData,
   BoardOfStudiesMeeting,
   ProgrammeRevisionRecord,
   ComparativeSyllabusItem,
-  FiveYearRevisionSummary,
   CurriculumRevisionData,
   CbcsProgrammeRecord,
   UniversityNotification,
   ElectiveCourseOption,
   CbcsSummaryData,
   ValueAddedCourse,
-  ValueAddedEnrolmentSummary,
   StudentCertificateRecord,
   ValueAddedCoursesData,
   CrosscuttingCourseMapping,
@@ -116,27 +112,17 @@ import type {
   EnrolmentYearRecord,
   ProgrammeEnrolmentRecord,
   StudentProfileEnrolmentData,
-  DepartmentFacultyRatio,
   FullTimeFacultyMember,
-  CohortStudentCount,
   StudentTeacherRatioData,
-  StudentCentricMethodType,
   IndustrialVisitRecord,
   CapstoneProjectRecord,
-  ParticipativeLearningActivity,
   StudentCentricPedagogyData,
-  IctRoomType,
   IctRoomInventoryItem,
-  LmsCourseUsageStat,
-  DigitalLearningResource,
   IctClassroomLmsData,
-  CieAssessmentSchedule,
   CieGrievanceRecord,
   CieEvaluationData,
   ProgrammePassRecord,
-  PoCoAttainmentRecord,
   PassPercentageData,
-  SssQuestionItem,
   SssSurveyData,
   ResearchGrantRecord,
   ResearchFundingData,
@@ -156,13 +142,10 @@ import type {
   ItFacilityData,
   ComputerLabAssetRecord,
   WifiAccessPointRecord,
-  BandwidthBillRecord,
   MaintenanceExpenditureData,
   AmcContractRecord,
-  MaintenanceExpenditureCategory,
   ScholarshipData,
   ScholarshipBeneficiaryRecord,
-  ScholarshipSchemeSummary,
   SkillEnhancementData,
   SkillProgrammeRecord,
   CompetitiveExamGuidanceData,
@@ -179,12 +162,10 @@ import type {
   StrategicGoalRecord,
   GovernanceCommitteeRecord,
   EGovernanceData,
-  EGovernancePillarRecord,
   ErpModuleAuditRecord,
   FacultyEmpowermentData,
   SeedGrantRecord,
   FdpSponsorshipRecord,
-  FacultyAppraisalRecord,
   AuditedBalanceSheetData,
   FinancialAuditRecord,
   BudgetAllocationRecord,
@@ -193,7 +174,6 @@ import type {
   GenderSensitizationEventRecord,
   RenewableEnergyData,
   SolarEnergyGenerationRecord,
-  EnergyConservationInitiativeRecord,
   EnvironmentalAuditData,
   WasteManagementFacilityRecord,
   RainwaterHarvestingRecord,
@@ -298,6 +278,7 @@ export interface NaacDashboardStats {
 export async function getNaacDashboardStats(): Promise<NaacDashboardStats> {
   return mockRequest(() => {
     const activeCycle = accreditationCycles.find((c) => c.status === "Accredited") ?? accreditationCycles[0];
+    if (!activeCycle) throw new Error("No accreditation cycle configured");
     const totalCompletion = Math.round(
       criteria.reduce((acc, c) => acc + c.completionPercentage, 0) / criteria.length
     );
@@ -361,8 +342,8 @@ export async function updateAccreditationCycle(
 ): Promise<AccreditationCycle> {
   return mockRequest(() => {
     const idx = accreditationCycles.findIndex((c) => c.id === id);
-    if (idx === -1) throw new Error("Cycle not found");
     const old = accreditationCycles[idx];
+    if (!old) throw new Error("Cycle not found");
     const updated = { ...old, ...patch };
     accreditationCycles[idx] = updated;
     logAudit(actor.name, actor.role, "Accreditation", "Updated", `Cycle ${updated.cycleNumber}`);
@@ -391,8 +372,8 @@ export async function updateMetric(
     for (const c of criteria) {
       for (const ki of c.keyIndicators) {
         const mIdx = ki.metrics.findIndex((m) => m.id === metricId);
-        if (mIdx !== -1) {
-          const oldMetric = ki.metrics[mIdx];
+        const oldMetric = mIdx !== -1 ? ki.metrics[mIdx] : undefined;
+        if (oldMetric) {
           const updated = {
             ...oldMetric,
             ...patch,
@@ -501,8 +482,8 @@ export async function updateEvidenceStatus(
 ): Promise<NaacEvidenceDocument> {
   return mockRequest(() => {
     const idx = evidenceList.findIndex((e) => e.id === id);
-    if (idx === -1) throw new Error("Evidence document not found");
     const old = evidenceList[idx];
+    if (!old) throw new Error("Evidence document not found");
     const updated: NaacEvidenceDocument = {
       ...old,
       status: newStatus,
@@ -587,8 +568,8 @@ export async function updateActionTakenStatus(
 ): Promise<IqacActionTaken> {
   return mockRequest(() => {
     const idx = iqacActionTaken.findIndex((a) => a.id === id);
-    if (idx === -1) throw new Error("Action Taken Record not found");
     const old = iqacActionTaken[idx];
+    if (!old) throw new Error("Action Taken Record not found");
     const updated = { ...old, ...patch };
     iqacActionTaken[idx] = updated;
     logAudit(actor.name, actor.role, "IQAC Action Taken", "Updated", updated.decision, old.status, updated.status);
@@ -608,8 +589,8 @@ export async function updateAqarStatus(
 ): Promise<AqarRecord> {
   return mockRequest(() => {
     const idx = aqarRecords.findIndex((a) => a.id === id);
-    if (idx === -1) throw new Error("AQAR record not found");
     const old = aqarRecords[idx];
+    if (!old) throw new Error("AQAR record not found");
     const updated: AqarRecord = {
       ...old,
       status,
@@ -672,8 +653,9 @@ export async function updateBestPractice(
 ): Promise<BestPracticeItem> {
   return mockRequest(() => {
     const idx = bestPractices.findIndex((b) => b.id === id);
-    if (idx === -1) throw new Error("Best practice not found");
-    const updated = { ...bestPractices[idx], ...patch };
+    const oldPractice = bestPractices[idx];
+    if (!oldPractice) throw new Error("Best practice not found");
+    const updated = { ...oldPractice, ...patch };
     bestPractices[idx] = updated;
     logAudit(actor.name, actor.role, "Criterion 7", "Updated", updated.title);
     return updated;
@@ -709,8 +691,8 @@ export async function updateNaacTask(
 ): Promise<NaacTask> {
   return mockRequest(() => {
     const idx = tasks.findIndex((t) => t.id === id);
-    if (idx === -1) throw new Error("Task not found");
     const old = tasks[idx];
+    if (!old) throw new Error("Task not found");
     const updated = { ...old, ...patch };
     tasks[idx] = updated;
     logAudit(actor.name, actor.role, "Tasks & Deadlines", "Updated", updated.title, old.status, updated.status);
@@ -730,8 +712,8 @@ export async function processApprovalAction(
 ): Promise<NaacApproval> {
   return mockRequest(() => {
     const idx = approvals.findIndex((a) => a.id === id);
-    if (idx === -1) throw new Error("Approval not found");
     const appr = approvals[idx];
+    if (!appr) throw new Error("Approval not found");
 
     let nextStatus: NaacApproval["status"] = "Pending";
     let nextStage = appr.currentStage;

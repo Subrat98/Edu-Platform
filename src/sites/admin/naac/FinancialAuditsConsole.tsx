@@ -12,9 +12,7 @@ import {
   ShieldCheck,
   Building2,
   Calculator,
-  PieChart,
   Activity,
-  Layers,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -37,7 +35,6 @@ import {
 import type {
   AuditedBalanceSheetData,
   FinancialAuditRecord,
-  BudgetAllocationRecord,
   NaacEvidenceDocument,
 } from "@/types";
 
@@ -58,7 +55,7 @@ export function FinancialAuditsConsole({ onEvidenceUpdated }: FinancialAuditsCon
   const [financialYear, setFinancialYear] = useState("2024-25");
   const [auditorFirmName, setAuditorFirmName] = useState("");
   const [caMembershipOrUdin, setCaMembershipOrUdin] = useState("UDIN: 25048912BGHT7721");
-  const [completionDate, setCompletionDate] = useState(new Date().toISOString().split("T")[0]);
+  const [completionDate, setCompletionDate] = useState(new Date().toISOString().split("T")[0]!);
   const [auditRemarks, setAuditRemarks] = useState("Accounts maintain fair presentation in conformity with applicable AS.");
   const [complianceStatus, setComplianceStatus] = useState<FinancialAuditRecord["complianceStatus"]>("Unqualified (Clean Opinion)");
 
@@ -506,7 +503,7 @@ export function FinancialAuditsConsole({ onEvidenceUpdated }: FinancialAuditsCon
                         variant="outline"
                         size="sm"
                         className="h-8 gap-1 text-xs shrink-0"
-                        onClick={() => window.open(doc.evidenceUrl || doc.url || "#", "_blank")}
+                        onClick={() => window.open(doc.evidenceUrl || "#", "_blank")}
                       >
                         <ExternalLink className="h-3.5 w-3.5" />
                         View
