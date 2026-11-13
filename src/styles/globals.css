@@ -237,3 +237,31 @@ body {
   background-color: transparent !important;
   box-shadow: none !important;
 }
+
+/* Accessibility Text Zoom & GIGW 3.0 */
+.text-zoom-small {
+  font-size: 14px;
+}
+.text-zoom-large {
+  font-size: 18px;
+}
+
+/* Announcement Ticker Animation */
+@keyframes tickerAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: tickerAnimation 30s linear infinite;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}

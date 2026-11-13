@@ -10,5 +10,7 @@ export interface NavMenu {
   institutionId: InstitutionType;
   items: NavItem[];
   footerQuickLinks: NavItem[];
+  footerAcademicLinks?: NavItem[];
+  footerSupportLinks?: NavItem[];
   footerPolicyLinks: NavItem[];
 }

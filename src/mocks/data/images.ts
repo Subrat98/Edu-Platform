@@ -17,6 +17,13 @@ import {
   heroCollegeFiles,
 } from "./imageManifest";
 
+export {
+  gallerySchoolFiles,
+  galleryCollegeFiles,
+  heroSchoolFiles,
+  heroCollegeFiles,
+};
+
 export function portraitUrl(_index: number): string {
   return "";
 }

@@ -51,6 +51,12 @@ const CollegeGallery = lazy(() => import("@/sites/college/pages/GalleryPage"));
 const CollegeDisclosure = lazy(() => import("@/sites/college/pages/Disclosure"));
 const CollegeContact = lazy(() => import("@/sites/college/pages/Contact"));
 const CollegePolicyPage = lazy(() => import("@/sites/college/pages/PolicyPage"));
+const CollegeAdministration = lazy(() => import("@/sites/college/pages/Administration"));
+const CollegeGrievance = lazy(() => import("@/sites/college/pages/Grievance"));
+const CollegeTenders = lazy(() => import("@/sites/college/pages/Tenders"));
+const CollegeRecruitment = lazy(() => import("@/sites/college/pages/Recruitment"));
+const CollegeAlumni = lazy(() => import("@/sites/college/pages/Alumni"));
+const CollegeVirtualTour = lazy(() => import("@/sites/college/pages/VirtualTour"));
 
 // --- Admin (CMS) pages (lazy) ---
 const AdminDashboard = lazy(() => import("@/sites/admin/Dashboard"));
@@ -205,6 +211,12 @@ export const router = createBrowserRouter([
       { path: "disclosure", element: <CollegeDisclosure /> },
       { path: "contact", element: <CollegeContact /> },
       { path: "policies/:slug", element: <CollegePolicyPage /> },
+      { path: "administration", element: <CollegeAdministration /> },
+      { path: "grievance", element: <CollegeGrievance /> },
+      { path: "tenders", element: <CollegeTenders /> },
+      { path: "recruitment", element: <CollegeRecruitment /> },
+      { path: "alumni", element: <CollegeAlumni /> },
+      { path: "virtual-tour", element: <CollegeVirtualTour /> },
     ],
   },
   { path: "/unified", element: <UnifiedLanding /> },
