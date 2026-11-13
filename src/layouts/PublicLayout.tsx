@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -16,6 +16,16 @@ export function PublicLayout() {
   const activeInstitutionId = useInstitutionStore(
     (s) => s.activeInstitutionId,
   );
+  const setInstitution = useInstitutionStore((s) => s.setInstitution);
+
+  // Synchronize active institution with current route prefix
+  useEffect(() => {
+    if (location.pathname.startsWith("/college") && activeInstitutionId !== "college") {
+      setInstitution("college");
+    } else if (location.pathname.startsWith("/school") && activeInstitutionId !== "school") {
+      setInstitution("school");
+    }
+  }, [location.pathname, activeInstitutionId, setInstitution]);
   const tabs =
     activeInstitutionId === "college" ? collegePublicTabs : schoolPublicTabs;
 

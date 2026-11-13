@@ -18,7 +18,7 @@ export const demoUsers: DemoUser[] = [
     role: "institution_admin",
     institutionId: "school",
     avatarUrl: portraitUrl(2),
-    title: "Institution Admin, Our School",
+    title: "Institution Admin, School",
   },
   {
     id: "user-school-principal",
@@ -27,7 +27,7 @@ export const demoUsers: DemoUser[] = [
     role: "principal",
     institutionId: "school",
     avatarUrl: portraitUrl(3),
-    title: "Principal, Our School",
+    title: "Principal, School",
   },
   {
     id: "user-school-admissions",
@@ -36,7 +36,7 @@ export const demoUsers: DemoUser[] = [
     role: "admission_officer",
     institutionId: "school",
     avatarUrl: portraitUrl(4),
-    title: "Admission Officer, Our School",
+    title: "Admission Officer, School",
   },
   {
     id: "user-school-teacher",
@@ -45,7 +45,7 @@ export const demoUsers: DemoUser[] = [
     role: "teacher",
     institutionId: "school",
     avatarUrl: portraitUrl(5),
-    title: "Senior Teacher, Our School",
+    title: "Senior Teacher, School",
     staffId: "staff-sch-03",
   },
   {
@@ -55,7 +55,7 @@ export const demoUsers: DemoUser[] = [
     role: "accountant",
     institutionId: "school",
     avatarUrl: portraitUrl(6),
-    title: "Accountant, Our School",
+    title: "Accountant, School",
   },
   {
     id: "user-school-parent",
@@ -64,7 +64,7 @@ export const demoUsers: DemoUser[] = [
     role: "parent",
     institutionId: "school",
     avatarUrl: portraitUrl(7),
-    title: "Parent, Our School",
+    title: "Parent, School",
     guardianId: "guardian-0",
   },
   {
@@ -74,7 +74,7 @@ export const demoUsers: DemoUser[] = [
     role: "librarian",
     institutionId: "college",
     avatarUrl: portraitUrl(8),
-    title: "Chief Librarian, PSC",
+    title: "Chief Librarian, College",
   },
   {
     id: "user-college-faculty",
@@ -83,7 +83,7 @@ export const demoUsers: DemoUser[] = [
     role: "faculty",
     institutionId: "college",
     avatarUrl: portraitUrl(9),
-    title: "Associate Professor, Dept. of Computer Science, PSC",
+    title: "Associate Professor, Dept. of Computer Science, College",
     staffId: "staff-col-02",
   },
   {
@@ -93,7 +93,7 @@ export const demoUsers: DemoUser[] = [
     role: "student",
     institutionId: "college",
     avatarUrl: portraitUrl(10),
-    title: "B.Sc. (Honours) Computer Science, Semester 1, PSC",
+    title: "B.Sc. (Honours) Computer Science, Semester 1, College",
     studentId: "student-col-001",
   },
   {
@@ -103,7 +103,7 @@ export const demoUsers: DemoUser[] = [
     role: "exam_cell",
     institutionId: "college",
     avatarUrl: portraitUrl(13),
-    title: "Examination Cell, PSC",
+    title: "Examination Cell, College",
   },
   {
     id: "user-college-hod",
@@ -112,7 +112,7 @@ export const demoUsers: DemoUser[] = [
     role: "hod",
     institutionId: "college",
     avatarUrl: portraitUrl(14),
-    title: "HOD, Department of Physics, PSC",
+    title: "HOD, Department of Physics, College",
     staffId: "staff-col-03",
   },
   {
@@ -122,7 +122,7 @@ export const demoUsers: DemoUser[] = [
     role: "principal",
     institutionId: "college",
     avatarUrl: portraitUrl(15),
-    title: "Principal & Head of Institution, Our College",
+    title: "Principal & Head of Institution, College",
   },
   {
     id: "user-college-iqac-coord",

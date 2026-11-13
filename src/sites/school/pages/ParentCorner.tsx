@@ -22,7 +22,7 @@ export default function SchoolParentCorner() {
         eyebrow="Quick access"
         title="Everything parents need"
         items={[
-          { title: "Parent Portal Login", description: "Attendance, timetable, results, fee ledger and library loans — in one place.", icon: "people", href: "/auth/login" },
+          { title: "Parent Portal Login", description: "Attendance, timetable, results, fee ledger and library loans — in one place.", icon: "people", href: "/auth/login?institution=school" },
           { title: "PTM Schedules", description: "Upcoming Parent-Teacher Meeting dates by class, published on the Notices page.", icon: "academics" },
           { title: "Transport Routes", description: "Pickup and drop timings for all GPS-tracked bus routes.", icon: "transport", href: "/school/facilities" },
           { title: "School Rules", description: "Uniform policy, attendance rules and the code of conduct.", icon: "safety" },

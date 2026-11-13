@@ -95,7 +95,7 @@ export function Header() {
 
   function handleLogout() {
     logout();
-    navigate("/auth/login");
+    navigate(`/auth/login?institution=${institutionId}`);
   }
 
   const isCollege = institutionId === "college";
@@ -419,7 +419,7 @@ export function Header() {
               </DropdownMenu>
             ) : (
               <Button asChild size="sm" className="gap-1.5 text-xs shadow-xs">
-                <Link to="/auth/login">
+                <Link to={`/auth/login?institution=${institutionId}`}>
                   <LogIn className="size-3.5" />
                   <span>Portal Login</span>
                 </Link>
@@ -627,7 +627,7 @@ export function Header() {
 
               <div className="pt-4 border-t space-y-2">
                 <Button asChild className="w-full text-xs gap-1.5">
-                  <Link to="/auth/login">
+                  <Link to={`/auth/login?institution=${institutionId}`}>
                     <LogIn className="size-3.5" />
                     <span>Portal Login</span>
                   </Link>
