@@ -129,7 +129,7 @@ export default function MenuBuilder() {
                   {item.children?.length ? (
                     <ul className="mt-1.5 space-y-0.5 border-l pl-3">
                       {item.children.map((c) => (
-                        <li key={c.path} className="text-muted-foreground text-xs">
+                        <li key={c.label} className="text-muted-foreground text-xs">
                           {c.label} <span className="opacity-60">— {c.path}</span>
                         </li>
                       ))}
@@ -187,7 +187,7 @@ export default function MenuBuilder() {
               {draft.children?.length ? (
                 <ul className="mt-1 space-y-1">
                   {draft.children.map((c, i) => (
-                    <li key={c.path} className="bg-background flex items-center justify-between rounded-md px-2 py-1 text-sm">
+                    <li key={i} className="bg-background flex items-center justify-between rounded-md px-2 py-1 text-sm">
                       {c.label}
                       <Button variant="ghost" size="icon-sm" onClick={() => removeChild(i)}>
                         <Trash2 className="size-3.5" />

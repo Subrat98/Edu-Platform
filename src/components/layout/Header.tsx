@@ -466,7 +466,7 @@ export function Header() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="start" className="min-w-52 shadow-lg border-primary/20">
                       {item.children.map((child) => (
-                        <DropdownMenuItem key={child.path} asChild>
+                        <DropdownMenuItem key={child.label} asChild>
                           <Link to={child.path} className="text-xs cursor-pointer py-1.5 font-medium">
                             {t(child.label)}
                           </Link>
@@ -600,7 +600,7 @@ export function Header() {
                         </div>
                         <div className="pl-3 space-y-0.5 border-l-2 border-primary/20 ml-2">
                           {item.children.map((child) => (
-                            <SheetClose key={child.path} asChild>
+                            <SheetClose key={child.label} asChild>
                               <Link
                                 to={child.path}
                                 className="block py-1 px-2 text-xs text-muted-foreground hover:text-primary hover:bg-muted/30 rounded"
