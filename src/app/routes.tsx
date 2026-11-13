@@ -28,6 +28,11 @@ const SchoolResults = lazy(() => import("@/sites/school/pages/Results"));
 const SchoolDownloads = lazy(() => import("@/sites/school/pages/DownloadsPage"));
 const SchoolContact = lazy(() => import("@/sites/school/pages/Contact"));
 const SchoolPolicyPage = lazy(() => import("@/sites/school/pages/PolicyPage"));
+const SchoolMandatoryDisclosure = lazy(() => import("@/sites/school/pages/MandatoryDisclosure"));
+const SchoolAdministration = lazy(() => import("@/sites/school/pages/Administration"));
+const SchoolRti = lazy(() => import("@/sites/school/pages/Rti"));
+const SchoolGrievance = lazy(() => import("@/sites/school/pages/Grievance"));
+const SchoolAlumni = lazy(() => import("@/sites/school/pages/Alumni"));
 
 // --- College pages (lazy) ---
 const CollegeHome = lazy(() => import("@/sites/college/pages/Home"));
@@ -180,6 +185,11 @@ export const router = createBrowserRouter([
       { path: "downloads", element: <SchoolDownloads /> },
       { path: "contact", element: <SchoolContact /> },
       { path: "policies/:slug", element: <SchoolPolicyPage /> },
+      { path: "mandatory-disclosure", element: <SchoolMandatoryDisclosure /> },
+      { path: "administration", element: <SchoolAdministration /> },
+      { path: "rti", element: <SchoolRti /> },
+      { path: "grievance", element: <SchoolGrievance /> },
+      { path: "alumni", element: <SchoolAlumni /> },
     ],
   },
   {

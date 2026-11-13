@@ -24,6 +24,7 @@ import {
   Building2,
   Globe,
   SlidersHorizontal,
+  FileCheck2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -231,7 +232,7 @@ export function Header() {
           </Container>
         </div>
 
-        {/* Tier 2: E-Services Quick-Access Strip (Section 4.2) */}
+        {/* Tier 2: E-Services Quick-Access Strip (College) */}
         {isCollege && (
           <div className="hidden md:block bg-muted/60 border-b border-border/60 py-1 text-[11px]">
             <Container className="flex items-center justify-between">
@@ -268,6 +269,48 @@ export function Header() {
                   <span>Samarth ERP</span>
                   <ExternalLink className="size-2.5" />
                 </a>
+              </div>
+            </Container>
+          </div>
+        )}
+
+        {/* Tier 2: School Transparency & Services Quick Strip (Section 4.2 / CBSE Mandate) */}
+        {!isCollege && (
+          <div className="hidden md:block bg-muted/60 border-b border-border/60 py-1 text-[11px]">
+            <Container className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Link
+                  to="/school/mandatory-disclosure"
+                  className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded font-black text-[10px] uppercase bg-amber-500 text-slate-950 hover:bg-amber-400 transition-colors shadow-xs"
+                >
+                  <FileCheck2 className="size-3" />
+                  <span>Mandatory Public Disclosure (Appendix IX)</span>
+                </Link>
+              </div>
+              <div className="flex items-center gap-3 overflow-x-auto text-foreground/90">
+                <Link to="/school/admissions" className="hover:text-primary font-medium flex items-center gap-1 text-blue-600 dark:text-blue-400">
+                  <span>Admissions 2026-27 (RTE 25%)</span>
+                </Link>
+                <span className="text-muted-foreground/40">·</span>
+                <Link to="/school/results" className="hover:text-primary font-medium">
+                  <span>Board Results (X & XII)</span>
+                </Link>
+                <span className="text-muted-foreground/40">·</span>
+                <Link to="/school/academics" className="hover:text-primary font-medium">
+                  <span>Academic Calendar</span>
+                </Link>
+                <span className="text-muted-foreground/40">·</span>
+                <Link to="/school/student-life" className="hover:text-primary font-medium">
+                  <span>PM-POSHAN Meal</span>
+                </Link>
+                <span className="text-muted-foreground/40">·</span>
+                <Link to="/school/grievance" className="hover:text-primary font-medium text-emerald-600 dark:text-emerald-400">
+                  <span>Grievance (Childline 1098)</span>
+                </Link>
+                <span className="text-muted-foreground/40">·</span>
+                <Link to="/school/alumni" className="hover:text-primary font-medium text-amber-600 dark:text-amber-400">
+                  <span>Mo School Abhiyan</span>
+                </Link>
               </div>
             </Container>
           </div>

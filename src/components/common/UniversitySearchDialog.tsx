@@ -1,17 +1,8 @@
 import { useState, useMemo, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Search,
-  FileText,
-  BookOpen,
-  Award,
-  Building2,
-  Users,
-  ShieldCheck,
-  Download,
   ExternalLink,
-  GraduationCap,
-  Sparkles,
 } from "lucide-react";
 import {
   Dialog,
@@ -21,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { collegeNotices } from "@/mocks/data/notices";
+import { collegeNotices, schoolNotices } from "@/mocks/data/notices";
 import { departments } from "@/mocks/data/departments";
 import { programmes } from "@/mocks/data/programmes";
 import { MOCK_PUBLICATIONS_DATA } from "@/mocks/data/naac/publications";
@@ -29,7 +20,7 @@ import { MOCK_PUBLICATIONS_DATA } from "@/mocks/data/naac/publications";
 interface SearchResultItem {
   id: string;
   title: string;
-  category: "Notices" | "Academics" | "NAAC / IQAC" | "Research" | "Administration" | "Services";
+  category: string;
   snippet: string;
   url: string;
   badge?: string;
@@ -45,14 +36,161 @@ export function UniversitySearchDialog({
   const [query, setQuery] = useState("");
   const [filterCategory, setFilterCategory] = useState<string>("All");
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Reset query on open
+  const isSchool = location.pathname.startsWith("/school");
+
+  // Reset query & filter on open or institution switch
   useEffect(() => {
-    if (open) setQuery("");
-  }, [open]);
+    if (open) {
+      setQuery("");
+      setFilterCategory("All");
+    }
+  }, [open, isSchool]);
 
-  // Index searchable database
+  // Index searchable database based on current portal mode
   const searchIndex: SearchResultItem[] = useMemo(() => {
+    if (isSchool) {
+      const items: SearchResultItem[] = [
+        // School Statutory & Mandatory Disclosures
+        {
+          id: "sch-disclosure",
+          title: "Mandatory Public Disclosure (CBSE Appendix IX Circular 1/2026)",
+          category: "Statutory Disclosure",
+          snippet: "Sections A–E: General information, affiliation documents, building safety, fire certificate, DEO certificate, and water/sanitation tests.",
+          url: "/school/mandatory-disclosure",
+          badge: "Appendix IX",
+        },
+        {
+          id: "sch-smc",
+          title: "School Management Committee (SMC & SDMC) — RTE Section 21",
+          category: "Administration",
+          snippet: "16-member statutory committee, 50% women representation, parent members, teacher representatives, and educational experts.",
+          url: "/school/administration",
+          badge: "RTE Sec 21",
+        },
+        {
+          id: "sch-rte",
+          title: "RTE 25% Reserved Admission Quota & Age Criteria (NEP 2020)",
+          category: "Academics",
+          snippet: "Section 12(1)(c) zero-tuition quota for economically weaker and disadvantaged groups. 40 entry seats.",
+          url: "/school/admissions",
+          badge: "RTE 12(1)(c)",
+        },
+        {
+          id: "sch-pm-poshan",
+          title: "PM-POSHAN Weekly Mid-Day Meal Nutrition Chart & Food Safety",
+          category: "Student Welfare",
+          snippet: "Classes I–VIII hot cooked meals, fortified rice, dalma, egg curry, hygiene roster, and daily teacher tasting log.",
+          url: "/school/student-life",
+          badge: "PM-POSHAN",
+        },
+        {
+          id: "sch-results",
+          title: "CBSE Class X & XII Board Examination Results (3-Year Archive)",
+          category: "Academics",
+          snippet: "100% pass record, Class X 91.2% quality pass (75%+), Class XII 89.4% quality pass, and school toppers.",
+          url: "/school/results",
+          badge: "Board Results",
+        },
+        {
+          id: "sch-atl",
+          title: "Atal Tinkering Lab (ATL), STEM & ICT Infrastructure",
+          category: "Facilities",
+          snippet: "NITI Aayog ATL lab with 3D printers, IoT kits, robotics, and 36 smart classrooms with interactive flat panels.",
+          url: "/school/facilities",
+          badge: "ATL Lab",
+        },
+        {
+          id: "sch-rti",
+          title: "Right to Information (RTI Act 2005) — Proactive Section 4(1)(b) Manuals",
+          category: "Statutory Disclosure",
+          snippet: "Public Information Officer (PIO), First Appellate Authority (FAA), fee structure, and 16 proactive manuals.",
+          url: "/school/rti",
+          badge: "RTI 2005",
+        },
+        {
+          id: "sch-alumni",
+          title: "Mo School Abhiyan (Odisha 2x Matching Grant) & Alumni Directory",
+          category: "Administration",
+          snippet: "Government of Odisha flagship initiative with 2x state matching grant for alumni donations. Roll of honor and alumni registration.",
+          url: "/school/alumni",
+          badge: "Mo School",
+        },
+        {
+          id: "sch-grievance",
+          title: "Student, Parent & POCSO Grievance Cell (Token System)",
+          category: "Student Welfare",
+          snippet: "File grievances online with tracking token SCH-GRV-2026-XXXX, Childline 1098, Women helpline 181, and Internal Complaints Committee.",
+          url: "/school/grievance",
+          badge: "24x7 Portal",
+        },
+        {
+          id: "sch-transport",
+          title: "School Transport Fleet & 8 GPS-Tracked Bus Routes",
+          category: "Facilities",
+          snippet: "8 yellow school buses with speed governors, CCTV, first-aid, female bus attendants, and live GPS tracking for parents.",
+          url: "/school/facilities",
+          badge: "Transport",
+        },
+        {
+          id: "sch-calendar",
+          title: "Annual School Calendar 2026-27 & Holistic Progress Card (NEP 2020)",
+          category: "Academics",
+          snippet: "220 instructional days, 5+3+3+4 pedagogical stages, formative evaluations, and 360-degree multi-dimensional assessment.",
+          url: "/school/academics",
+          badge: "NEP 2020",
+        },
+        {
+          id: "sch-houses",
+          title: "School Houses (Subhash, Gandhi, Tagore, Raman) & Clubs",
+          category: "Student Welfare",
+          snippet: "Four school houses fostering teamwork and discipline, Eco Club, Coding Club, Literary Club, and NCC/Scouts.",
+          url: "/school/student-life",
+          badge: "Co-Curricular",
+        },
+        {
+          id: "sch-fees",
+          title: "SMC Approved Fee Schedule 2026-27 & Concessions",
+          category: "Administration",
+          snippet: "Transparent fee structure approved by SMC. Quarterly payments, sibling concessions, and merit scholarships.",
+          url: "/school/admissions",
+          badge: "Fee Policy",
+        },
+        {
+          id: "sch-tc",
+          title: "Transfer Certificate (TC) Issuance & Online Verification",
+          category: "Academics",
+          snippet: "Online TC application, 7 working days processing, and public TC verification register for counter-signing.",
+          url: "/school/admissions",
+          badge: "TC Verify",
+        },
+        {
+          id: "sch-about",
+          title: "About Our School (UDISE+ 21160401201, Affiliation 3330123)",
+          category: "Administration",
+          snippet: "Founded in 1998, 4.0-acre green campus, 48 qualified faculty, school emblem, motto 'Vidya Dadati Vinayam', and anthem.",
+          url: "/school/about",
+          badge: "UDISE+",
+        },
+      ];
+
+      // Index School Notices
+      schoolNotices.forEach((n) => {
+        items.push({
+          id: `sch-notice-${n.id}`,
+          title: n.title,
+          category: "Notices",
+          snippet: n.summary || `Published on ${n.date} · Category: ${n.category}`,
+          url: "/school/notices",
+          badge: n.category,
+        });
+      });
+
+      return items;
+    }
+
+    // College / University Search Index
     const items: SearchResultItem[] = [
       // Key Statutory Pages
       {
@@ -178,7 +316,14 @@ export function UniversitySearchDialog({
     });
 
     return items;
-  }, []);
+  }, [isSchool]);
+
+  const categories = useMemo(() => {
+    if (isSchool) {
+      return ["All", "Notices", "Academics", "Statutory Disclosure", "Administration", "Student Welfare", "Facilities"];
+    }
+    return ["All", "Notices", "Academics", "NAAC / IQAC", "Research", "Administration", "Services"];
+  }, [isSchool]);
 
   const results = useMemo(() => {
     if (!query.trim()) return searchIndex.slice(0, 8);
@@ -193,8 +338,6 @@ export function UniversitySearchDialog({
     });
   }, [query, filterCategory, searchIndex]);
 
-  const categories = ["All", "Notices", "Academics", "NAAC / IQAC", "Research", "Administration", "Services"];
-
   const handleSelect = (url: string) => {
     onOpenChange(false);
     navigate(url);
@@ -207,7 +350,7 @@ export function UniversitySearchDialog({
           <DialogTitle className="text-sm font-bold text-foreground flex items-center justify-between">
             <span className="flex items-center gap-2">
               <Search className="size-4 text-primary" />
-              University Portal Search (Odisha State Repository)
+              {isSchool ? "Our School Portal Search (CBSE & Odisha S&ME)" : "Our College Portal Search (Odisha State Repository)"}
             </span>
             <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-muted rounded border border-border text-muted-foreground">
               ESC to close
@@ -217,7 +360,11 @@ export function UniversitySearchDialog({
             <Search className="absolute left-3 top-3 size-4 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Search notices, syllabi, NAAC documents, tenders, research, staff..."
+              placeholder={
+                isSchool
+                  ? "Search Appendix IX, RTE 25% quota, PM-POSHAN, SMC, faculty, circulars..."
+                  : "Search notices, syllabi, NAAC documents, tenders, research, staff..."
+              }
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="pl-9 h-10 text-sm bg-background border-border/80 focus-visible:ring-primary"
@@ -276,14 +423,20 @@ export function UniversitySearchDialog({
           ) : (
             <div className="py-10 text-center text-xs text-muted-foreground space-y-1">
               <Search className="size-6 mx-auto text-muted-foreground/60 mb-1" />
-              <div className="font-semibold text-foreground">No matching university records found</div>
-              <p>Try searching for "AQAR", "Syllabus", "Tender", "Hostel", or "Admission".</p>
+              <div className="font-semibold text-foreground">
+                {isSchool ? "No matching school records found" : "No matching college records found"}
+              </div>
+              <p>
+                {isSchool
+                  ? "Try searching for \"Appendix IX\", \"RTE\", \"PM-POSHAN\", \"SMC\", or \"Fee\"."
+                  : "Try searching for \"AQAR\", \"Syllabus\", \"Tender\", \"Hostel\", or \"Admission\"."}
+              </p>
             </div>
           )}
         </div>
 
         <div className="p-2 border-t border-border/50 bg-muted/10 text-[10px] text-muted-foreground flex items-center justify-between px-4">
-          <span>GIGW 3.0 & UGC Public Disclosure Search Compliant</span>
+          <span>{isSchool ? "CBSE Circular 1/2026 & GIGW 3.0 Search Compliant" : "GIGW 3.0 & UGC Public Disclosure Search Compliant"}</span>
           <span>Showing {results.length} results</span>
         </div>
       </DialogContent>
