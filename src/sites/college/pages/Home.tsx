@@ -99,7 +99,7 @@ export default function CollegeHome() {
 
   // E-Services Tiles (H5)
   const eServices = [
-    { title: "e-Admission", desc: "SAMS UG/PG Application Portal", href: "/college/admissions", icon: GraduationCap, color: "text-blue-600 bg-blue-500/10 border-blue-500/20" },
+    { title: "e-Admission", desc: "SAMS UG/PG Application Portal", href: "/college/admissions", icon: GraduationCap, color: "text-primary bg-primary/10 border-primary/20 hover:border-primary" },
     { title: "Exam Results", desc: "Provisional Marksheets & Cards", href: "/college/examination-cell", icon: Award, color: "text-emerald-600 bg-emerald-500/10 border-emerald-500/20" },
     { title: "Examinations", desc: "Exam Schedules & Form Fill-up", href: "/college/examination-cell", icon: Calendar, color: "text-purple-600 bg-purple-500/10 border-purple-500/20" },
     { title: "Online Payment", desc: "SBI Collect Tuition & Fees", href: "/college/admissions", icon: CreditCard, color: "text-amber-600 bg-amber-500/10 border-amber-500/20" },
@@ -602,7 +602,7 @@ export default function CollegeHome() {
 
             <Card className="border border-border/60 bg-card p-4 space-y-2">
               <div className="flex items-center gap-2 text-xs font-bold text-foreground">
-                <Award className="size-4 text-blue-600" />
+                <Award className="size-4 text-primary" />
                 <span>Sponsored Research Projects (DST/CSIR)</span>
               </div>
               <p className="text-xs text-muted-foreground">

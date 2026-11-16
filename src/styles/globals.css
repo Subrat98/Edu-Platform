@@ -22,15 +22,15 @@
  * automatically — no per-component branching required.
  */
 :root {
-  --color-primary: #1f3a5f;
-  --color-primary-foreground: #ffffff;
-  --color-accent: #0e8f8f;
-  --color-accent-foreground: #ffffff;
+  --color-primary: #C21717;
+  --color-primary-foreground: #FFFFFF;
+  --color-accent: #991b1b;
+  --color-accent-foreground: #FFFFFF;
   --color-highlight: #e0a100;
   --color-highlight-foreground: #1f1300;
-  --color-bg: #f5f7fb;
-  --color-surface: #ffffff;
-  --color-text: #172b4d;
+  --color-bg: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-text: #7F0000;
   --color-text-muted: #64748b;
   --color-border: #e2e8f0;
   --color-success: #15803d;
@@ -64,7 +64,7 @@
   --warning: var(--color-warning);
   --info: var(--color-info);
   --destructive: var(--color-error);
-  --destructive-foreground: #ffffff;
+  --destructive-foreground: #FFFFFF;
   --border: var(--color-border);
   --input: var(--color-border);
   --ring: var(--color-accent);
@@ -196,6 +196,7 @@
   h5,
   h6 {
     @apply font-heading;
+    color: #7F0000;
   }
 
   :focus-visible {

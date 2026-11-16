@@ -96,7 +96,7 @@ export default function SchoolHome() {
       desc: "Nursery to XI & RTE 25% Quota",
       href: "/school/admissions",
       icon: GraduationCap,
-      color: "bg-blue-500/10 text-blue-600 border-blue-500/20 hover:border-blue-500",
+      color: "bg-primary/10 text-primary border-primary/20 hover:border-primary",
     },
     {
       title: "Fee Structure",

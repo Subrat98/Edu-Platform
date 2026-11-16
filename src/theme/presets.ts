@@ -18,9 +18,9 @@ export const SCHOOL_PRESETS: ThemePreset[] = [
   {
     id: "school-classic-scholar",
     label: "Classic Scholar",
-    description: "Navy and gold, traditional centered header, principal message and toppers up front. Suited to established schools.",
+    description: "Crimson and gold, traditional centered header, principal message and toppers up front. Suited to established schools.",
     theme: {
-      colors: colors({ primary: "#1f3a5f", accent: "#8a6d1f", accentForeground: "#ffffff", highlight: "#c98a00", highlightForeground: "#1f1300" }),
+      colors: colors({ primary: "#C21717", accent: "#8a6d1f", accentForeground: "#FFFFFF", highlight: "#c98a00", highlightForeground: "#1f1300" }),
       typography: BRAND_TYPOGRAPHY,
       radius: "0.5rem",
       logoUrl: "",
@@ -31,7 +31,7 @@ export const SCHOOL_PRESETS: ThemePreset[] = [
     label: "Bright Kids",
     description: "Playful palette, rounded cards, large imagery, activity-focused homepage. Suited to pre-primary and primary.",
     theme: {
-      colors: colors({ primary: "#1d7a7a", accent: "#e0a100", accentForeground: "#1f1300", highlight: "#e8590c", highlightForeground: "#ffffff" }),
+      colors: colors({ primary: "#1d7a7a", accent: "#e0a100", accentForeground: "#1f1300", highlight: "#e8590c", highlightForeground: "#FFFFFF" }),
       typography: BRAND_TYPOGRAPHY,
       radius: "1.25rem",
       logoUrl: "",
@@ -42,7 +42,7 @@ export const SCHOOL_PRESETS: ThemePreset[] = [
     label: "Modern Campus",
     description: "Transparent header over a full-bleed hero, video-friendly, parent-corner shortcuts. Suited to senior secondary.",
     theme: {
-      colors: colors({ primary: "#1a2b4a", accent: "#2563a8", accentForeground: "#ffffff", highlight: "#16a34a", highlightForeground: "#ffffff" }),
+      colors: colors({ primary: "#C21717", accent: "#991b1b", accentForeground: "#FFFFFF", highlight: "#16a34a", highlightForeground: "#FFFFFF" }),
       typography: BRAND_TYPOGRAPHY,
       radius: "0.75rem",
       logoUrl: "",
@@ -58,7 +58,7 @@ export const COLLEGE_PRESETS: ThemePreset[] = [
     label: "Academic Classic",
     description: "Accreditation strip, mega-menu, department and programme cards. Suited to degree colleges.",
     theme: {
-      colors: colors({ primary: "#1b2f52", accent: "#2563a8", accentForeground: "#ffffff", highlight: "#c98a00", highlightForeground: "#1f1300" }, COLLEGE_COLORS),
+      colors: colors({ primary: "#C21717", accent: "#991b1b", accentForeground: "#FFFFFF", highlight: "#c98a00", highlightForeground: "#1f1300" }, COLLEGE_COLORS),
       typography: BRAND_TYPOGRAPHY,
       radius: "0.5rem",
       logoUrl: "",
@@ -69,7 +69,7 @@ export const COLLEGE_PRESETS: ThemePreset[] = [
     label: "Research Forward",
     description: "Research, publications and IQAC emphasis; documents-heavy layout for accreditation.",
     theme: {
-      colors: colors({ primary: "#2f3e46", accent: "#52796f", accentForeground: "#ffffff", highlight: "#b45309", highlightForeground: "#ffffff" }, COLLEGE_COLORS),
+      colors: colors({ primary: "#2f3e46", accent: "#52796f", accentForeground: "#FFFFFF", highlight: "#b45309", highlightForeground: "#FFFFFF" }, COLLEGE_COLORS),
       typography: BRAND_TYPOGRAPHY,
       radius: "0.375rem",
       logoUrl: "",
@@ -80,7 +80,7 @@ export const COLLEGE_PRESETS: ThemePreset[] = [
     label: "Campus Life",
     description: "Events, placements and student corner emphasis; vibrant imagery and bottom-tab mobile navigation.",
     theme: {
-      colors: colors({ primary: "#6d28d9", accent: "#db2777", accentForeground: "#ffffff", highlight: "#f59e0b", highlightForeground: "#1f1300" }, COLLEGE_COLORS),
+      colors: colors({ primary: "#6d28d9", accent: "#db2777", accentForeground: "#FFFFFF", highlight: "#f59e0b", highlightForeground: "#1f1300" }, COLLEGE_COLORS),
       typography: BRAND_TYPOGRAPHY,
       radius: "1rem",
       logoUrl: "",

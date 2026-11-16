@@ -4,26 +4,19 @@ import { useQuery } from "@tanstack/react-query";
 import { useTheme } from "next-themes";
 import {
   Menu,
-  Phone,
-  Mail,
   Moon,
   Sun,
   ChevronDown,
   RotateCcw,
   LogIn,
   LogOut,
-  ChevronRight,
   GraduationCap,
   Landmark,
   Search,
   Award,
   ExternalLink,
   ShieldCheck,
-  FileText,
   CreditCard,
-  Building2,
-  Globe,
-  SlidersHorizontal,
   FileCheck2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -48,7 +41,6 @@ import { Container } from "@/components/common/Container";
 import { useInstitutionData } from "@/features/institutions/useInstitutionData";
 import { useInstitutionStore } from "@/features/institutions/institutionStore";
 import { useAuthStore } from "@/features/auth/authStore";
-import { demoUsers } from "@/mocks/data/users";
 import { ROLE_LABELS } from "@/types";
 import { navMenuService } from "@/features/content/navMenuService";
 import { queryKeys } from "@/lib/queryKeys";
@@ -62,6 +54,7 @@ import { setTextZoom, getStoredTextZoom, type TextZoomLevel } from "@/lib/access
 export function Header() {
   const { institutionId, institution } = useInstitutionData();
   const setInstitution = useInstitutionStore((s) => s.setInstitution);
+  const visibility = useInstitutionStore((s) => s.visibility);
   const currentUser = useAuthStore((s) => s.currentUser);
   const logout = useAuthStore((s) => s.logout);
   const navigate = useNavigate();
@@ -192,28 +185,35 @@ export function Header() {
                 <kbd className="hidden sm:inline-block px-1 text-[9px] font-mono bg-white/20 rounded">⌘K</kbd>
               </button>
 
-              {/* Wing toggle — School / College */}
-              <div className="flex items-center rounded-full border border-white/25 bg-white/10 p-0.5">
-                {(["school", "college"] as const).map((wing) => (
-                  <button
-                    key={wing}
-                    type="button"
-                    onClick={() => {
-                      setInstitution(wing);
-                      navigate(`/${wing}`);
-                    }}
-                    className={cn(
-                      "flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold capitalize transition-all",
-                      institutionId === wing
-                        ? "bg-white text-primary shadow-sm"
-                        : "text-white/80 hover:text-white",
-                    )}
-                  >
-                    {wing === "school" ? <GraduationCap className="size-3" /> : <Landmark className="size-3" />}
-                    {wing === "school" ? t("school") : t("college")}
-                  </button>
-                ))}
-              </div>
+              {/* Wing toggle — School / College (Shown if both wings visible) */}
+              {(visibility?.school ?? true) && (visibility?.college ?? true) ? (
+                <div className="flex items-center rounded-full border border-white/25 bg-white/10 p-0.5">
+                  {(["school", "college"] as const).map((wing) => (
+                    <button
+                      key={wing}
+                      type="button"
+                      onClick={() => {
+                        setInstitution(wing);
+                        navigate(`/${wing}`);
+                      }}
+                      className={cn(
+                        "flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold capitalize transition-all",
+                        institutionId === wing
+                          ? "bg-white text-primary shadow-sm"
+                          : "text-white/80 hover:text-white",
+                      )}
+                    >
+                      {wing === "school" ? <GraduationCap className="size-3" /> : <Landmark className="size-3" />}
+                      {wing === "school" ? t("school") : t("college")}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex items-center gap-1 rounded-full border border-white/25 bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold text-white">
+                  {(visibility?.college ?? isCollege) ? <Landmark className="size-3" /> : <GraduationCap className="size-3" />}
+                  <span>{(visibility?.college ?? isCollege) ? t("college") : t("school")}</span>
+                </div>
+              )}
 
               {/* Language Dropdown (English / Odia) */}
               <LanguageDropdown variant="light" />
@@ -256,7 +256,7 @@ export function Header() {
                   <span>Library OPAC (EBSCO)</span>
                 </Link>
                 <span className="text-muted-foreground/40">·</span>
-                <Link to="/college/admissions" className="hover:text-primary font-medium flex items-center gap-1 text-blue-600 dark:text-blue-400">
+                <Link to="/college/admissions" className="hover:text-primary font-medium flex items-center gap-1 text-primary">
                   <CreditCard className="size-3" />
                   <span>Online Fee Payment</span>
                 </Link>
@@ -288,7 +288,7 @@ export function Header() {
                 </Link>
               </div>
               <div className="flex items-center gap-3 overflow-x-auto text-foreground/90">
-                <Link to="/school/admissions" className="hover:text-primary font-medium flex items-center gap-1 text-blue-600 dark:text-blue-400">
+                <Link to="/school/admissions" className="hover:text-primary font-medium flex items-center gap-1 text-primary">
                   <span>Admissions 2026-27 (RTE 25%)</span>
                 </Link>
                 <span className="text-muted-foreground/40">·</span>

@@ -2,15 +2,15 @@ import type { ColorTokens, ThemeTokens, TypographyTokens } from "@/types";
 import eduPlatformLogo from "@/assets/Edu-Platform Education Logo.png";
 
 export const SCHOOL_COLORS: ColorTokens = {
-  primary: "#1f3a5f",
-  primaryForeground: "#ffffff",
-  accent: "#0e8f8f",
-  accentForeground: "#ffffff",
+  primary: "#C21717",
+  primaryForeground: "#FFFFFF",
+  accent: "#991b1b",
+  accentForeground: "#FFFFFF",
   highlight: "#e0a100",
   highlightForeground: "#1f1300",
-  background: "#f5f7fb",
-  surface: "#ffffff",
-  textPrimary: "#172b4d",
+  background: "#FFFFFF",
+  surface: "#FFFFFF",
+  textPrimary: "#7F0000",
   textSecondary: "#64748b",
   border: "#e2e8f0",
   success: "#15803d",
@@ -23,9 +23,9 @@ export const SCHOOL_COLORS: ColorTokens = {
 // theming engine is visibly proven, not just relabelled.
 export const COLLEGE_COLORS: ColorTokens = {
   ...SCHOOL_COLORS,
-  primary: "#1b2f52",
-  accent: "#2563a8",
-  accentForeground: "#ffffff",
+  primary: "#C21717",
+  accent: "#991b1b",
+  accentForeground: "#FFFFFF",
   highlight: "#c98a00",
 };
 
@@ -54,11 +54,11 @@ export const COLLEGE_THEME: ThemeTokens = {
 export const UNIFIED_COLORS: ColorTokens = {
   ...SCHOOL_COLORS,
   primary: "#7a2048",
-  primaryForeground: "#ffffff",
+  primaryForeground: "#FFFFFF",
   accent: "#b8761f",
   accentForeground: "#1f1300",
   highlight: "#1f8a5f",
-  highlightForeground: "#ffffff",
+  highlightForeground: "#FFFFFF",
 };
 
 export const UNIFIED_THEME: ThemeTokens = {

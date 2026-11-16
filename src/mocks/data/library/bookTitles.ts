@@ -1,6 +1,6 @@
 import type { BookTitle } from "@/types";
 
-const COVER_COLORS = ["#1f3a5f", "#0e8f8f", "#b45309", "#6366f1", "#15803d", "#be185d", "#1b2f52", "#2563a8"];
+const COVER_COLORS = ["#C21717", "#0e8f8f", "#b45309", "#6366f1", "#15803d", "#be185d", "#991b1b", "#8B1111"];
 
 function cover(i: number) {
   return COVER_COLORS[i % COVER_COLORS.length]!;

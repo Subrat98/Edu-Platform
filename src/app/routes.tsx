@@ -94,6 +94,7 @@ const AdminActivityLog = lazy(() => import("@/sites/admin/settings/ActivityLog")
 const AdminLeaveRequests = lazy(() => import("@/sites/admin/students/LeaveRequests"));
 const AdminCertificateRequests = lazy(() => import("@/sites/admin/students/CertificateRequests"));
 const SetupWizard = lazy(() => import("@/sites/admin/platform/SetupWizard"));
+const PlatformSettings = lazy(() => import("@/sites/admin/platform/PlatformSettings"));
 
 // --- NAAC & IQAC pages (lazy) ---
 const NaacDashboard = lazy(() => import("@/sites/admin/naac/NaacDashboard"));
@@ -296,6 +297,14 @@ export const router = createBrowserRouter([
       { path: "naac/reports", element: <NaacReports /> },
       { path: "naac/audit", element: <NaacAudit /> },
       { path: "naac/permissions", element: <NaacPermissions /> },
+      {
+        path: "platform/settings",
+        element: (
+          <RequireRole roles={["platform_admin"]} fallback={<Navigate to="/admin" replace />}>
+            <PlatformSettings />
+          </RequireRole>
+        ),
+      },
       {
         path: "platform/setup-wizard",
         element: (

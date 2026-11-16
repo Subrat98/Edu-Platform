@@ -28,26 +28,39 @@ export function LoginPage() {
   const setUser = useAuthStore((s) => s.setUser);
   const activeInstitutionId = useInstitutionStore((s) => s.activeInstitutionId);
   const setInstitution = useInstitutionStore((s) => s.setInstitution);
+  const visibility = useInstitutionStore((s) => s.visibility);
 
   const [pendingId, setPendingId] = useState<string | null>(null);
 
   // Read URL query parameter "?institution=college" or "?institution=school"
   const paramInstitution = searchParams.get("institution");
+  const schoolVisible = visibility?.school ?? true;
+  const collegeVisible = visibility?.college ?? true;
   const initialInstitution: InstitutionType =
-    paramInstitution === "college" || paramInstitution === "school"
+    (paramInstitution === "college" && collegeVisible) || (paramInstitution === "school" && schoolVisible)
       ? paramInstitution
+      : !schoolVisible
+      ? "college"
+      : !collegeVisible
+      ? "school"
       : activeInstitutionId === "college"
       ? "college"
       : "school";
 
   const [currentInstitution, setCurrentInstitution] = useState<InstitutionType>(initialInstitution);
 
-  // Sync state when search param changes
+  // Sync state when search param changes or visibility changes
   useEffect(() => {
-    if (paramInstitution === "college" || paramInstitution === "school") {
-      setCurrentInstitution(paramInstitution);
+    if (paramInstitution === "college" && collegeVisible) {
+      setCurrentInstitution("college");
+    } else if (paramInstitution === "school" && schoolVisible) {
+      setCurrentInstitution("school");
+    } else if (!schoolVisible && currentInstitution !== "college") {
+      setCurrentInstitution("college");
+    } else if (!collegeVisible && currentInstitution !== "school") {
+      setCurrentInstitution("school");
     }
-  }, [paramInstitution]);
+  }, [paramInstitution, schoolVisible, collegeVisible, currentInstitution]);
 
   const handleSwitchInstitution = (inst: InstitutionType) => {
     setCurrentInstitution(inst);
@@ -148,41 +161,57 @@ export function LoginPage() {
         </div>
 
         {/* Portal Personas Wing Switcher */}
-        <div className="inline-flex items-center p-1 rounded-xl bg-muted/70 border border-border/80 shadow-xs mt-2">
-          <button
-            type="button"
-            onClick={() => handleSwitchInstitution("college")}
-            className={cn(
-              "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all",
-              isCollege
-                ? "bg-background text-foreground shadow-xs ring-1 ring-border"
-                : "text-muted-foreground hover:text-foreground"
-            )}
-          >
-            <Landmark className="size-3.5 text-emerald-600 dark:text-emerald-400" />
-            <span>College</span>
-            <Badge variant="secondary" className="text-[10px] py-0 px-1.5">
-              College + Super Admin
-            </Badge>
-          </button>
+        {visibility.school && visibility.college ? (
+          <div className="inline-flex items-center p-1 rounded-xl bg-muted/70 border border-border/80 shadow-xs mt-2">
+            <button
+              type="button"
+              onClick={() => handleSwitchInstitution("college")}
+              className={cn(
+                "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all",
+                isCollege
+                  ? "bg-background text-foreground shadow-xs ring-1 ring-border"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <Landmark className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+              <span>College</span>
+              <Badge variant="secondary" className="text-[10px] py-0 px-1.5">
+                College + Super Admin
+              </Badge>
+            </button>
 
-          <button
-            type="button"
-            onClick={() => handleSwitchInstitution("school")}
-            className={cn(
-              "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all",
-              !isCollege
-                ? "bg-background text-foreground shadow-xs ring-1 ring-border"
-                : "text-muted-foreground hover:text-foreground"
+            <button
+              type="button"
+              onClick={() => handleSwitchInstitution("school")}
+              className={cn(
+                "flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all",
+                !isCollege
+                  ? "bg-background text-foreground shadow-xs ring-1 ring-border"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <GraduationCap className="size-3.5 text-primary" />
+              <span>School</span>
+              <Badge variant="secondary" className="text-[10px] py-0 px-1.5">
+                School + Super Admin
+              </Badge>
+            </button>
+          </div>
+        ) : (
+          <div className="mt-2 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/20 bg-primary/5 text-xs text-primary font-semibold">
+            {visibility.college ? (
+              <>
+                <Landmark className="size-3.5" />
+                <span>College Portal Active (School Content Hidden by Super Admin)</span>
+              </>
+            ) : (
+              <>
+                <GraduationCap className="size-3.5" />
+                <span>School Portal Active (College Content Hidden by Super Admin)</span>
+              </>
             )}
-          >
-            <GraduationCap className="size-3.5 text-primary" />
-            <span>School</span>
-            <Badge variant="secondary" className="text-[10px] py-0 px-1.5">
-              School + Super Admin
-            </Badge>
-          </button>
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Grid of Authorized Personas */}

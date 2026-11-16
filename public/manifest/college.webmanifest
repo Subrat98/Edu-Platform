@@ -5,8 +5,8 @@
   "start_url": "/college",
   "scope": "/college",
   "display": "standalone",
-  "background_color": "#f5f7fb",
-  "theme_color": "#1b2f52",
+  "background_color": "#FFFFFF",
+  "theme_color": "#C21717",
   "icons": [
     { "src": "/icons/college-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any" },
     { "src": "/icons/college-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "maskable" }

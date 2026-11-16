@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useInstitutionStore } from "@/features/institutions/institutionStore";
 import {
   Search,
   ExternalLink,
@@ -38,7 +39,8 @@ export function UniversitySearchDialog({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isSchool = location.pathname.startsWith("/school");
+  const visibility = useInstitutionStore((s) => s.visibility);
+  const isSchool = (!(visibility?.college ?? true)) || ((visibility?.school ?? true) && location.pathname.startsWith("/school"));
 
   // Reset query & filter on open or institution switch
   useEffect(() => {
@@ -281,11 +283,12 @@ export function UniversitySearchDialog({
 
     // Index Programmes
     programmes.forEach((p) => {
+      const dept = departments.find((d) => d.id === p.departmentId);
       items.push({
         id: `prog-${p.id}`,
-        title: `${p.name} (${p.degree})`,
+        title: `${p.name} (${p.level})`,
         category: "Academics",
-        snippet: `${p.level} programme · Duration: ${p.duration} · Seats: ${p.intake} · Dept: ${p.department}`,
+        snippet: `${p.level} programme · Duration: ${p.durationYears} Years · Seats: ${p.seats} · Dept: ${dept?.name ?? p.departmentId}`,
         url: `/college/programmes/${p.slug}`,
         badge: p.level,
       });

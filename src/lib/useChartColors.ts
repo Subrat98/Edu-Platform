@@ -16,7 +16,7 @@ function readChartColors(): string[] {
  * whenever the institution (and therefore the brand palette) changes.
  */
 export function useChartColors(institutionId: string): string[] {
-  const [colors, setColors] = useState<string[]>(() => ["#1f3a5f", "#0e8f8f", "#e0a100", "#6366f1", "#64748b"]);
+  const [colors, setColors] = useState<string[]>(() => ["#C21717", "#0e8f8f", "#e0a100", "#6366f1", "#64748b"]);
 
   useEffect(() => {
     setColors(readChartColors());

@@ -43,6 +43,7 @@ import {
   Sparkles,
   Clock,
   KeyRound,
+  SlidersHorizontal,
 } from "lucide-react";
 
 export interface AdminNavItem {
@@ -172,7 +173,10 @@ export const naacRoleNavGroups: AdminNavGroup[] = [
 export const platformNavGroups: AdminNavGroup[] = [
   {
     label: "Platform",
-    items: [{ label: "Setup Wizard", path: "/admin/platform/setup-wizard", icon: Wand2, end: true }],
+    items: [
+      { label: "Website Wings & Content", path: "/admin/platform/settings", icon: SlidersHorizontal, end: true },
+      { label: "Setup Wizard", path: "/admin/platform/setup-wizard", icon: Wand2, end: true },
+    ],
   },
 ];
 

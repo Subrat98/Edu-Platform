@@ -17,15 +17,16 @@ export function PublicLayout() {
     (s) => s.activeInstitutionId,
   );
   const setInstitution = useInstitutionStore((s) => s.setInstitution);
+  const visibility = useInstitutionStore((s) => s.visibility);
 
-  // Synchronize active institution with current route prefix
+  // Synchronize active institution with current route prefix (only if visible)
   useEffect(() => {
-    if (location.pathname.startsWith("/college") && activeInstitutionId !== "college") {
+    if (location.pathname.startsWith("/college") && activeInstitutionId !== "college" && (visibility?.college ?? true)) {
       setInstitution("college");
-    } else if (location.pathname.startsWith("/school") && activeInstitutionId !== "school") {
+    } else if (location.pathname.startsWith("/school") && activeInstitutionId !== "school" && (visibility?.school ?? true)) {
       setInstitution("school");
     }
-  }, [location.pathname, activeInstitutionId, setInstitution]);
+  }, [location.pathname, activeInstitutionId, setInstitution, visibility]);
   const tabs =
     activeInstitutionId === "college" ? collegePublicTabs : schoolPublicTabs;
 
