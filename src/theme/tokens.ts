@@ -1,5 +1,6 @@
 import type { ColorTokens, ThemeTokens, TypographyTokens } from "@/types";
 import eduPlatformLogo from "@/assets/Edu-Platform Education Logo.png";
+import collegeLogo from "@/assets/college-logo.png";
 
 export const SCHOOL_COLORS: ColorTokens = {
   primary: "#C21717",
@@ -45,7 +46,7 @@ export const COLLEGE_THEME: ThemeTokens = {
   colors: COLLEGE_COLORS,
   typography: BRAND_TYPOGRAPHY,
   radius: "0.5rem",
-  logoUrl: eduPlatformLogo,
+  logoUrl: collegeLogo,
 };
 
 // A third, visually distinct identity (deep maroon + amber) so a "Both

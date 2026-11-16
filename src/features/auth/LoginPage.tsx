@@ -21,6 +21,7 @@ import { demoUsers } from "@/mocks/data/users";
 import { ROLE_LABELS, type InstitutionType } from "@/types";
 import { cn } from "@/lib/utils";
 import { useInstitutionStore } from "@/features/institutions/institutionStore";
+import collegeLogo from "@/assets/college-logo.png";
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -141,14 +142,21 @@ export function LoginPage() {
 
       {/* Hero / Portal Header */}
       <div className="mb-8 text-center space-y-3">
-        <div
-          className={cn(
-            "mx-auto flex size-14 items-center justify-center rounded-2xl text-white shadow-md transition-all",
-            isCollege ? "bg-emerald-600 shadow-emerald-600/20" : "bg-primary shadow-primary/20"
-          )}
-        >
-          {isCollege ? <Landmark className="size-7" /> : <GraduationCap className="size-7" />}
-        </div>
+        {isCollege ? (
+          <img
+            src={collegeLogo}
+            alt="Our College Logo"
+            className="mx-auto size-20 object-contain drop-shadow-md"
+          />
+        ) : (
+          <div
+            className={cn(
+              "mx-auto flex size-14 items-center justify-center rounded-2xl text-white shadow-md transition-all bg-primary shadow-primary/20"
+            )}
+          >
+            <GraduationCap className="size-7" />
+          </div>
+        )}
         <div>
           <h1 className="font-heading text-foreground text-2xl sm:text-3xl font-extrabold tracking-tight">
             Sign in to {isCollege ? "College Portal" : "School Portal"}
@@ -173,7 +181,7 @@ export function LoginPage() {
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <Landmark className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+              <img src={collegeLogo} alt="" className="size-4 object-contain inline-block" />
               <span>College</span>
               <Badge variant="secondary" className="text-[10px] py-0 px-1.5">
                 College + Super Admin

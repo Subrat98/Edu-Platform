@@ -41,7 +41,11 @@ export function WingSwitcher() {
             currentUser.institutionId === w.id ? "bg-surface text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground",
           )}
         >
-          <w.icon className="size-3" />
+          {w.id === "college" ? (
+            <img src="/college-logo.png" alt="" className="size-3.5 object-contain inline-block rounded-full" />
+          ) : (
+            <w.icon className="size-3" />
+          )}
           {w.label}
         </button>
       ))}

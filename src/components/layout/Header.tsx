@@ -203,14 +203,22 @@ export function Header() {
                           : "text-white/80 hover:text-white",
                       )}
                     >
-                      {wing === "school" ? <GraduationCap className="size-3" /> : <Landmark className="size-3" />}
+                      {wing === "school" ? (
+                        <GraduationCap className="size-3" />
+                      ) : (
+                        <img src="/college-logo.png" alt="" className="size-3.5 object-contain inline-block rounded-full" />
+                      )}
                       {wing === "school" ? t("school") : t("college")}
                     </button>
                   ))}
                 </div>
               ) : (
                 <div className="flex items-center gap-1 rounded-full border border-white/25 bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold text-white">
-                  {(visibility?.college ?? isCollege) ? <Landmark className="size-3" /> : <GraduationCap className="size-3" />}
+                  {(visibility?.college ?? isCollege) ? (
+                    <img src="/college-logo.png" alt="" className="size-3.5 object-contain inline-block rounded-full" />
+                  ) : (
+                    <GraduationCap className="size-3" />
+                  )}
                   <span>{(visibility?.college ?? isCollege) ? t("college") : t("school")}</span>
                 </div>
               )}
@@ -319,13 +327,21 @@ export function Header() {
         {/* Tier 3: Institutional Brand & Accreditation Banner */}
         <Container className="flex h-20 items-center justify-between gap-4 py-2">
           <Link to={`/${institutionId}`} className="flex min-w-0 shrink items-center gap-3">
-            <div className="relative size-12 shrink-0 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-white shadow-md border border-white/20">
-              {isCollege ? (
-                <Landmark className="size-6 text-white" />
-              ) : (
-                <GraduationCap className="size-6 text-white" />
-              )}
-            </div>
+            {isCollege && institution?.theme.logoUrl ? (
+              <img
+                src={institution.theme.logoUrl}
+                alt={institution?.name ?? "Our College"}
+                className="size-14 shrink-0 rounded-xl object-contain drop-shadow-sm"
+              />
+            ) : (
+              <div className="relative size-12 shrink-0 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center text-white shadow-md border border-white/20">
+                {isCollege ? (
+                  <Landmark className="size-6 text-white" />
+                ) : (
+                  <GraduationCap className="size-6 text-white" />
+                )}
+              </div>
+            )}
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <span className="font-heading text-foreground block truncate text-base sm:text-lg font-bold leading-tight">
@@ -333,7 +349,7 @@ export function Header() {
                 </span>
               </div>
               <span className="text-xs text-primary font-semibold block truncate">
-                {isCollege ? "Our College · Est. 1868 / 1943" : (institution?.tagline ?? "Where every child learns to shine")}
+                {isCollege ? "Our College · Estd. 2026" : (institution?.tagline ?? "Where every child learns to shine")}
               </span>
               <span className="text-[11px] text-muted-foreground hidden sm:block truncate">
                 {institution?.affiliation ?? (isCollege ? "Autonomous College · NAAC A+" : "CBSE Affiliation No. 3330123")}

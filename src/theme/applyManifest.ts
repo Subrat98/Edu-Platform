@@ -8,5 +8,27 @@
  */
 export function applyManifest(id: "school" | "college" | "unified") {
   document.getElementById("web-manifest")?.setAttribute("href", `/manifest/${id}.webmanifest`);
-  document.getElementById("apple-touch-icon")?.setAttribute("href", `/icons/${id}-512.svg`);
+
+  const iconHref =
+    id === "college"
+      ? "/college-logo.png"
+      : id === "unified"
+        ? "/icons/unified-512.svg"
+        : "/icons/school-512.svg";
+  document.getElementById("apple-touch-icon")?.setAttribute("href", iconHref);
+
+  // Dynamically update the browser tab favicon
+  const favicon = document.getElementById("app-favicon") || document.querySelector("link[rel*='icon']");
+  if (favicon) {
+    favicon.setAttribute("href", id === "college" ? "/college-logo.png" : "/favicon.png");
+  }
+
+  // Update browser tab title
+  if (id === "college") {
+    document.title = "Our College";
+  } else if (id === "school") {
+    document.title = "Our School";
+  } else if (id === "unified") {
+    document.title = "EduPlatform";
+  }
 }

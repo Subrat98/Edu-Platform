@@ -1,14 +1,15 @@
 {
   "name": "Our College",
-  "short_name": "PSC",
+  "short_name": "OC",
   "description": "College website, departments, programmes, results and fees for Our College.",
   "start_url": "/college",
   "scope": "/college",
   "display": "standalone",
   "background_color": "#FFFFFF",
-  "theme_color": "#C21717",
+  "theme_color": "#E42227",
   "icons": [
-    { "src": "/icons/college-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "/icons/college-512.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "maskable" }
+    { "src": "/college-logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/college-logo.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/college-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
   ]
 }

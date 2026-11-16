@@ -78,9 +78,17 @@ export function AppSidebarShell({
       <Sidebar collapsible="icon">
         <SidebarHeader>
           <div className="flex items-center gap-2 px-2 py-1.5">
-            <span className="bg-primary flex size-8 shrink-0 items-center justify-center rounded-lg text-white">
-              <GraduationCap className="size-4" />
-            </span>
+            {institutionId === "college" && institution?.theme.logoUrl ? (
+              <img
+                src={institution.theme.logoUrl}
+                alt=""
+                className="size-8 shrink-0 rounded-lg object-contain"
+              />
+            ) : (
+              <span className="bg-primary flex size-8 shrink-0 items-center justify-center rounded-lg text-white">
+                <GraduationCap className="size-4" />
+              </span>
+            )}
             <div className="min-w-0 group-data-[collapsible=icon]:hidden">
               <p className="text-sidebar-foreground truncate text-sm font-semibold">{brandLabel}</p>
               <p className="text-muted-foreground truncate text-xs">{brandName}</p>

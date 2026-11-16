@@ -82,19 +82,27 @@ export function Footer() {
         {/* Column 1: Institution Identity & Official Contact */}
         <div className="space-y-4">
           <div className="flex items-center gap-2.5">
-            <div className="size-10 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-base">
-              {isCollege ? (
-                <Landmark className="size-5 text-amber-300" />
-              ) : (
-                <GraduationCap className="size-5 text-amber-300" />
-              )}
-            </div>
+            {isCollege && institution?.theme.logoUrl ? (
+              <img
+                src={institution.theme.logoUrl}
+                alt={institution?.name ?? "Our College"}
+                className="size-11 rounded-lg object-contain bg-white/10 p-0.5 border border-white/20 shadow-xs"
+              />
+            ) : (
+              <div className="size-10 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center font-bold text-white text-base">
+                {isCollege ? (
+                  <Landmark className="size-5 text-amber-300" />
+                ) : (
+                  <GraduationCap className="size-5 text-amber-300" />
+                )}
+              </div>
+            )}
             <div>
               <span className="font-heading text-base font-bold block leading-tight">
                 {institution?.name}
               </span>
               <span className="text-xs text-amber-300 block">
-                {isCollege ? "Our College" : institution?.tagline}
+                {isCollege ? "Our College · Estd. 2026" : institution?.tagline}
               </span>
             </div>
           </div>

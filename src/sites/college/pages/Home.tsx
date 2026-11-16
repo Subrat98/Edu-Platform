@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/dialog";
 import { collegeNotices } from "@/mocks/data/notices";
 import { collegeHeroUrl, collegeGalleryUrl } from "@/mocks/data/images";
+import collegeLogo from "@/assets/college-logo.png";
 
 export default function CollegeHome() {
   const [tickerPaused, setTickerPaused] = useState(false);
@@ -206,6 +207,18 @@ export default function CollegeHome() {
             </div>
           </div>
 
+          {/* Official College Seal (Desktop Hero Display) */}
+          <div className="hidden lg:flex items-center justify-center p-8 pr-16 ml-auto z-10 shrink-0">
+            <div className="relative group">
+              <div className="absolute -inset-4 rounded-full bg-red-600/30 blur-2xl opacity-75 group-hover:opacity-100 transition duration-1000"></div>
+              <img
+                src={collegeLogo}
+                alt="Our College Seal"
+                className="relative size-52 xl:size-60 object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+          </div>
+
           {/* Slider Navigation Arrows & Indicators */}
           <div className="absolute bottom-4 right-4 z-20 flex items-center gap-2">
             <button
@@ -344,8 +357,8 @@ export default function CollegeHome() {
             </CardHeader>
             <CardContent className="p-5 pt-0 space-y-3">
               <div className="flex gap-4 items-center">
-                <div className="size-20 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-700 dark:text-amber-300 font-bold text-2xl shrink-0">
-                  <Landmark className="size-10" />
+                <div className="size-20 rounded-xl bg-red-500/10 border border-red-500/20 p-2 flex items-center justify-center shrink-0">
+                  <img src={collegeLogo} alt="Our College Seal" className="size-full object-contain" />
                 </div>
                 <div className="text-xs text-muted-foreground leading-relaxed">
                   <p className="italic">

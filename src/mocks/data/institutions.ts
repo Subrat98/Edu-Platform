@@ -40,10 +40,10 @@ export const institutions: Record<"school" | "college", Institution> = {
     type: "college",
     name: "Our College",
     shortName: "OC",
-    tagline: "Sculpting Heart, Head & Hand · Established 1868 / 1943",
+    tagline: "Sculpting Heart, Head & Hand · Established 2026",
     description:
-      "Premier autonomous degree college of Odisha, NAAC Accredited A+ (CGPA 3.42), recognized under UGC Category-1 with 32 PG Departments, Central Instrumentation Facility, and over 150 years of higher education leadership.",
-    establishedYear: 1868,
+      "Premier autonomous degree college of Odisha, NAAC Accredited A+ (CGPA 3.42), recognized under UGC Category-1 with 32 PG Departments, Central Instrumentation Facility, and academic excellence.",
+    establishedYear: 2026,
     affiliation: "Autonomous College under State Universities Act · UGC 2(f) & 12(B) · NAAC A+ (CGPA 3.42)",
     theme: COLLEGE_THEME,
     contact: {
