@@ -7,9 +7,7 @@ import {
   Landmark,
   ArrowLeft,
   ShieldCheck,
-  CheckCircle2,
   Sparkles,
-  Users,
 } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
