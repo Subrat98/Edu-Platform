@@ -8,7 +8,9 @@ export type NoticeCategory =
   | "Event"
   | "General"
   | "Scholarship"
-  | "Library";
+  | "Library"
+  | "Recruitment"
+  | "Tender";
 
 export type NoticeAudience = "Public" | "Students" | "Parents" | "Staff";
 

@@ -6,26 +6,17 @@ import {
   BookOpen,
   Building2,
   Calendar,
-  CheckCircle2,
   ChevronLeft,
   ChevronRight,
-  Clock,
   Download,
   ExternalLink,
   FileCheck2,
-  FileText,
   GraduationCap,
-  Heart,
   Landmark,
-  Layers,
-  MapPin,
   Pause,
   Play,
-  Quote,
-  Search,
   ShieldCheck,
   Sparkles,
-  TrendingUp,
   UserCheck,
   Users,
   Video,
@@ -45,10 +36,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { collegeNotices } from "@/mocks/data/notices";
-import { collegeEvents } from "@/mocks/data/events";
 import { collegeHeroUrl, collegeGalleryUrl } from "@/mocks/data/images";
-import { MOCK_PUBLICATIONS_DATA } from "@/mocks/data/naac/publications";
-import { MOCK_RESEARCH_FUNDING_DATA } from "@/mocks/data/naac/researchFunding";
 
 export default function CollegeHome() {
   const [tickerPaused, setTickerPaused] = useState(false);
@@ -95,6 +83,8 @@ export default function CollegeHome() {
     }, 6500);
     return () => clearInterval(timer);
   }, [heroSlides.length]);
+
+  const currentSlide = heroSlides[activeSlide] ?? heroSlides[0]!;
 
   // Filtered notices for Tabbed Notice Panel (H7)
   const tabbedNotices = useMemo(() => {
@@ -179,7 +169,7 @@ export default function CollegeHome() {
           <div
             className="absolute inset-0 bg-cover bg-center transition-all duration-1000 scale-105"
             style={{
-              backgroundImage: `url(${heroSlides[activeSlide].image})`,
+              backgroundImage: `url(${currentSlide.image})`,
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-transparent" />
@@ -187,30 +177,30 @@ export default function CollegeHome() {
           {/* Hero Content Overlay */}
           <div className="relative z-10 p-6 sm:p-12 max-w-3xl space-y-4">
             <Badge className="bg-amber-400 text-slate-950 font-bold border-amber-300 text-xs shadow-md">
-              {heroSlides[activeSlide].badge}
+              {currentSlide.badge}
             </Badge>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-              {heroSlides[activeSlide].title}
+              {currentSlide.title}
             </h1>
 
             <p className="text-sm sm:text-base font-semibold text-amber-300">
-              {heroSlides[activeSlide].subtitle}
+              {currentSlide.subtitle}
             </p>
 
             <p className="text-xs sm:text-sm text-slate-200 leading-relaxed max-w-2xl">
-              {heroSlides[activeSlide].description}
+              {currentSlide.description}
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <Button asChild size="default" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg">
-                <Link to={heroSlides[activeSlide].primaryCta.href}>
-                  {heroSlides[activeSlide].primaryCta.label}
+                <Link to={currentSlide.primaryCta.href}>
+                  {currentSlide.primaryCta.label}
                 </Link>
               </Button>
-              <Button asChild size="default" variant="outline" className="border-white/40 text-white hover:bg-white/10 font-bold">
-                <Link to={heroSlides[activeSlide].secondaryCta.href}>
-                  {heroSlides[activeSlide].secondaryCta.label}
+              <Button asChild size="default" variant="outline" className="border-white/40 bg-white/10 text-white hover:bg-white/20 hover:text-white font-bold backdrop-blur-xs">
+                <Link to={currentSlide.secondaryCta.href}>
+                  {currentSlide.secondaryCta.label}
                 </Link>
               </Button>
             </div>
