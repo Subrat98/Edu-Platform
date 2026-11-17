@@ -1,0 +1,17 @@
+from rest_framework import serializers
+from .models import Book, BookLoan
+
+
+class BookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Book
+        fields = "__all__"
+
+
+class BookLoanSerializer(serializers.ModelSerializer):
+    book_title = serializers.CharField(source="book.title", read_only=True)
+    author = serializers.CharField(source="book.author", read_only=True)
+
+    class Meta:
+        model = BookLoan
+        fields = "__all__"
