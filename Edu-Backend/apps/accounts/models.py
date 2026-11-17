@@ -1,3 +1,4 @@
+import uuid
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -23,6 +24,12 @@ class User(AbstractUser):
     department = models.CharField(max_length=100, blank=True)
     designation = models.CharField(max_length=100, blank=True)
     metadata = models.JSONField(default=dict, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            base = (self.username or uuid.uuid4().hex[:8]).replace(" ", "-").lower()
+            self.id = f"user-{base}"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.get_full_name() or self.username} ({self.role} - {self.institution_id})"

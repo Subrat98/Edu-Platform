@@ -94,143 +94,26 @@ class Command(BaseCommand):
             }
         )
 
-        # 3. Demo Users
-        users_data = [
-            {
-                "id": "user-platform-super-admin",
+        # 3. Super Admin User (Only Super Admin is seeded; other users are managed manually)
+        User.objects.exclude(role="platform_admin").delete()
+
+        admin_user, created = User.objects.update_or_create(
+            id="user-platform-super-admin",
+            defaults={
                 "username": "superadmin",
                 "email": "superadmin@eduplatform.demo",
-                "first_name": "Aurobindo",
-                "last_name": "Mahapatra",
+                "first_name": "Super",
+                "last_name": "Admin",
                 "role": "platform_admin",
                 "institution_id": "all",
-                "designation": "State Higher Education Commissioner",
-            },
-            {
-                "id": "user-school-principal",
-                "username": "school_principal",
-                "email": "principal@ourschool.edu.in",
-                "first_name": "Minati",
-                "last_name": "Pattnaik",
-                "role": "school_principal",
-                "institution_id": "school",
-                "designation": "Principal & Head of School",
-            },
-            {
-                "id": "user-school-teacher",
-                "username": "school_teacher",
-                "email": "teacher@ourschool.edu.in",
-                "first_name": "Subhashree",
-                "last_name": "Nayak",
-                "role": "teacher",
-                "institution_id": "school",
-                "department": "Science",
-                "designation": "Senior PGT Physics",
-            },
-            {
-                "id": "user-school-student",
-                "username": "school_student",
-                "email": "student@ourschool.edu.in",
-                "first_name": "Ayush",
-                "last_name": "Pattnaik",
-                "role": "student",
-                "institution_id": "school",
-                "designation": "Class X-A, Roll #14",
-            },
-            {
-                "id": "user-school-parent",
-                "username": "school_parent",
-                "email": "parent@ourschool.edu.in",
-                "first_name": "Bhabani",
-                "last_name": "Pattnaik",
-                "role": "parent",
-                "institution_id": "school",
-                "designation": "Guardian of Ayush (X-A)",
-            },
-            {
-                "id": "user-college-principal",
-                "username": "college_principal",
-                "email": "principal@ourcollege.edu.in",
-                "first_name": "Prof. Bidhu Bhusan",
-                "last_name": "Mishra",
-                "role": "college_principal",
-                "institution_id": "college",
-                "designation": "Principal & Ex-Officio Chairman",
-            },
-            {
-                "id": "user-college-hod",
-                "username": "college_hod",
-                "email": "hod.cse@ourcollege.edu.in",
-                "first_name": "Dr. Pravat Kumar",
-                "last_name": "Roul",
-                "role": "hod",
-                "institution_id": "college",
-                "department": "Computer Science & Engineering",
-                "designation": "Professor & Head of Department",
-            },
-            {
-                "id": "user-college-faculty",
-                "username": "college_faculty",
-                "email": "faculty@ourcollege.edu.in",
-                "first_name": "Dr. Sanghamitra",
-                "last_name": "Mohanty",
-                "role": "teacher",
-                "institution_id": "college",
-                "department": "Computer Science & Engineering",
-                "designation": "Associate Professor",
-            },
-            {
-                "id": "user-college-student",
-                "username": "college_student",
-                "email": "student@ourcollege.edu.in",
-                "first_name": "Smruti",
-                "last_name": "Prajna",
-                "role": "student",
-                "institution_id": "college",
-                "department": "Computer Science",
-                "designation": "B.Tech CSE, 6th Semester",
-            },
-            {
-                "id": "user-college-librarian",
-                "username": "college_librarian",
-                "email": "librarian@ourcollege.edu.in",
-                "first_name": "Basanta",
-                "last_name": "Das",
-                "role": "librarian",
-                "institution_id": "college",
-                "designation": "Chief Librarian (Koha ILMS Admin)",
-            },
-            {
-                "id": "user-college-examcell",
-                "username": "college_examcell",
-                "email": "examcell@ourcollege.edu.in",
-                "first_name": "Prof. Manas Ranjan",
-                "last_name": "Das",
-                "role": "exam_controller",
-                "institution_id": "college",
-                "designation": "Controller of Examinations",
-            },
-        ]
-
-        for u in users_data:
-            user_obj, created = User.objects.update_or_create(
-                id=u["id"],
-                defaults={
-                    "username": u["username"],
-                    "email": u["email"],
-                    "first_name": u["first_name"],
-                    "last_name": u["last_name"],
-                    "role": u["role"],
-                    "institution_id": u["institution_id"],
-                    "department": u.get("department", ""),
-                    "designation": u.get("designation", ""),
-                    "is_staff": u["role"] in ("platform_admin", "school_principal", "college_principal"),
-                    "is_superuser": u["role"] == "platform_admin",
-                }
-            )
-            if created or not user_obj.has_usable_password():
-                user_obj.set_password("demo123")
-                user_obj.save()
+                "designation": "Platform Super Admin",
+                "is_staff": True,
+                "is_superuser": True,
+            }
+        )
+        if created or not admin_user.has_usable_password():
+            admin_user.set_password("admin123")
+            admin_user.save()
 
         # 4. Departments
         depts_data = [

@@ -63,11 +63,19 @@ python3 manage.py test tests
 - `GET /api/`: API root catalog listing all available endpoints
 - `GET /api/health/`: Service and database health check
 
-### 2. Authentication & Personas (`/api/auth/`)
-- `GET /api/auth/personas/`: List all 11 predefined personas (School, College, Super Admin)
-- `POST /api/auth/login/`: Authenticate via `{"user_id": "user-college-principal"}` or `{"username": "...", "password": "..."}`
-- `POST /api/auth/logout/`: Clear active user session
-- `GET /api/auth/me/`: Retrieve profile of currently authenticated user
+### 2. Authentication & User Management (`/api/auth/`)
+> **Default Admin Account**:
+> - **Username**: `superadmin`
+> - **Password**: `admin123`
+> - **Role**: `platform_admin`
+> - **Status**: All other demo users have been removed so you can manually create and manage users.
+
+- `POST /api/auth/login/`: Authenticate via `{"username": "superadmin", "password": "admin123"}` or `{"user_id": "user-platform-super-admin"}`
+- `POST /api/auth/logout/`: Clear active session
+- `GET /api/auth/me/`: Retrieve authenticated user profile
+- `GET /api/auth/users/`: List users in database
+- `POST /api/auth/users/`: Create new user manually via REST API
+- **Django Admin Portal**: Log in at `http://127.0.0.1:8000/admin/` with `superadmin` / `admin123` to visually add, edit, and manage users, assign roles (Teacher, Student, HOD, Principal, Librarian, Exam Cell), departments, and passwords.
 
 ### 3. Institutions & Governance (`/api/`)
 - `GET /api/institutions/`: List institutions (returns "school" and "college" profiles with theme tokens and contact details)

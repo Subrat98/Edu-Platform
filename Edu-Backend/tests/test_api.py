@@ -46,6 +46,6 @@ class EduApiTestCase(TestCase):
         self.assertTrue(len(data) >= 1)
 
     def test_auth_login(self):
-        resp = self.client.post("/api/auth/login/", {"user_id": "user-college-principal"}, content_type="application/json")
+        resp = self.client.post("/api/auth/login/", {"user_id": "user-platform-super-admin"}, content_type="application/json")
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(resp.json()["user"]["role"], "college_principal")
+        self.assertEqual(resp.json()["user"]["role"], "platform_admin")
