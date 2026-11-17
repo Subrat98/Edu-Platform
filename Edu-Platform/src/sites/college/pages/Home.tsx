@@ -194,7 +194,7 @@ export default function CollegeHome() {
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Button asChild size="default" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold shadow-lg">
+              <Button asChild size="default" className="font-bold shadow-lg">
                 <Link to={currentSlide.primaryCta.href}>
                   {currentSlide.primaryCta.label}
                 </Link>
@@ -210,7 +210,7 @@ export default function CollegeHome() {
           {/* Official College Seal (Desktop Hero Display) */}
           <div className="hidden lg:flex items-center justify-center p-8 pr-16 ml-auto z-10 shrink-0">
             <div className="relative group">
-              <div className="absolute -inset-4 rounded-full bg-red-600/30 blur-2xl opacity-75 group-hover:opacity-100 transition duration-1000"></div>
+              <div className="absolute -inset-4 rounded-full bg-primary/30 blur-2xl opacity-75 group-hover:opacity-100 transition duration-1000"></div>
               <img
                 src={collegeLogo}
                 alt="Our College Seal"
@@ -357,7 +357,7 @@ export default function CollegeHome() {
             </CardHeader>
             <CardContent className="p-5 pt-0 space-y-3">
               <div className="flex gap-4 items-center">
-                <div className="size-20 rounded-xl bg-red-500/10 border border-red-500/20 p-2 flex items-center justify-center shrink-0">
+                <div className="size-20 rounded-xl bg-primary/10 border border-primary/20 p-2 flex items-center justify-center shrink-0">
                   <img src={collegeLogo} alt="Our College Seal" className="size-full object-contain" />
                 </div>
                 <div className="text-xs text-muted-foreground leading-relaxed">
@@ -556,7 +556,7 @@ export default function CollegeHome() {
               </div>
 
               <div className="flex flex-wrap items-center gap-2 shrink-0">
-                <Button asChild size="sm" className="bg-primary text-primary-foreground font-bold shadow-xs">
+                <Button asChild size="sm" className="font-bold shadow-xs">
                   <Link to="/college/iqac">
                     <Award className="size-4 mr-1.5" />
                     <span>View IQAC Portal</span>

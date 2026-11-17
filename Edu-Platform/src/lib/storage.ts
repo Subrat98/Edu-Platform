@@ -7,8 +7,9 @@ export function storageKey(key: string): string {
 export function readStorage<T>(key: string, fallback: T): T {
   try {
     const raw = localStorage.getItem(storageKey(key));
-    if (raw === null) return fallback;
-    return JSON.parse(raw) as T;
+    if (raw === null || raw === "undefined" || raw === "null") return fallback;
+    const parsed = JSON.parse(raw);
+    return parsed === null || parsed === undefined ? fallback : (parsed as T);
   } catch {
     return fallback;
   }

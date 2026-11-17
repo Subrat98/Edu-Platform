@@ -1,16 +1,7 @@
 import { Link } from "react-router-dom";
 import {
-  Globe,
-  Mail,
-  MapPin,
-  Phone,
-  Award,
-  ShieldCheck,
-  ExternalLink,
-  Building2,
   Calendar,
   Eye,
-  FileCheck2,
   GraduationCap,
   Landmark,
 } from "lucide-react";
@@ -151,9 +142,9 @@ export function Footer() {
           <ul className="mt-3 space-y-2 text-xs">
             {(menu?.footerAcademicLinks ?? (isCollege ? [
               { label: "IQAC Public Portal", path: "/college/iqac" },
-              { label: "NAAC SSR Cycle 3 Dossier", path: "/college/iqac" },
-              { label: "AQAR 8-Year Archive", path: "/college/iqac" },
-              { label: "Criteria 1–7 Evidence", path: "/college/iqac" },
+              { label: "NAAC SSR Cycle 3 Dossier", path: "/college/accreditation-ssr" },
+              { label: "AQAR 8-Year Archive", path: "/college/aqar-archive" },
+              { label: "Criteria 1–7 Evidence", path: "/college/criteria-evidence" },
               { label: "R&D & Scopus Register", path: "/college/research" },
               { label: "Central Library OPAC", path: "/college/library" },
               { label: "Alumni Network & Giving", path: "/college/alumni" },

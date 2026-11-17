@@ -197,11 +197,35 @@ export function UniversitySearchDialog({
       // Key Statutory Pages
       {
         id: "page-iqac",
-        title: "IQAC & NAAC Accreditation Portal (Grade A+)",
+        title: "IQAC Public Portal (Internal Quality Assurance Cell)",
         category: "NAAC / IQAC",
-        snippet: "Statutory IQAC composition, quarterly meeting minutes, 8-year AQAR archive, SSR dossiers, and Criteria 1–7 evidence.",
+        snippet: "Statutory IQAC composition, quarterly meeting minutes, and quality enhancement roadmap.",
         url: "/college/iqac",
         badge: "Accreditation",
+      },
+      {
+        id: "page-accreditation-ssr",
+        title: "NAAC Accreditation & SSR Dossier (Grade A+ · CGPA 3.42)",
+        category: "NAAC / IQAC",
+        snippet: "NAAC Cycle 1-3 accreditation timeline, Peer Team Visit reports, Self Study Report (SSR), and DVV validation.",
+        url: "/college/accreditation-ssr",
+        badge: "Accreditation",
+      },
+      {
+        id: "page-aqar-archive",
+        title: "AQAR 8-Year Archive (Annual Quality Assurance Reports)",
+        category: "NAAC / IQAC",
+        snippet: "Longitudinal 8-year repository of AQAR reports, Action Taken Reports (ATRs), and NAAC submission receipts.",
+        url: "/college/aqar-archive",
+        badge: "Reports",
+      },
+      {
+        id: "page-criteria-evidence",
+        title: "NAAC Criteria I–VII Evidence & Quality Metrics",
+        category: "NAAC / IQAC",
+        snippet: "Interactive 7-criteria explorer, key indicators, qualitative & quantitative metrics, and verified PDF evidence proofs.",
+        url: "/college/criteria-evidence",
+        badge: "Evidence",
       },
       {
         id: "page-disclosure",

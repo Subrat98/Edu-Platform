@@ -1,215 +1,791 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { RotateCcw, Save } from "lucide-react";
+import {
+  RotateCcw,
+  Save,
+  Palette,
+  Sparkles,
+  Layers,
+  Type,
+  MousePointerClick,
+  Square,
+  Check,
+  ExternalLink,
+  Globe,
+} from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
+import { Badge } from "@/components/ui/badge";
 import { PageLoadingSkeleton } from "@/components/common/PageLoadingSkeleton";
 import { useInstitutionData } from "@/features/institutions/useInstitutionData";
 import { cmsService } from "@/features/cms/cmsService";
 import { queryKeys } from "@/lib/queryKeys";
-import { presetsFor, type ThemePreset } from "@/theme/presets";
+import {
+  saveCustomTheme,
+  resetCustomTheme,
+  getCustomTheme,
+  type ThemeTargetScope,
+} from "@/theme/themePersistence";
 import type { ColorTokens } from "@/types";
 
-const SWATCHES: { key: keyof ColorTokens; label: string; help: string }[] = [
-  { key: "primary", label: "Primary", help: "Header, headings, primary buttons" },
-  { key: "accent", label: "Accent", help: "Links, highlights, active states" },
-  { key: "highlight", label: "Highlight", help: "Apply Now and other key CTAs" },
+interface ColorItemConfig {
+  key: keyof ColorTokens;
+  label: string;
+  description: string;
+  defaultValue: string;
+}
+
+const BRAND_RED_SECTION: ColorItemConfig[] = [
+  {
+    key: "primary",
+    label: "Primary Brand Color (Currently Red)",
+    description: "Replaces red across the entire website: headers, active tabs, brand badges, banners, and primary highlights.",
+    defaultValue: "#C21717",
+  },
+  {
+    key: "accent",
+    label: "Accent & Secondary Brand Color",
+    description: "Hover states, active menu pills, focus rings, and secondary accents.",
+    defaultValue: "#991b1b",
+  },
 ];
+
+const BUTTONS_SECTION: ColorItemConfig[] = [
+  {
+    key: "buttonBackground",
+    label: "Primary Buttons Background",
+    description: "Background color of all primary action buttons throughout the entire website and admin panel.",
+    defaultValue: "#C21717",
+  },
+  {
+    key: "buttonForeground",
+    label: "Primary Buttons Text Color",
+    description: "Text and icon color inside all primary action buttons (usually white or contrasting).",
+    defaultValue: "#FFFFFF",
+  },
+  {
+    key: "highlight",
+    label: "Key Call-to-Action (CTA) Button",
+    description: "Background for high-priority action buttons (e.g., 'Apply Now', 'Admissions').",
+    defaultValue: "#e0a100",
+  },
+];
+
+const WHITE_SURFACES_SECTION: ColorItemConfig[] = [
+  {
+    key: "background",
+    label: "Page Background (Currently White)",
+    description: "The main page canvas background across public and administrative pages.",
+    defaultValue: "#FFFFFF",
+  },
+  {
+    key: "surface",
+    label: "Cards & Container Surfaces (Currently White)",
+    description: "Background of content cards, tables, panels, and modal dialogs.",
+    defaultValue: "#FFFFFF",
+  },
+  {
+    key: "border",
+    label: "Border & Divider Outlines",
+    description: "Borders around cards, tables, input fields, and section divider lines.",
+    defaultValue: "#e2e8f0",
+  },
+];
+
+const TEXT_SECTION: ColorItemConfig[] = [
+  {
+    key: "textPrimary",
+    label: "Main Text & Heading Color",
+    description: "Page titles, section headings, card titles, and primary body typography.",
+    defaultValue: "#1e293b",
+  },
+  {
+    key: "textSecondary",
+    label: "Secondary & Subtitle Text Color",
+    description: "Subtitles, meta labels, timestamps, and descriptive helper text.",
+    defaultValue: "#64748b",
+  },
+];
+
+interface QuickThemePreset {
+  id: string;
+  name: string;
+  description: string;
+  primary: string;
+  bg: string;
+  text: string;
+  btnBg: string;
+  btnFg: string;
+}
+
+const THEME_PRESETS: QuickThemePreset[] = [
+  {
+    id: "classic-red",
+    name: "Classic Crimson (Default)",
+    description: "Signature institutional crimson red with crisp white surfaces.",
+    primary: "#C21717",
+    bg: "#FFFFFF",
+    text: "#1e293b",
+    btnBg: "#C21717",
+    btnFg: "#FFFFFF",
+  },
+  {
+    id: "emerald-green",
+    name: "Emerald Green",
+    description: "Lush botanical green with clean modern contrast.",
+    primary: "#15803d",
+    bg: "#FFFFFF",
+    text: "#0f172a",
+    btnBg: "#15803d",
+    btnFg: "#FFFFFF",
+  },
+  {
+    id: "royal-blue",
+    name: "Royal Navy Blue",
+    description: "Prestigious academic navy blue for university portals.",
+    primary: "#1d4ed8",
+    bg: "#FFFFFF",
+    text: "#0f172a",
+    btnBg: "#1d4ed8",
+    btnFg: "#FFFFFF",
+  },
+  {
+    id: "deep-purple",
+    name: "Imperial Purple",
+    description: "Sophisticated royal violet with warm gold accents.",
+    primary: "#7e22ce",
+    bg: "#FFFFFF",
+    text: "#1e1b4b",
+    btnBg: "#7e22ce",
+    btnFg: "#FFFFFF",
+  },
+  {
+    id: "warm-amber",
+    name: "Amber & Ochre",
+    description: "Heritage warm amber-terracotta palette.",
+    primary: "#b45309",
+    bg: "#FFFFFF",
+    text: "#292524",
+    btnBg: "#b45309",
+    btnFg: "#FFFFFF",
+  },
+];
+
+function formatHexColor(val?: string, fallback: string = "#000000"): string {
+  if (!val) return fallback;
+  const trimmed = val.trim();
+  if (/^#[0-9a-fA-F]{6}$/.test(trimmed)) return trimmed;
+  if (/^#[0-9a-fA-F]{3}$/.test(trimmed)) {
+    return `#${trimmed[1]}${trimmed[1]}${trimmed[2]}${trimmed[2]}${trimmed[3]}${trimmed[3]}`;
+  }
+  return fallback;
+}
 
 export default function ThemeDesigner() {
   const { institutionId } = useInstitutionData();
   const queryClient = useQueryClient();
-  const { data: theme, isLoading } = useQuery({ queryKey: ["cmsTheme", institutionId], queryFn: () => cmsService.getTheme(institutionId) });
+
+  // Scope: defaults to global so College, School, and Admin all update together!
+  const [themeScope, setThemeScope] = useState<ThemeTargetScope>("global");
+
+  const effectiveId = themeScope === "school" ? "school" : "college";
+  const { data: theme, isLoading } = useQuery({
+    queryKey: ["cmsTheme", effectiveId],
+    queryFn: () => cmsService.getTheme(effectiveId),
+  });
 
   const [colors, setColors] = useState<ColorTokens | null>(null);
   const [radiusPx, setRadiusPx] = useState(12);
 
+  // Initialize state from theme
   useEffect(() => {
     if (theme) {
-      setColors(theme.colors);
+      const mergedColors: ColorTokens = {
+        ...theme.colors,
+        buttonBackground: theme.colors.buttonBackground || theme.colors.primary,
+        buttonForeground: theme.colors.buttonForeground || theme.colors.primaryForeground || "#FFFFFF",
+      };
+      setColors(mergedColors);
       setRadiusPx(Math.round(parseFloat(theme.radius) * 16));
     }
   }, [theme]);
 
+  // Live Apply function: instantly applies and persists changes to both College and School
+  const liveApply = useCallback(
+    (newColors: ColorTokens, newRadiusPx: number) => {
+      const radius = `${(newRadiusPx / 16).toFixed(3)}rem`;
+      saveCustomTheme(themeScope, newColors, radius);
+    },
+    [themeScope]
+  );
+
+  const handleColorChange = (key: keyof ColorTokens, value: string) => {
+    setColors((prev) => {
+      if (!prev) return prev;
+      const updated = { ...prev, [key]: value };
+      if (key === "primary" && (!prev.buttonBackground || prev.buttonBackground === prev.primary)) {
+        updated.buttonBackground = value;
+      }
+      return updated;
+    });
+
+    if (colors) {
+      const updated = { ...colors, [key]: value };
+      if (key === "primary" && (!colors.buttonBackground || colors.buttonBackground === colors.primary)) {
+        updated.buttonBackground = value;
+      }
+      try {
+        liveApply(updated, radiusPx);
+      } catch (err) {
+        console.error("Failed to apply theme color:", err);
+      }
+    }
+  };
+
+  const handleRadiusChange = (newRadius: number) => {
+    setRadiusPx(newRadius);
+    if (colors) {
+      try {
+        liveApply(colors, newRadius);
+      } catch (err) {
+        console.error("Failed to apply radius:", err);
+      }
+    }
+  };
+
+  const applyPreset = (preset: QuickThemePreset) => {
+    if (!colors) return;
+    const updated: ColorTokens = {
+      ...colors,
+      primary: preset.primary,
+      accent: preset.primary,
+      background: preset.bg,
+      surface: preset.bg,
+      textPrimary: preset.text,
+      buttonBackground: preset.btnBg,
+      buttonForeground: preset.btnFg,
+    };
+    setColors(updated);
+    liveApply(updated, radiusPx);
+    toast.success(`Preset "${preset.name}" applied live to ${themeScope === "global" ? "Entire Website" : themeScope}!`, {
+      description: "Click 'Save Theme to Entire Site' to ensure it stays permanent across all sessions.",
+    });
+  };
+
   const saveMutation = useMutation({
-    mutationFn: () => cmsService.updateTheme(institutionId, colors ?? {}, `${(radiusPx / 16).toFixed(3)}rem`),
+    mutationFn: () =>
+      cmsService.updateTheme(
+        institutionId,
+        colors ?? {},
+        `${(radiusPx / 16).toFixed(3)}rem`,
+        themeScope
+      ),
     onSuccess: () => {
-      // Every page reads institution data (including its theme) through
-      // this one query key via useInstitutionData(); if we only
-      // invalidated our own local "cmsTheme" key, that stale cached
-      // snapshot would keep getting re-applied by ThemeProvider the next
-      // time any component re-subscribed to it, silently reverting the
-      // live edit.
-      queryClient.invalidateQueries({ queryKey: queryKeys.institution(institutionId) });
-      queryClient.invalidateQueries({ queryKey: ["cmsTheme", institutionId] });
-      toast.success("Theme updated", { description: "Changes are live on the public site immediately." });
+      queryClient.invalidateQueries({ queryKey: queryKeys.institution("college") });
+      queryClient.invalidateQueries({ queryKey: queryKeys.institution("school") });
+      queryClient.invalidateQueries({ queryKey: ["cmsTheme", "college"] });
+      queryClient.invalidateQueries({ queryKey: ["cmsTheme", "school"] });
+      toast.success("Theme permanently saved!", {
+        description: `Colors are saved and active across ${themeScope === "global" ? "the whole website (College & School)" : themeScope}.`,
+      });
     },
   });
 
-  const applyPresetMutation = useMutation({
-    mutationFn: (preset: ThemePreset) => cmsService.updateTheme(institutionId, preset.theme.colors, preset.theme.radius),
-    onSuccess: (_r, preset) => {
-      setColors(preset.theme.colors);
-      setRadiusPx(Math.round(parseFloat(preset.theme.radius) * 16));
-      queryClient.invalidateQueries({ queryKey: queryKeys.institution(institutionId) });
-      queryClient.invalidateQueries({ queryKey: ["cmsTheme", institutionId] });
-      toast.success(`"${preset.label}" applied`, { description: "Fine-tune the colours below, or save as-is." });
-    },
-  });
-
-  function resetDefaults() {
-    if (!theme) return;
-    setColors(theme.colors);
-    setRadiusPx(Math.round(parseFloat(theme.radius) * 16));
-    toast.info("Reverted to last saved theme");
-  }
+  const resetDefaults = () => {
+    resetCustomTheme(themeScope);
+    const restored = getCustomTheme(effectiveId);
+    setColors(restored.colors);
+    setRadiusPx(Math.round(parseFloat(restored.radius) * 16));
+    toast.info("Reverted to factory default theme");
+  };
 
   if (isLoading || !colors) return <PageLoadingSkeleton />;
 
   return (
-    <div>
+    <div className="space-y-6 pb-16">
       <AdminPageHeader
-        title="Theme Designer"
-        description="Customize brand colours and shape for the public website. Changes apply live."
+        title="Website Theme & Color Designer"
+        description="Comprehensive website color controller. Change the primary red branding, white page surfaces, typography colors, or buttons — changes apply immediately across the entire website."
         actions={
-          <>
-            <Button variant="outline" className="gap-1.5" onClick={resetDefaults}>
-              <RotateCcw className="size-4" /> Reset
+          <div className="flex flex-wrap items-center gap-2">
+            <Button asChild variant="outline" size="sm" className="gap-1.5 text-xs shadow-xs">
+              <Link to="/college">
+                <ExternalLink className="size-3.5" />
+                <span>Open College Home Screen</span>
+              </Link>
             </Button>
-            <Button className="gap-1.5" onClick={() => saveMutation.mutate()} disabled={saveMutation.isPending}>
-              <Save className="size-4" /> {saveMutation.isPending ? "Saving…" : "Save theme"}
+            <Button variant="outline" size="sm" className="gap-1.5 text-xs shadow-xs" onClick={resetDefaults}>
+              <RotateCcw className="size-3.5" />
+              <span>Reset Defaults</span>
             </Button>
-          </>
+            <Button
+              size="sm"
+              className="gap-1.5 text-xs shadow-xs"
+              onClick={() => saveMutation.mutate()}
+              disabled={saveMutation.isPending}
+            >
+              <Save className="size-3.5" />
+              <span>{saveMutation.isPending ? "Saving..." : "Save Theme to Entire Site"}</span>
+            </Button>
+          </div>
         }
       />
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_1fr]">
-        <div className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Template presets</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                {presetsFor(institutionId).map((preset) => (
-                  <button
-                    key={preset.id}
-                    type="button"
-                    onClick={() => applyPresetMutation.mutate(preset)}
-                    disabled={applyPresetMutation.isPending}
-                    className="border-border hover:border-accent rounded-lg border p-3 text-left transition-colors disabled:opacity-60"
-                  >
-                    <div className="mb-2 flex gap-1.5">
-                      {([preset.theme.colors.primary, preset.theme.colors.accent, preset.theme.colors.highlight] as string[]).map((c, i) => (
-                        <span key={i} className="size-5 rounded-full border border-white/40" style={{ backgroundColor: c }} />
-                      ))}
-                    </div>
-                    <p className="text-sm font-medium">{preset.label}</p>
-                    <p className="text-muted-foreground mt-0.5 text-xs">{preset.description}</p>
-                  </button>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+      {/* Scope Selector Bar */}
+      <Card className="border border-primary/20 bg-primary/5 shadow-xs">
+        <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-2">
+              <Globe className="size-4 text-primary" />
+              <span className="text-xs font-bold text-foreground">Target Campus Wing:</span>
+            </div>
+            <p className="text-[11px] text-muted-foreground">
+              Choose whether changes affect both wings together or just one specific campus.
+            </p>
+          </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Brand colours</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {SWATCHES.map((s) => (
-                <div key={s.key} className="flex items-center justify-between gap-4">
-                  <div>
-                    <Label>{s.label}</Label>
-                    <p className="text-muted-foreground text-xs">{s.help}</p>
+          <div className="flex items-center gap-1.5 bg-background p-1 rounded-xl border border-border/80">
+            <button
+              type="button"
+              onClick={() => setThemeScope("global")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                themeScope === "global"
+                  ? "bg-primary text-primary-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Entire Website (College &amp; School)
+            </button>
+            <button
+              type="button"
+              onClick={() => setThemeScope("college")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                themeScope === "college"
+                  ? "bg-primary text-primary-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Our College Only
+            </button>
+            <button
+              type="button"
+              onClick={() => setThemeScope("school")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                themeScope === "school"
+                  ? "bg-primary text-primary-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Our School Only
+            </button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Preset Theme Quick Bar */}
+      <Card className="border border-border/70 shadow-xs">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2">
+            <Palette className="size-4 text-primary" />
+            <CardTitle className="text-sm font-bold">1-Click Full Theme Palettes</CardTitle>
+          </div>
+          <CardDescription className="text-xs">
+            Quickly switch the entire site's color scheme with pre-balanced aesthetic combinations.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            {THEME_PRESETS.map((p) => {
+              const isActive = colors.primary.toLowerCase() === p.primary.toLowerCase();
+              return (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => applyPreset(p)}
+                  className={`p-3 rounded-xl border text-left transition-all relative ${
+                    isActive
+                      ? "border-primary bg-primary/5 shadow-xs ring-2 ring-primary/20"
+                      : "border-border hover:border-primary/50 hover:bg-muted/40"
+                  }`}
+                >
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <span
+                      className="size-4 rounded-full border border-black/10 shadow-xs"
+                      style={{ backgroundColor: p.primary }}
+                    />
+                    <span
+                      className="size-4 rounded-full border border-black/10 shadow-xs"
+                      style={{ backgroundColor: p.btnBg }}
+                    />
+                    <span
+                      className="size-4 rounded-full border border-black/10 shadow-xs"
+                      style={{ backgroundColor: p.bg }}
+                    />
+                    {isActive && (
+                      <Check className="size-3.5 text-primary ml-auto" />
+                    )}
                   </div>
-                  <div className="flex items-center gap-2">
+                  <p className="text-xs font-bold text-foreground truncate">{p.name}</p>
+                  <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-1">{p.description}</p>
+                </button>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Main Grid: Controls vs Live Preview */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Left Column: Color Controls (7 cols) */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* Section 1: Red Branding (Primary) */}
+          <Card className="border border-border/70 shadow-xs">
+            <CardHeader className="pb-3 border-b border-border/50 bg-muted/20">
+              <div className="flex items-center gap-2">
+                <Sparkles className="size-4 text-primary" />
+                <CardTitle className="text-sm font-bold">1. Primary Brand Accent (Where Red is now)</CardTitle>
+              </div>
+              <CardDescription className="text-xs">
+                Changes any element where the red color is currently used (e.g., change red to green, blue, purple, etc.).
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 space-y-4">
+              {BRAND_RED_SECTION.map((item) => (
+                <div key={item.key} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-muted/20 border border-border/40">
+                  <div className="space-y-0.5">
+                    <Label className="text-xs font-bold text-foreground">{item.label}</Label>
+                    <p className="text-[11px] text-muted-foreground max-w-sm">{item.description}</p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
                     <input
                       type="color"
-                      value={colors[s.key]}
-                      onChange={(e) => setColors((c) => (c ? { ...c, [s.key]: e.target.value } : c))}
-                      className="border-border size-9 cursor-pointer rounded-md border p-0.5"
-                      aria-label={`${s.label} colour`}
+                      value={formatHexColor(colors[item.key], item.defaultValue)}
+                      onChange={(e) => handleColorChange(item.key, e.target.value)}
+                      className="size-8 cursor-pointer rounded-lg border border-border p-0.5"
                     />
-                    <span className="text-muted-foreground font-mono text-xs uppercase">{colors[s.key]}</span>
+                    <Input
+                      type="text"
+                      value={colors[item.key] || item.defaultValue}
+                      onChange={(e) => handleColorChange(item.key, e.target.value)}
+                      className="w-24 h-8 text-xs font-mono uppercase"
+                    />
                   </div>
                 </div>
               ))}
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Shape</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <Label>Corner radius</Label>
-                <span className="text-muted-foreground text-xs">{radiusPx}px</span>
+          {/* Section 2: All Button Colors */}
+          <Card className="border border-border/70 shadow-xs">
+            <CardHeader className="pb-3 border-b border-border/50 bg-muted/20">
+              <div className="flex items-center gap-2">
+                <MousePointerClick className="size-4 text-primary" />
+                <CardTitle className="text-sm font-bold">2. All Button Colors</CardTitle>
               </div>
-              <Slider value={[radiusPx]} onValueChange={([v]) => setRadiusPx(v ?? radiusPx)} min={0} max={24} step={2} className="mt-3" />
+              <CardDescription className="text-xs">
+                Customizes primary action buttons, key call-to-action buttons, and button text color.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 space-y-4">
+              {BUTTONS_SECTION.map((item) => (
+                <div key={item.key} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-muted/20 border border-border/40">
+                  <div className="space-y-0.5">
+                    <Label className="text-xs font-bold text-foreground">{item.label}</Label>
+                    <p className="text-[11px] text-muted-foreground max-w-sm">{item.description}</p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <input
+                      type="color"
+                      value={formatHexColor(colors[item.key], item.defaultValue)}
+                      onChange={(e) => handleColorChange(item.key, e.target.value)}
+                      className="size-8 cursor-pointer rounded-lg border border-border p-0.5"
+                    />
+                    <Input
+                      type="text"
+                      value={colors[item.key] || item.defaultValue}
+                      onChange={(e) => handleColorChange(item.key, e.target.value)}
+                      className="w-24 h-8 text-xs font-mono uppercase"
+                    />
+                  </div>
+                </div>
+              ))}
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Typography</CardTitle>
+          {/* Section 3: White Background & Surfaces */}
+          <Card className="border border-border/70 shadow-xs">
+            <CardHeader className="pb-3 border-b border-border/50 bg-muted/20">
+              <div className="flex items-center gap-2">
+                <Layers className="size-4 text-primary" />
+                <CardTitle className="text-sm font-bold">3. Website Background & Surfaces (Where White is now)</CardTitle>
+              </div>
+              <CardDescription className="text-xs">
+                Controls the main page background, card surfaces, and border outlines.
+              </CardDescription>
             </CardHeader>
-            <CardContent className="text-muted-foreground space-y-1 text-sm">
-              <p>
-                Headings: <span className="font-heading text-foreground">Poppins</span>
-              </p>
-              <p>
-                Body: <span className="font-body text-foreground">Inter</span>
-              </p>
-              <p className="text-xs">Font pairing is fixed for brand consistency across the platform.</p>
+            <CardContent className="p-4 space-y-4">
+              {WHITE_SURFACES_SECTION.map((item) => (
+                <div key={item.key} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-muted/20 border border-border/40">
+                  <div className="space-y-0.5">
+                    <Label className="text-xs font-bold text-foreground">{item.label}</Label>
+                    <p className="text-[11px] text-muted-foreground max-w-sm">{item.description}</p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <input
+                      type="color"
+                      value={formatHexColor(colors[item.key], item.defaultValue)}
+                      onChange={(e) => handleColorChange(item.key, e.target.value)}
+                      className="size-8 cursor-pointer rounded-lg border border-border p-0.5"
+                    />
+                    <Input
+                      type="text"
+                      value={colors[item.key] || item.defaultValue}
+                      onChange={(e) => handleColorChange(item.key, e.target.value)}
+                      className="w-24 h-8 text-xs font-mono uppercase"
+                    />
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Section 4: Text & Typography Colors */}
+          <Card className="border border-border/70 shadow-xs">
+            <CardHeader className="pb-3 border-b border-border/50 bg-muted/20">
+              <div className="flex items-center gap-2">
+                <Type className="size-4 text-primary" />
+                <CardTitle className="text-sm font-bold">4. Main Text & Heading Colors</CardTitle>
+              </div>
+              <CardDescription className="text-xs">
+                Controls text typography colors for headings, paragraphs, and subtitles.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 space-y-4">
+              {TEXT_SECTION.map((item) => (
+                <div key={item.key} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-muted/20 border border-border/40">
+                  <div className="space-y-0.5">
+                    <Label className="text-xs font-bold text-foreground">{item.label}</Label>
+                    <p className="text-[11px] text-muted-foreground max-w-sm">{item.description}</p>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <input
+                      type="color"
+                      value={formatHexColor(colors[item.key], item.defaultValue)}
+                      onChange={(e) => handleColorChange(item.key, e.target.value)}
+                      className="size-8 cursor-pointer rounded-lg border border-border p-0.5"
+                    />
+                    <Input
+                      type="text"
+                      value={colors[item.key] || item.defaultValue}
+                      onChange={(e) => handleColorChange(item.key, e.target.value)}
+                      className="w-24 h-8 text-xs font-mono uppercase"
+                    />
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Section 5: Corner Radius */}
+          <Card className="border border-border/70 shadow-xs">
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Square className="size-4 text-primary" />
+                  <CardTitle className="text-sm font-bold">5. Corner Radius & Shape</CardTitle>
+                </div>
+                <Badge variant="outline" className="font-mono text-xs">{radiusPx}px</Badge>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <Slider
+                value={[radiusPx]}
+                onValueChange={([v]) => handleRadiusChange(v ?? radiusPx)}
+                min={0}
+                max={24}
+                step={2}
+                className="my-2"
+              />
+              <div className="flex justify-between text-[11px] text-muted-foreground pt-1">
+                <span>Sharp (0px)</span>
+                <span>Soft (12px)</span>
+                <span>Rounded (24px)</span>
+              </div>
             </CardContent>
           </Card>
         </div>
 
-        <div>
-          <p className="text-muted-foreground mb-2 text-xs font-semibold tracking-wide uppercase">Live preview</p>
+        {/* Right Column: Sticky Live Preview (5 cols) */}
+        <div className="lg:col-span-5 sticky top-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-bold tracking-wider text-muted-foreground uppercase">
+              Live Real-Time Website Preview
+            </p>
+            <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 text-[10px] font-bold">
+              Hot Applied Live
+            </Badge>
+          </div>
+
+          {/* Realistic Website Mockup Card */}
           <div
-            className="border-border space-y-4 rounded-xl border p-6"
+            className="rounded-2xl border p-5 shadow-lg transition-all space-y-4"
             style={{
-              // Scoped preview using the DRAFT colours, independent of the
-              // page-wide theme until "Save theme" is clicked.
-              ["--preview-primary" as string]: colors.primary,
-              ["--preview-accent" as string]: colors.accent,
-              ["--preview-highlight" as string]: colors.highlight,
-              ["--preview-radius" as string]: `${radiusPx}px`,
+              backgroundColor: colors.background || "#FFFFFF",
+              borderColor: colors.border || "#e2e8f0",
+              borderRadius: `${radiusPx}px`,
             }}
           >
+            {/* Mock Header Navigation */}
             <div
-              className="p-5 text-white"
-              style={{ backgroundColor: "var(--preview-primary)", borderRadius: "var(--preview-radius)" }}
+              className="flex items-center justify-between p-3 rounded-xl border"
+              style={{
+                backgroundColor: colors.surface || "#FFFFFF",
+                borderColor: colors.border || "#e2e8f0",
+                borderRadius: `${Math.max(4, radiusPx - 4)}px`,
+              }}
             >
-              <p className="font-heading text-lg font-bold">Sample headline</p>
-              <p className="mt-1 text-sm text-white/85">This is how your hero banner text will look.</p>
-              <button
-                type="button"
-                className="mt-3 px-4 py-2 text-sm font-medium"
-                style={{ backgroundColor: "var(--preview-highlight)", color: "#1f1300", borderRadius: "var(--preview-radius)" }}
+              <div className="flex items-center gap-2">
+                <div
+                  className="size-7 rounded-lg flex items-center justify-center text-white font-black text-xs shadow-xs"
+                  style={{ backgroundColor: colors.primary }}
+                >
+                  OC
+                </div>
+                <span className="font-bold text-xs" style={{ color: colors.textPrimary || "#1e293b" }}>
+                  Our College
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span
+                  className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                  style={{ backgroundColor: `${colors.primary}15`, color: colors.primary }}
+                >
+                  NAAC A+
+                </span>
+                <button
+                  type="button"
+                  className="px-2.5 py-1 text-[11px] font-bold shadow-xs transition-opacity"
+                  style={{
+                    backgroundColor: colors.buttonBackground || colors.primary,
+                    color: colors.buttonForeground || "#FFFFFF",
+                    borderRadius: `${Math.max(4, radiusPx - 4)}px`,
+                  }}
+                >
+                  Sign In
+                </button>
+              </div>
+            </div>
+
+            {/* Mock Hero Banner */}
+            <div
+              className="p-5 rounded-xl border relative overflow-hidden"
+              style={{
+                backgroundColor: `${colors.primary}10`,
+                borderColor: `${colors.primary}30`,
+                borderRadius: `${Math.max(4, radiusPx - 2)}px`,
+              }}
+            >
+              <div
+                className="inline-block text-[10px] font-bold uppercase tracking-wider mb-2 px-2 py-0.5 rounded-full"
+                style={{ backgroundColor: `${colors.primary}20`, color: colors.primary }}
               >
-                Apply Now
-              </button>
+                Premier Autonomous Institution
+              </div>
+              <h3
+                className="text-lg font-extrabold leading-snug font-heading"
+                style={{ color: colors.textPrimary || "#1e293b" }}
+              >
+                Sculpting Heart, Head &amp; Hand
+              </h3>
+              <p
+                className="text-xs leading-relaxed mt-1.5"
+                style={{ color: colors.textSecondary || "#64748b" }}
+              >
+                Autonomous degree college of Odisha, NAAC Accredited A+ with state-of-the-art research laboratories.
+              </p>
+
+              {/* Action Buttons inside Hero */}
+              <div className="flex flex-wrap items-center gap-2 mt-4">
+                <button
+                  type="button"
+                  className="px-3.5 py-1.5 text-xs font-bold shadow-sm transition-transform active:scale-95"
+                  style={{
+                    backgroundColor: colors.buttonBackground || colors.primary,
+                    color: colors.buttonForeground || "#FFFFFF",
+                    borderRadius: `${radiusPx}px`,
+                  }}
+                >
+                  Explore Admissions
+                </button>
+                <button
+                  type="button"
+                  className="px-3.5 py-1.5 text-xs font-bold transition-transform active:scale-95"
+                  style={{
+                    backgroundColor: colors.highlight || "#e0a100",
+                    color: colors.highlightForeground || "#1f1300",
+                    borderRadius: `${radiusPx}px`,
+                  }}
+                >
+                  Apply Now
+                </button>
+                <span
+                  className="text-xs font-medium cursor-pointer underline-offset-2 hover:underline ml-1"
+                  style={{ color: colors.accent || colors.primary }}
+                >
+                  View Prospectus →
+                </span>
+              </div>
             </div>
-            <div className="flex items-center gap-2 text-sm">
-              <span style={{ color: "var(--preview-accent)" }} className="font-medium">
-                Sample link
-              </span>
-              <span className="text-muted-foreground">— accent colour for links &amp; active states</span>
-            </div>
+
+            {/* Mock Content Card on Surface */}
             <div
-              className="border-border border p-4"
-              style={{ borderRadius: "var(--preview-radius)", borderColor: "var(--preview-accent)" }}
+              className="p-4 rounded-xl border space-y-3"
+              style={{
+                backgroundColor: colors.surface || "#FFFFFF",
+                borderColor: colors.border || "#e2e8f0",
+                borderRadius: `${Math.max(4, radiusPx - 2)}px`,
+              }}
             >
-              <p className="text-sm">A card with the selected corner radius.</p>
+              <div className="flex items-center justify-between">
+                <h4
+                  className="text-xs font-bold font-heading"
+                  style={{ color: colors.textPrimary || "#1e293b" }}
+                >
+                  Quality Assurance (IQAC &amp; NAAC)
+                </h4>
+                <span
+                  className="size-2 rounded-full"
+                  style={{ backgroundColor: colors.primary }}
+                />
+              </div>
+              <p
+                className="text-xs leading-relaxed"
+                style={{ color: colors.textSecondary || "#64748b" }}
+              >
+                This card demonstrates how content surfaces appear against the page canvas with your selected border and typography colors.
+              </p>
+              <div className="flex items-center justify-between pt-1 text-[11px] border-t" style={{ borderColor: colors.border || "#e2e8f0" }}>
+                <span style={{ color: colors.textSecondary || "#64748b" }}>Status: Approved</span>
+                <span className="font-bold cursor-pointer" style={{ color: colors.primary }}>
+                  View Criterion 1–7 Evidence →
+                </span>
+              </div>
             </div>
+          </div>
+
+          {/* Quick Notice */}
+          <div className="p-4 rounded-xl bg-muted/40 border border-border/60 text-xs text-muted-foreground space-y-1">
+            <p className="font-bold text-foreground">💡 Real-Time Sync Across All Tabs</p>
+            <p>
+              Changes are saved to browser local storage and immediately injected into the website's CSS variables.
+              Click <strong>"Open College Home Screen"</strong> above to see the changes live on the public college portal.
+            </p>
           </div>
         </div>
       </div>

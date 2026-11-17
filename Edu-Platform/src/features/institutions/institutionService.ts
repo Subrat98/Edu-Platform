@@ -1,11 +1,27 @@
 import { mockRequest } from "@/mocks/api/client";
 import { institutions } from "@/mocks/data/institutions";
 import { logActivity } from "@/mocks/data/activityLog";
+import { getCustomTheme } from "@/theme/themePersistence";
 import type { ContactInfo, Institution, InstitutionType, SocialLinks } from "@/types";
 
 export const institutionService = {
-  get: (id: InstitutionType) => mockRequest<Institution>(() => institutions[id], { latencyMs: [100, 250] }),
-  list: () => mockRequest<Institution[]>(() => Object.values(institutions), { latencyMs: [100, 250] }),
+  get: (id: InstitutionType) =>
+    mockRequest<Institution>(
+      () => ({
+        ...institutions[id],
+        theme: getCustomTheme(id),
+      }),
+      { latencyMs: [100, 250] }
+    ),
+  list: () =>
+    mockRequest<Institution[]>(
+      () =>
+        Object.values(institutions).map((inst) => ({
+          ...inst,
+          theme: getCustomTheme(inst.type),
+        })),
+      { latencyMs: [100, 250] }
+    ),
 
   update: (
     id: InstitutionType,

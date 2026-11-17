@@ -11,7 +11,7 @@ export const SCHOOL_COLORS: ColorTokens = {
   highlightForeground: "#1f1300",
   background: "#FFFFFF",
   surface: "#FFFFFF",
-  textPrimary: "#7F0000",
+  textPrimary: "#1e293b",
   textSecondary: "#64748b",
   border: "#e2e8f0",
   success: "#15803d",

@@ -3,38 +3,60 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { useQuery } from "@tanstack/react-query";
 import { applyTheme } from "@/theme/applyTheme";
 import { applyManifest } from "@/theme/applyManifest";
-import { institutions } from "@/mocks/data/institutions";
+import { getCustomTheme } from "@/theme/themePersistence";
 import { useInstitutionStore } from "@/features/institutions/institutionStore";
 import { queryKeys } from "@/lib/queryKeys";
 import { institutionService } from "@/features/institutions/institutionService";
 
 function InstitutionThemeEffect() {
   const activeInstitutionId = useInstitutionStore((s) => s.activeInstitutionId);
+  const onUnifiedRoute = typeof window !== "undefined" && window.location.pathname.startsWith("/unified");
+
+  // Determine current active wing from URL path if public route, or active store state
+  const effectiveWing =
+    typeof window !== "undefined" && window.location.pathname.startsWith("/school")
+      ? "school"
+      : typeof window !== "undefined" && window.location.pathname.startsWith("/college")
+        ? "college"
+        : activeInstitutionId;
+
   const { data } = useQuery({
-    queryKey: queryKeys.institution(activeInstitutionId),
-    queryFn: () => institutionService.get(activeInstitutionId),
+    queryKey: queryKeys.institution(effectiveWing),
+    queryFn: () => institutionService.get(effectiveWing),
   });
 
-  // /unified manages its own theme/manifest entirely (see UnifiedLanding.tsx)
-  // — it isn't driven by activeInstitutionId at all. Without this guard,
-  // this effect's *async* branch below (which fires once the mock request
-  // resolves, after /unified's own one-shot effect has already run) would
-  // race it and silently clobber the Unified brand colour with whatever
-  // institution was last active on the public site.
-  const onUnifiedRoute = window.location.pathname.startsWith("/unified");
+  useEffect(() => {
+    if (onUnifiedRoute) return;
+    // Apply synchronously from custom persisted storage so there's no flash
+    const storedTheme = getCustomTheme(effectiveWing);
+    applyTheme(storedTheme);
+    applyManifest(effectiveWing);
+  }, [effectiveWing, onUnifiedRoute]);
 
   useEffect(() => {
     if (onUnifiedRoute) return;
-    // Apply synchronously from the static seed first so there's no flash
-    // of the wrong brand colour while the (fast) mock request resolves.
-    applyTheme(institutions[activeInstitutionId].theme);
-    applyManifest(activeInstitutionId);
-  }, [activeInstitutionId, onUnifiedRoute]);
+    if (data?.theme) {
+      applyTheme(data.theme);
+    } else {
+      applyTheme(getCustomTheme(effectiveWing));
+    }
+  }, [data, effectiveWing, onUnifiedRoute]);
 
+  // Reactive listener for live theme changes in the same tab or across tabs
   useEffect(() => {
     if (onUnifiedRoute) return;
-    if (data) applyTheme(data.theme);
-  }, [data, onUnifiedRoute]);
+    const handleThemeChange = () => {
+      const updatedTheme = getCustomTheme(effectiveWing);
+      applyTheme(updatedTheme);
+    };
+
+    window.addEventListener("storage", handleThemeChange);
+    window.addEventListener("eduplatform:theme-changed", handleThemeChange);
+    return () => {
+      window.removeEventListener("storage", handleThemeChange);
+      window.removeEventListener("eduplatform:theme-changed", handleThemeChange);
+    };
+  }, [effectiveWing, onUnifiedRoute]);
 
   return null;
 }

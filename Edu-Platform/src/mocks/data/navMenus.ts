@@ -184,9 +184,9 @@ export const collegeNavMenu: NavMenu = {
       path: "/college/iqac",
       children: [
         { label: "IQAC Public Portal", path: "/college/iqac" },
-        { label: "Accreditation & SSR", path: "/college/iqac" },
-        { label: "AQAR Archive (8 Years)", path: "/college/iqac" },
-        { label: "Criteria I–VII Evidence", path: "/college/iqac" },
+        { label: "Accreditation & SSR", path: "/college/accreditation-ssr" },
+        { label: "AQAR Archive (8 Years)", path: "/college/aqar-archive" },
+        { label: "Criteria I–VII Evidence", path: "/college/criteria-evidence" },
         { label: "Mandatory Disclosure", path: "/college/disclosure" },
       ],
     },

@@ -10,6 +10,8 @@ export interface ColorTokens {
   textPrimary: string;
   textSecondary: string;
   border: string;
+  buttonBackground?: string;
+  buttonForeground?: string;
   success: string;
   warning: string;
   error: string;

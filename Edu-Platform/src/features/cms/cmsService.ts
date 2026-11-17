@@ -2,9 +2,8 @@ import { mockRequest } from "@/mocks/api/client";
 import { cmsPages, getCmsPagesBySite, getCmsPage } from "@/mocks/data/cmsPages";
 import { schoolMedia, collegeMedia, getMediaByInstitution } from "@/mocks/data/mediaAssets";
 import { schoolNavMenu, collegeNavMenu, getNavMenu } from "@/mocks/data/navMenus";
-import { institutions } from "@/mocks/data/institutions";
 import { allNotices, getNoticesByInstitution } from "@/mocks/data/notices";
-import { applyTheme } from "@/theme/applyTheme";
+import { getCustomTheme, saveCustomTheme } from "@/theme/themePersistence";
 import type {
   CmsPageRecord,
   ColorTokens,
@@ -88,14 +87,17 @@ export const cmsService = {
     }),
 
   // ---- Theme designer ----
-  getTheme: (institutionId: InstitutionType) => mockRequest(() => institutions[institutionId].theme, { latencyMs: [100, 200] }),
+  getTheme: (institutionId: InstitutionType) =>
+    mockRequest(() => getCustomTheme(institutionId), { latencyMs: [100, 200] }),
 
-  updateTheme: (institutionId: InstitutionType, colors: Partial<ColorTokens>, radius?: string) =>
+  updateTheme: (
+    _institutionId: InstitutionType,
+    colors: Partial<ColorTokens>,
+    radius?: string,
+    scope: "global" | "college" | "school" = "global"
+  ) =>
     mockRequest<{ ok: true }>(() => {
-      const institution = institutions[institutionId];
-      institution.theme.colors = { ...institution.theme.colors, ...colors };
-      if (radius) institution.theme.radius = radius;
-      applyTheme(institution.theme);
+      saveCustomTheme(scope, colors, radius);
       return { ok: true };
     }),
 

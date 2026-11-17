@@ -31,7 +31,7 @@ export function PublicLayout() {
     activeInstitutionId === "college" ? collegePublicTabs : schoolPublicTabs;
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-background text-foreground transition-colors duration-200">
       <Header />
       {/* pb-16 on mobile so content clears the fixed bottom tab bar */}
       <main className="flex-1 pb-16 xl:pb-0">

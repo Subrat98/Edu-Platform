@@ -62,6 +62,9 @@ const CollegeTenders = lazy(() => import("@/sites/college/pages/Tenders"));
 const CollegeRecruitment = lazy(() => import("@/sites/college/pages/Recruitment"));
 const CollegeAlumni = lazy(() => import("@/sites/college/pages/Alumni"));
 const CollegeVirtualTour = lazy(() => import("@/sites/college/pages/VirtualTour"));
+const CollegeAccreditationSsr = lazy(() => import("@/sites/college/pages/AccreditationSsr"));
+const CollegeAqarArchive = lazy(() => import("@/sites/college/pages/AqarArchive"));
+const CollegeCriteriaEvidence = lazy(() => import("@/sites/college/pages/CriteriaEvidence"));
 
 // --- Admin (CMS) pages (lazy) ---
 const AdminDashboard = lazy(() => import("@/sites/admin/Dashboard"));
@@ -210,6 +213,9 @@ export const router = createBrowserRouter([
       { path: "admissions", element: <CollegeAdmissions /> },
       { path: "faculty-staff", element: <CollegeFacultyStaff /> },
       { path: "iqac", element: <CollegeIQAC /> },
+      { path: "accreditation-ssr", element: <CollegeAccreditationSsr /> },
+      { path: "aqar-archive", element: <CollegeAqarArchive /> },
+      { path: "criteria-evidence", element: <CollegeCriteriaEvidence /> },
       { path: "research", element: <CollegeResearch /> },
       { path: "placements", element: <CollegePlacements /> },
       { path: "examination-cell", element: <CollegeExamCell /> },
