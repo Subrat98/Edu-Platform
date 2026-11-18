@@ -72,6 +72,7 @@ const CmsPagesList = lazy(() => import("@/sites/admin/cms/PagesList"));
 const CmsPageBuilder = lazy(() => import("@/sites/admin/cms/PageBuilder"));
 const CmsMenuBuilder = lazy(() => import("@/sites/admin/cms/MenuBuilder"));
 const CmsThemeDesigner = lazy(() => import("@/sites/admin/cms/ThemeDesigner"));
+const CmsSiteEditor = lazy(() => import("@/sites/admin/cms/SiteContentEditor"));
 const CmsNoticesAdmin = lazy(() => import("@/sites/admin/cms/NoticesAdmin"));
 const CmsMediaLibrary = lazy(() => import("@/sites/admin/cms/MediaLibrary"));
 
@@ -263,6 +264,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <AdminDashboard /> },
+      { path: "cms/site-editor", element: <CmsSiteEditor /> },
       { path: "cms/pages", element: <CmsPagesList /> },
       { path: "cms/pages/:id", element: <CmsPageBuilder /> },
       { path: "cms/menus", element: <CmsMenuBuilder /> },

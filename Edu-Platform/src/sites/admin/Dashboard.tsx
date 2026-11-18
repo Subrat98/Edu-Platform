@@ -13,6 +13,7 @@ import {
   IndianRupee,
   Landmark,
   Layers,
+  PenSquare,
 } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
@@ -225,6 +226,9 @@ export default function AdminDashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
+            <Link to="/admin/cms/site-editor" className="text-primary font-bold flex items-center gap-2 text-sm hover:underline bg-primary/10 p-2 rounded-md border border-primary/20">
+              <PenSquare className="size-4 text-primary" /> Website Content Editor (Home, About, etc.)
+            </Link>
             <Link to="/admin/students" className="text-accent flex items-center gap-2 text-sm hover:underline">
               <GraduationCap className="size-4" /> Student directory
             </Link>

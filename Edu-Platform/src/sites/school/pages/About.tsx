@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { schoolHeroUrl } from "@/mocks/data/images";
 import { institutions } from "@/mocks/data/institutions";
+import { useLiveSiteContent } from "@/features/content/siteContentService";
 import {
   Sparkles,
   BookOpen,
@@ -25,24 +26,27 @@ import {
 
 export default function SchoolAbout() {
   const institution = institutions.school;
+  const siteContent = useLiveSiteContent("school");
 
-  const milestones = [
-    { year: "1998", event: "Establishment of Our School at Khandapara with Nursery to Class V to provide affordable quality English-medium education." },
-    { year: "2004", event: "Received unconditional No Objection Certificate (NOC) from the School & Mass Education Department, Govt. of Odisha." },
-    { year: "2008", event: "Granted composite affiliation by the Central Board of Secondary Education (CBSE) up to Secondary Level (Class X)." },
-    { year: "2015", event: "Upgraded to Senior Secondary Level (Class XII) in Science and Commerce streams; established modern laboratories." },
-    { year: "2020", event: "Selected by NITI Aayog for establishment of Atal Tinkering Lab (ATL); instituted smart interactive classrooms." },
-    { year: "2024", event: "Achieved 100% pass result in Class X AISSE; awarded Fit India Gold Certified School status." },
-    { year: "2026", event: "Affiliation extended through 2029; fully compliant with CBSE Appendix IX and NEP 2020 Holistic Progress standards." },
-  ];
+  const milestones = siteContent.about?.timeline?.length
+    ? siteContent.about.timeline
+    : [
+        { year: "1998", event: "Establishment of Our School at Khandapara with Nursery to Class V to provide affordable quality English-medium education." },
+        { year: "2004", event: "Received unconditional No Objection Certificate (NOC) from the School & Mass Education Department, Govt. of Odisha." },
+        { year: "2008", event: "Granted composite affiliation by the Central Board of Secondary Education (CBSE) up to Secondary Level (Class X)." },
+        { year: "2015", event: "Upgraded to Senior Secondary Level (Class XII) in Science and Commerce streams; established modern laboratories." },
+        { year: "2020", event: "Selected by NITI Aayog for establishment of Atal Tinkering Lab (ATL); instituted smart interactive classrooms." },
+        { year: "2024", event: "Achieved 100% pass result in Class X AISSE; awarded Fit India Gold Certified School status." },
+        { year: "2026", event: "Affiliation extended through 2029; fully compliant with CBSE Appendix IX and NEP 2020 Holistic Progress standards." },
+      ];
 
   return (
     <>
       <Hero
         variant="compact"
-        title="About Our School"
-        subtitle="Heritage, Vision, Educational Philosophy & 27 Years of Scholarly Excellence"
-        imageUrl={schoolHeroUrl(1)}
+        title={siteContent.about?.heroTitle || "About Our School"}
+        subtitle={siteContent.about?.heroSubtitle || "Heritage, Vision, Educational Philosophy & 27 Years of Scholarly Excellence"}
+        imageUrl={siteContent.about?.heroImage || schoolHeroUrl(1)}
       />
       <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "About Us" }]} />
 
@@ -59,10 +63,10 @@ export default function SchoolAbout() {
               </Badge>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-foreground mt-2">
-              Where Every Child Learns to Shine
+              {siteContent.about?.storyTitle || "Where Every Child Learns to Shine"}
             </h1>
             <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-3xl leading-relaxed">
-              Founded in 1998 in Khandapara, Nayagarh, <strong>Our School</strong> has grown over nearly three decades into a beacon of academic rigor, character building, and inclusive student care across 4.0 acres of green, modern infrastructure.
+              {siteContent.about?.storyText || "Founded in 1998 in Khandapara, Nayagarh, Our School has grown over nearly three decades into a beacon of academic rigor, character building, and inclusive student care across 4.0 acres of green, modern infrastructure."}
             </p>
           </div>
 
@@ -70,20 +74,20 @@ export default function SchoolAbout() {
             <Card className="border border-border/70 bg-card p-5 space-y-2 shadow-xs">
               <div className="flex items-center gap-2 text-primary font-bold text-sm">
                 <Sparkles className="size-4" />
-                <span>Our Vision</span>
+                <span>{siteContent.about?.visionTitle || "Our Vision"}</span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                To nurture intellectually curious, morally rooted, and socially responsible global citizens capable of creative problem-solving and nation-building.
+                {siteContent.about?.visionText || "To nurture intellectually curious, morally rooted, and socially responsible global citizens capable of creative problem-solving and nation-building."}
               </p>
             </Card>
 
             <Card className="border border-border/70 bg-card p-5 space-y-2 shadow-xs">
               <div className="flex items-center gap-2 text-emerald-600 font-bold text-sm">
                 <BookOpen className="size-4" />
-                <span>Our Mission</span>
+                <span>{siteContent.about?.missionTitle || "Our Mission"}</span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                To provide a joyful, fear-free learning ecosystem combining CBSE-NCERT excellence with Atal Tinkering Lab innovations, sports, and inclusive care.
+                {siteContent.about?.missionText || "To provide a joyful, fear-free learning ecosystem combining CBSE-NCERT excellence with Atal Tinkering Lab innovations, sports, and inclusive care."}
               </p>
             </Card>
 

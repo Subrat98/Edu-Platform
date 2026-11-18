@@ -66,6 +66,7 @@ export const adminNavGroups: AdminNavGroup[] = [
   {
     label: "Website CMS",
     items: [
+      { label: "Website Content Editor", path: "/admin/cms/site-editor", icon: PenSquare },
       { label: "Pages", path: "/admin/cms/pages", icon: FileText },
       { label: "Menu Builder", path: "/admin/cms/menus", icon: MenuIcon },
       { label: "Theme Designer", path: "/admin/cms/theme", icon: Palette },
@@ -174,6 +175,7 @@ export const platformNavGroups: AdminNavGroup[] = [
   {
     label: "Platform",
     items: [
+      { label: "Website Content Editor", path: "/admin/cms/site-editor", icon: PenSquare, end: true },
       { label: "Website Wings & Content", path: "/admin/platform/settings", icon: SlidersHorizontal, end: true },
       { label: "Setup Wizard", path: "/admin/platform/setup-wizard", icon: Wand2, end: true },
     ],

@@ -11,11 +11,16 @@ import { useQuery } from "@tanstack/react-query";
 import { navMenuService } from "@/features/content/navMenuService";
 import { queryKeys } from "@/lib/queryKeys";
 import { Badge } from "@/components/ui/badge";
+import { useLiveSiteContent } from "@/features/content/siteContentService";
 
 const CURRENT_YEAR = new Date().getFullYear();
 
 export function Footer() {
   const { institutionId, institution } = useInstitutionData();
+  const siteContent = useLiveSiteContent(institutionId);
+  const activeLogoUrl = siteContent.branding?.logoUrl || institution?.theme.logoUrl || "/college-logo.png";
+  const activeName = siteContent.branding?.institutionName || institution?.name || (institutionId === "college" ? "Our College" : "Our School");
+  const activeTagline = siteContent.branding?.tagline || (institutionId === "college" ? "Our College · Estd. 2026" : institution?.tagline);
   const { data: menu } = useQuery({
     queryKey: queryKeys.navMenu(institutionId),
     queryFn: () => navMenuService.get(institutionId),
@@ -73,10 +78,10 @@ export function Footer() {
         {/* Column 1: Institution Identity & Official Contact */}
         <div className="space-y-4">
           <div className="flex items-center gap-2.5">
-            {isCollege && institution?.theme.logoUrl ? (
+            {activeLogoUrl ? (
               <img
-                src={institution.theme.logoUrl}
-                alt={institution?.name ?? "Our College"}
+                src={activeLogoUrl}
+                alt={activeName}
                 className="size-11 rounded-lg object-contain bg-white/10 p-0.5 border border-white/20 shadow-xs"
               />
             ) : (
@@ -90,10 +95,10 @@ export function Footer() {
             )}
             <div>
               <span className="font-heading text-base font-bold block leading-tight">
-                {institution?.name}
+                {activeName}
               </span>
               <span className="text-xs text-amber-300 block">
-                {isCollege ? "Our College · Estd. 2026" : institution?.tagline}
+                {activeTagline}
               </span>
             </div>
           </div>

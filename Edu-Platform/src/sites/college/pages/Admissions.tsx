@@ -5,6 +5,7 @@ import { Downloads } from "@/components/sections/Downloads";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { collegeHeroUrl } from "@/mocks/data/images";
+import { useLiveSiteContent } from "@/features/content/siteContentService";
 
 const faqItems = [
   { id: "f1", question: "What is the eligibility for UG programmes?", answer: "A pass in 10+2 from a recognized board, with subject-specific requirements varying by programme — see each programme's detail page." },
@@ -15,17 +16,25 @@ const faqItems = [
 ];
 
 export default function CollegeAdmissions() {
+  const siteContent = useLiveSiteContent("college");
+  const adm = siteContent.admissions;
+
   return (
     <>
-      <Hero variant="compact" title="Admissions 2027–28" imageUrl={collegeHeroUrl(7)} />
+      <Hero
+        variant="compact"
+        title={adm.heroTitle || "Admissions 2026–27"}
+        subtitle={adm.heroSubtitle}
+        imageUrl={adm.heroImage || collegeHeroUrl(7)}
+      />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Admissions" }]} />
 
       <AdmissionsCTA
-        title="UG & PG admissions are now open"
-        description="Applications for all undergraduate and postgraduate programmes for the 2027–28 session are open. Merit lists are published in phases based on qualifying marks and category reservation norms."
-        deadline="31 January 2027"
-        eligibility="Varies by programme — see Programmes & Courses"
-        steps={[
+        title={adm.bannerTitle || "UG & PG admissions are now open"}
+        description={adm.bannerDescription || "Applications for all undergraduate and postgraduate programmes for the 2026–27 session are open. Merit lists are published in phases based on qualifying marks and category reservation norms."}
+        deadline={adm.deadline || "31 July 2026"}
+        eligibility={adm.eligibility || "Varies by programme — see Programmes & Courses"}
+        steps={adm.steps && adm.steps.length > 0 ? adm.steps : [
           "Create your application account and select your programme choices",
           "Upload scanned mark sheets and category/reservation documents",
           "Track your merit status and complete admission formalities online",

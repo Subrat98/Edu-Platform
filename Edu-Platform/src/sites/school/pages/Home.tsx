@@ -36,6 +36,7 @@ import {
 } from "@/components/ui/dialog";
 import { schoolNotices } from "@/mocks/data/notices";
 import { schoolHeroUrl, schoolGalleryUrl } from "@/mocks/data/images";
+import { useLiveSiteContent } from "@/features/content/siteContentService";
 
 export default function SchoolHome() {
   const [tickerPaused, setTickerPaused] = useState(false);
@@ -43,35 +44,8 @@ export default function SchoolHome() {
   const [principalMessageOpen, setPrincipalMessageOpen] = useState(false);
   const [noticeTab, setNoticeTab] = useState<"All" | "Admission" | "Examination" | "Circular">("All");
 
-  const heroSlides = [
-    {
-      title: "Nurturing Young Minds to Shine",
-      subtitle: "CBSE Affiliated Senior Secondary School (Nursery to Class XII) · Estd. 1998",
-      description: "Empowering 1,250+ students in Khandapara, Nayagarh with holistic NEP 2020 pedagogy, Atal Tinkering Lab innovations, PM-POSHAN nutrition, and 98.4% board result excellence.",
-      image: schoolHeroUrl(1),
-      primaryCta: { label: "Admissions 2026-27 (RTE 25%)", href: "/school/admissions" },
-      secondaryCta: { label: "Mandatory Public Disclosure", href: "/school/mandatory-disclosure" },
-      badge: "CBSE Affiliation No. 3330123 · School Code: 15234",
-    },
-    {
-      title: "Hands-on Innovation at Atal Tinkering Lab",
-      subtitle: "Robotics, 3D Printing, Electronics & Internet of Things (IoT) Kits",
-      description: "Fostering STEM curiosity from Class VI onwards under NITI Aayog's ATL initiative, preparing the innovators, scientists, and engineers of tomorrow.",
-      image: schoolHeroUrl(2),
-      primaryCta: { label: "Explore Campus Facilities", href: "/school/facilities" },
-      secondaryCta: { label: "Science & Co-Curriculars", href: "/school/student-life" },
-      badge: "NITI Aayog ATL Innovation School",
-    },
-    {
-      title: "Fit India & Inclusive Sports Excellence",
-      subtitle: "Athletics, Football, Kho-Kho, Junior Red Cross & Scouts/Guides",
-      description: "Building character, teamwork, and health across 4.0 acres of green campus, playground, indoor badminton hall, and dedicated yoga periods.",
-      image: schoolHeroUrl(3),
-      primaryCta: { label: "Student Life & Houses", href: "/school/student-life" },
-      secondaryCta: { label: "Board Results & Toppers", href: "/school/results" },
-      badge: "Fit India Certified School",
-    },
-  ];
+  const siteContent = useLiveSiteContent("school");
+  const heroSlides = siteContent.home.heroSlides;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -396,19 +370,25 @@ export default function SchoolHome() {
           <Card className="border border-border/70 bg-card p-6 space-y-4 shadow-xs">
             <div className="flex items-center gap-3">
               <div className="size-14 rounded-2xl bg-primary/10 border-2 border-primary/20 flex items-center justify-center font-black text-primary text-xl shrink-0">
-                SM
+                {siteContent.home.principalMessage?.headName
+                  ? siteContent.home.principalMessage.headName.split(" ").map((w) => w[0]).filter(Boolean).slice(0, 2).join("").toUpperCase()
+                  : "SM"}
               </div>
               <div>
                 <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] font-bold">
-                  Principal's Desk
+                  {siteContent.home.principalMessage?.badge || "Principal's Desk"}
                 </Badge>
-                <h3 className="text-base font-bold text-foreground mt-0.5">Smt. Sunita Mohanty</h3>
-                <p className="text-xs text-muted-foreground">M.Sc. (Physics), B.Ed. · 22 Years Exp.</p>
+                <h3 className="text-base font-bold text-foreground mt-0.5">
+                  {siteContent.home.principalMessage?.headName || "Smt. Sunita Mohanty"}
+                </h3>
+                <p className="text-xs text-muted-foreground">
+                  {siteContent.home.principalMessage?.subTitle || "M.Sc. (Physics), B.Ed. · 22 Years Exp."}
+                </p>
               </div>
             </div>
 
             <p className="text-xs text-muted-foreground leading-relaxed italic border-l-2 border-primary/30 pl-3">
-              "Welcome to Our School. True education transcends examination marks; it nurtures scientific temperament, moral fortitude, and compassionate citizenship. Our teachers walk with every learner to ensure no child is left behind."
+              "{siteContent.home.principalMessage?.shortQuote || "Welcome to Our School. True education transcends examination marks; it nurtures scientific temperament, moral fortitude, and compassionate citizenship. Our teachers walk with every learner to ensure no child is left behind."}"
             </p>
 
             <Button
@@ -722,21 +702,15 @@ export default function SchoolHome() {
           <DialogHeader>
             <DialogTitle className="text-base font-bold flex items-center gap-2">
               <GraduationCap className="size-5 text-primary" />
-              <span>Vision Statement from the Principal</span>
+              <span>{siteContent.home.principalMessage?.headTitle || "Vision Statement from the Principal"}</span>
             </DialogTitle>
             <DialogDescription className="text-xs">
-              Smt. Sunita Mohanty, Principal, Our School
+              {siteContent.home.principalMessage?.headName || "Smt. Sunita Mohanty"}, {siteContent.home.principalMessage?.subTitle || "Principal, Our School"}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3 text-xs text-muted-foreground leading-relaxed pt-2">
             <p>
-              "Dear Parents, Students, and Well-Wishers, welcome to Our School. For over 27 years, our campus has stood as a beacon of academic diligence, ethical discipline, and joyful learning in Nayagarh."
-            </p>
-            <p>
-              "In alignment with the National Education Policy (NEP 2020), we have modernised our learning ecosystem with 100% smart interactive classrooms, experiential science laboratories, and an Atal Tinkering Lab. We believe that true learning begins with curiosity and blossoms with empathy."
-            </p>
-            <p>
-              "Our dedicated team of 48 trained educators ensures personal attention with a 1:26 student-teacher ratio. As an inclusive school, we provide specialised support through our dedicated Special Educator and Child Wellness Counsellor. I invite you to partner with us in shaping confident, responsible citizens for India."
+              "{siteContent.home.principalMessage?.fullMessage || "Dear Parents, Students, and Well-Wishers, welcome to Our School. For over 27 years, our campus has stood as a beacon of academic diligence, ethical discipline, and joyful learning in Nayagarh."}"
             </p>
           </div>
         </DialogContent>

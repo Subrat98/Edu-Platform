@@ -74,11 +74,35 @@ export default function PagesList() {
         title="Pages"
         description="Create, edit and publish pages for the public website."
         actions={
-          <Button onClick={() => setCreateOpen(true)} className="gap-1.5">
-            <Plus className="size-4" /> New Page
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button asChild variant="outline" className="gap-1.5 border-primary/40 text-primary hover:bg-primary/10">
+              <Link to="/admin/cms/site-editor">
+                <Pencil className="size-4" /> Live Content Editor
+              </Link>
+            </Button>
+            <Button onClick={() => setCreateOpen(true)} className="gap-1.5">
+              <Plus className="size-4" /> New Page
+            </Button>
+          </div>
         }
       />
+
+      <div className="mb-6 p-4 rounded-xl border-2 border-primary/30 bg-primary/5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-sm text-foreground">Super Admin Full Website Content Editor</span>
+            <Badge className="bg-primary text-primary-foreground text-[10px]">Instant Live Sync</Badge>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Directly edit live banners, hero slides, headlines, leadership messages, about us milestones, admissions &amp; contact coordinates for Home, About, Admissions, and more.
+          </p>
+        </div>
+        <Button asChild className="gap-2 shrink-0 bg-primary font-bold shadow-xs">
+          <Link to="/admin/cms/site-editor">
+            <Pencil className="size-4" /> Open Website Content Editor
+          </Link>
+        </Button>
+      </div>
 
       <div className="mb-4 flex flex-wrap gap-3">
         <div className="relative max-w-xs flex-1">

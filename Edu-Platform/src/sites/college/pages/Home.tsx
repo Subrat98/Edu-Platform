@@ -38,16 +38,18 @@ import {
 import { collegeNotices } from "@/mocks/data/notices";
 import { collegeHeroUrl, collegeGalleryUrl } from "@/mocks/data/images";
 import collegeLogo from "@/assets/college-logo.png";
+import { useLiveSiteContent } from "@/features/content/siteContentService";
 
 export default function CollegeHome() {
+  const siteContent = useLiveSiteContent("college");
   const [tickerPaused, setTickerPaused] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [noticeTab, setNoticeTab] = useState<"Announcements" | "Recruitment" | "Tenders">("Announcements");
   const [vcMessageOpen, setVcMessageOpen] = useState(false);
   const [chancellorMessageOpen, setChancellorMessageOpen] = useState(false);
 
-  // Hero slides
-  const heroSlides = [
+  // Hero slides from live editable content
+  const heroSlides = siteContent.home.heroSlides.length > 0 ? siteContent.home.heroSlides : [
     {
       title: "Sculpting Heart, Head & Hand",
       subtitle: "First & Premier State University of Odisha · Established 1868 / 1943",
@@ -56,24 +58,6 @@ export default function CollegeHome() {
       primaryCta: { label: "e-Admission Portal 2026-27", href: "/college/admissions" },
       secondaryCta: { label: "NAAC Accreditation Dossier", href: "/college/iqac" },
       badge: "NAAC Grade A+ · CGPA 3.42",
-    },
-    {
-      title: "Centre for Groundbreaking Research & Innovation",
-      subtitle: "₹142.50 Lakhs Extramural Grants (DST, CSIR, UGC) · 68 Scopus Papers",
-      description: "Advancing frontier inquiry in Artificial Intelligence, Perovskite Nanomaterials, Biodiversity of the Eastern Ghats, and Regional Development Economics with state-of-the-art CIF facilities.",
-      image: collegeHeroUrl(2),
-      primaryCta: { label: "Explore Scopus Register", href: "/college/research" },
-      secondaryCta: { label: "Central Instrumentation Facility", href: "/college/research" },
-      badge: "Metric 3.3.1 Scopus Verified",
-    },
-    {
-      title: "Vibrant Campus Life & Heritage Legacy",
-      subtitle: "Historic Red-Brick Quadrangle · Parija Central Library · 380+ Affiliated Colleges",
-      description: "Empowering 24,000+ students with Choice Based Credit System (CBCS), NEP 2020 LOCF curricula, 42 micro-credentials, active clubs, and 84% campus placement record.",
-      image: collegeHeroUrl(3),
-      primaryCta: { label: "Explore Programmes & Syllabi", href: "/college/programmes" },
-      secondaryCta: { label: "Take 360° Virtual Tour", href: "/college/virtual-tour" },
-      badge: "600,000+ Global Alumni",
     },
   ];
 
@@ -257,7 +241,7 @@ export default function CollegeHome() {
       {/* H4: Legacy + Statistics Animated Counters */}
       <Container>
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
-          {[
+          {(siteContent.home.stats.length > 0 ? siteContent.home.stats : [
             { label: "Years of Legacy", val: "80+", sub: "Est. 1868 / 1943" },
             { label: "Affiliated Colleges", val: "380+", sub: "Across Odisha" },
             { label: "PG Departments", val: "32", sub: "Centres of Excellence" },
@@ -266,7 +250,7 @@ export default function CollegeHome() {
             { label: "Research Grants", val: "₹142.5L", sub: "DST, CSIR & UGC" },
             { label: "Scopus Papers", val: "3,500+", sub: "68 in 2025-26" },
             { label: "Global Alumni", val: "600,000+", sub: "Leadership Footprint" },
-          ].map((stat, i) => (
+          ]).map((stat, i) => (
             <div
               key={i}
               className="p-3 rounded-xl border border-border/60 bg-card text-center space-y-1 shadow-xs hover:border-primary/40 transition-all"
@@ -344,15 +328,17 @@ export default function CollegeHome() {
             <CardHeader className="p-5 pb-3">
               <div className="flex items-center justify-between">
                 <Badge className="bg-amber-600 text-white text-[10px]">
-                  Head of the University
+                  {siteContent.home.chancellorMessage?.badge ?? "Head of the University"}
                 </Badge>
-                <span className="text-xs text-muted-foreground font-mono">Raj Bhavan, Odisha</span>
+                <span className="text-xs text-muted-foreground font-mono">
+                  {siteContent.home.chancellorMessage?.location ?? "Raj Bhavan, Odisha"}
+                </span>
               </div>
               <CardTitle className="text-lg font-bold text-foreground mt-2">
-                Hon'ble Chancellor & Governor of Odisha
+                {siteContent.home.chancellorMessage?.headTitle ?? "Hon'ble Chancellor & Governor of Odisha"}
               </CardTitle>
               <CardDescription className="text-xs">
-                Ex-Officio Head & Supreme Authority under the Odisha Universities Act
+                {siteContent.home.chancellorMessage?.subTitle ?? "Ex-Officio Head & Supreme Authority under the Odisha Universities Act"}
               </CardDescription>
             </CardHeader>
             <CardContent className="p-5 pt-0 space-y-3">
@@ -362,7 +348,7 @@ export default function CollegeHome() {
                 </div>
                 <div className="text-xs text-muted-foreground leading-relaxed">
                   <p className="italic">
-                    “May this premier institution continue to illuminate the state through excellence in higher learning, inclusive research, and character building for future generations.”
+                    “{siteContent.home.chancellorMessage?.shortQuote ?? "May this premier institution continue to illuminate the state through excellence in higher learning, inclusive research, and character building for future generations."}”
                   </p>
                   <Button
                     variant="link"
@@ -382,15 +368,17 @@ export default function CollegeHome() {
             <CardHeader className="p-5 pb-3">
               <div className="flex items-center justify-between">
                 <Badge className="bg-primary text-primary-foreground text-[10px]">
-                  Principal Academic & Executive Officer
+                  {siteContent.home.vcMessage?.badge ?? "Principal Academic & Executive Officer"}
                 </Badge>
-                <span className="text-xs text-muted-foreground font-mono">Vice-Chancellor's Secretariat</span>
+                <span className="text-xs text-muted-foreground font-mono">
+                  {siteContent.home.vcMessage?.location ?? "Vice-Chancellor's Secretariat"}
+                </span>
               </div>
               <CardTitle className="text-lg font-bold text-foreground mt-2">
-                Prof. (Dr.) B. K. Ray, Vice-Chancellor
+                {siteContent.home.vcMessage?.headName ?? "Prof. (Dr.) B. K. Ray, Vice-Chancellor"}
               </CardTitle>
               <CardDescription className="text-xs">
-                Ph.D., FNAAS · Leading Institutional Transformation & NAAC A++ Roadmap
+                {siteContent.home.vcMessage?.subTitle ?? "Ph.D., FNAAS · Leading Institutional Transformation & NAAC A++ Roadmap"}
               </CardDescription>
             </CardHeader>
             <CardContent className="p-5 pt-0 space-y-3">
@@ -400,7 +388,7 @@ export default function CollegeHome() {
                 </div>
                 <div className="text-xs text-muted-foreground leading-relaxed">
                   <p className="italic">
-                    “Our mission is to empower every student through NEP 2020 student-centric learning, experiential innovation, transparent governance, and world-class research.”
+                    “{siteContent.home.vcMessage?.shortQuote ?? "Our mission is to empower every student through NEP 2020 student-centric learning, experiential innovation, transparent governance, and world-class research."}”
                   </p>
                   <Button
                     variant="link"
@@ -736,11 +724,8 @@ export default function CollegeHome() {
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3 text-xs text-muted-foreground leading-relaxed pt-2">
-            <p>
-              "The history of higher education in Odisha is intrinsically linked with the glorious trajectory of this university. From its historic inception in the 19th century through the pivotal university charter of 1943, this institution has nurtured scholars, freedom fighters, chief ministers, jurists, and scientists who shaped modern India."
-            </p>
-            <p>
-              "In this transformative era of the National Education Policy (NEP 2020), I commend the Vice-Chancellor, the Academic Council, and the Internal Quality Assurance Cell (IQAC) for upholding rigorous standards, expanding interdisciplinary research, and fostering inclusive empowerment across our state."
+            <p className="whitespace-pre-line">
+              "{siteContent.home.chancellorMessage?.fullMessage ?? "The history of higher education in Odisha is intrinsically linked with the glorious trajectory of this university. From its historic inception in the 19th century through the pivotal university charter of 1943, this institution has nurtured scholars, freedom fighters, chief ministers, jurists, and scientists who shaped modern India. In this transformative era of NEP 2020, I commend the faculty and administration for upholding rigorous academic standards."}"
             </p>
           </div>
         </DialogContent>
@@ -755,15 +740,12 @@ export default function CollegeHome() {
               Vision Statement from the Vice-Chancellor
             </DialogTitle>
             <DialogDescription className="text-xs">
-              Prof. (Dr.) B. K. Ray, Vice-Chancellor
+              {siteContent.home.vcMessage?.headName ?? "Prof. (Dr.) B. K. Ray, Vice-Chancellor"}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3 text-xs text-muted-foreground leading-relaxed pt-2">
-            <p>
-              "Welcome to Our College. We stand at the intersection of timeless heritage and groundbreaking 21st-century innovation. Our accreditation with NAAC Grade A+ (CGPA 3.42) reflects our unyielding commitment to academic integrity, student-centric pedagogical reforms, and research excellence."
-            </p>
-            <p>
-              "With 100% ICT-enabled smart classrooms, a ₹142.50 Lakh extramural sponsored research portfolio, and over 68 peer-reviewed Scopus publications this academic year, our faculty and students are solving crucial challenges facing our state and the nation. I invite prospective students and scholars to join our vibrant academic community."
+            <p className="whitespace-pre-line">
+              "{siteContent.home.vcMessage?.fullMessage ?? "Welcome to Our College. We stand at the intersection of timeless heritage and groundbreaking 21st-century innovation. Our accreditation with NAAC Grade A+ (CGPA 3.42) reflects our unyielding commitment to academic integrity, student-centric pedagogical reforms, and research excellence."}"
             </p>
           </div>
         </DialogContent>

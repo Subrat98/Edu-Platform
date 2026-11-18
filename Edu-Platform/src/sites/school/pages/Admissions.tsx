@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Faq } from "@/components/sections/Faq";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { schoolHeroUrl } from "@/mocks/data/images";
+import { useLiveSiteContent } from "@/features/content/siteContentService";
 import {
   GraduationCap,
   Download,
@@ -31,6 +32,7 @@ const faqItems = [
 ];
 
 export default function SchoolAdmissions() {
+  const siteContent = useLiveSiteContent("school");
   const ageCriteria = [
     { classLevel: "Nursery / Pre-School", age: "3 Years to 4 Years", cutoff: "Born between 01.04.2023 and 31.03.2024" },
     { classLevel: "LKG (Lower Kindergarten)", age: "4 Years to 5 Years", cutoff: "Born between 01.04.2022 and 31.03.2023" },
@@ -53,9 +55,9 @@ export default function SchoolAdmissions() {
     <>
       <Hero
         variant="compact"
-        title="Admissions 2026–27"
-        subtitle="Transparent Admissions, Age Criteria under NEP 2020, RTE 25% Reserved Quota & Approved Fee Schedule"
-        imageUrl={schoolHeroUrl(4)}
+        title={siteContent.admissions?.heroTitle || "Admissions 2026–27"}
+        subtitle={siteContent.admissions?.heroSubtitle || "Transparent Admissions, Age Criteria under NEP 2020, RTE 25% Reserved Quota & Approved Fee Schedule"}
+        imageUrl={siteContent.admissions?.heroImage || schoolHeroUrl(4)}
       />
       <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Admissions" }]} />
 

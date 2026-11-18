@@ -25,11 +25,14 @@ import { collegeHeroUrl } from "@/mocks/data/images";
 import { institutions } from "@/mocks/data/institutions";
 import { accreditationBadges } from "@/mocks/data/accreditation";
 import { AccreditationStrip } from "@/components/sections/AccreditationStrip";
+import { useLiveSiteContent } from "@/features/content/siteContentService";
 
 export default function CollegeAbout() {
   const institution = institutions.college;
+  const siteContent = useLiveSiteContent("college");
+  const about = siteContent.about;
 
-  const timeline = [
+  const timeline = about.timeline.length > 0 ? about.timeline : [
     { year: "1868", event: "Establishment of the Collegiate Institution, marking the dawn of modern higher education in Odisha." },
     { year: "1876", event: "Upgraded to a full-fledged Degree College with Science and Arts faculties." },
     { year: "1943", event: "Chartered as the first state university of Odisha under the historic Legislative Assembly Act." },
@@ -38,7 +41,7 @@ export default function CollegeAbout() {
     { year: "2023", event: "Achieved NAAC Grade A+ (CGPA 3.42) in Cycle 3; recognized as UGC Category-1 University." },
   ];
 
-  const formerVcs = [
+  const formerVcs = about.formerLeaders.length > 0 ? about.formerLeaders : [
     { name: "Dr. Prana Krushna Parija", tenure: "1943 – 1948", field: "Eminent Botanist & Pioneer Educationist" },
     { name: "Dr. Chintamani Acharya", tenure: "1948 – 1951", field: "Legal Luminary & Scholar" },
     { name: "Prof. Trilochan Pradhan", tenure: "1989 – 1991", field: "Eminent Theoretical Physicist & IOP Founder" },
@@ -48,7 +51,12 @@ export default function CollegeAbout() {
 
   return (
     <>
-      <Hero variant="compact" title="About the University" imageUrl={collegeHeroUrl(4)} />
+      <Hero
+        variant="compact"
+        title={about.heroTitle || "About the University"}
+        subtitle={about.heroSubtitle}
+        imageUrl={about.heroImage || collegeHeroUrl(4)}
+      />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "About" }]} />
 
       <Container className="py-10 space-y-12">
@@ -64,10 +72,10 @@ export default function CollegeAbout() {
               </Badge>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black text-foreground mt-2">
-              Sculpting Heart, Head & Hand Since 1868 / 1943
+              {about.storyTitle || "Sculpting Heart, Head & Hand Since 1868 / 1943"}
             </h1>
             <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-3xl leading-relaxed">
-              {institution.name} stands as the premier state university of Odisha, uniting historic collegiate heritage with cutting-edge 21st-century research, NEP 2020 multi-disciplinary pedagogy, and NAAC A+ accredited governance.
+              {about.storyText || `${institution.name} stands as the premier state university of Odisha, uniting historic collegiate heritage with cutting-edge 21st-century research, NEP 2020 multi-disciplinary pedagogy, and NAAC A+ accredited governance.`}
             </p>
           </div>
 
@@ -75,20 +83,20 @@ export default function CollegeAbout() {
             <Card className="border border-border/70 bg-card p-5 space-y-3">
               <div className="flex items-center gap-2 text-primary font-bold text-sm">
                 <Sparkles className="size-4" />
-                <span>Our Vision</span>
+                <span>{about.visionTitle || "Our Vision"}</span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                To stand as an internationally acclaimed centre of higher learning and research, nurturing visionary leaders, ethical innovators, and socially responsible citizens dedicated to holistic regional, national, and global development.
+                {about.visionText || "To stand as an internationally acclaimed centre of higher learning and research, nurturing visionary leaders, ethical innovators, and socially responsible citizens dedicated to holistic regional, national, and global development."}
               </p>
             </Card>
 
             <Card className="border border-border/70 bg-card p-5 space-y-3">
               <div className="flex items-center gap-2 text-primary font-bold text-sm">
                 <BookOpen className="size-4" />
-                <span>Our Mission</span>
+                <span>{about.missionTitle || "Our Mission"}</span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                To provide accessible, high-caliber undergraduate, postgraduate, and doctoral education; foster transformative interdisciplinary research in Science, Humanities, and Commerce; and uphold democratic transparency and sustainable community advancement.
+                {about.missionText || "To provide accessible, high-caliber undergraduate, postgraduate, and doctoral education; foster transformative interdisciplinary research in Science, Humanities, and Commerce; and uphold democratic transparency and sustainable community advancement."}
               </p>
             </Card>
           </div>

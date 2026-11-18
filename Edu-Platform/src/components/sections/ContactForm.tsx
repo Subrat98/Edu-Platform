@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { contactService } from "@/features/content/contactService";
 import { useInstitutionData } from "@/features/institutions/useInstitutionData";
+import { useLiveSiteContent } from "@/features/content/siteContentService";
 
 const schema = z.object({
   name: z.string().min(2, "Please enter your full name."),
@@ -29,7 +30,10 @@ export interface ContactFormProps {
 }
 
 export function ContactForm({ title = "Get in Touch", showInstitutionDetails = true }: ContactFormProps) {
-  const { institution } = useInstitutionData();
+  const { institution, institutionId } = useInstitutionData();
+  const siteContent = useLiveSiteContent(institutionId ?? "college");
+  const contact = siteContent.contact || institution?.contact;
+
   const {
     register,
     handleSubmit,
@@ -57,28 +61,28 @@ export function ContactForm({ title = "Get in Touch", showInstitutionDetails = t
       <Container className="py-14 sm:py-16">
         <SectionHeading eyebrow="Contact" title={title} />
         <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_1.2fr]">
-          {showInstitutionDetails && institution ? (
+          {showInstitutionDetails && contact ? (
             <div className="space-y-5">
               <div className="flex gap-3">
                 <MapPin className="text-accent mt-0.5 size-5 shrink-0" />
                 <p className="text-muted-foreground text-sm">
-                  {institution.contact.address}, {institution.contact.city}, {institution.contact.state} —{" "}
-                  {institution.contact.pincode}
+                  {contact.address}, {contact.city}, {contact.state} —{" "}
+                  {contact.pincode}
                 </p>
               </div>
               <div className="flex gap-3">
                 <Phone className="text-accent mt-0.5 size-5 shrink-0" />
                 <p className="text-muted-foreground text-sm">
-                  {institution.contact.phone}
-                  {institution.contact.altPhone ? ` · ${institution.contact.altPhone}` : ""}
+                  {contact.phone}
+                  {contact.altPhone ? ` · ${contact.altPhone}` : ""}
                 </p>
               </div>
               <div className="flex gap-3">
                 <Mail className="text-accent mt-0.5 size-5 shrink-0" />
-                <p className="text-muted-foreground text-sm">{institution.contact.email}</p>
+                <p className="text-muted-foreground text-sm">{contact.email}</p>
               </div>
               <div className="border-border bg-background flex aspect-video items-center justify-center rounded-lg border text-sm">
-                <span className="text-muted-foreground">Map: {institution.contact.mapQuery}</span>
+                <span className="text-muted-foreground">Map: {contact.mapQuery}</span>
               </div>
             </div>
           ) : null}
