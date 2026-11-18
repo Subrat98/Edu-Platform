@@ -63,13 +63,13 @@ export default function SchoolAcademics() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Academics" }]} />
       <Hero
         variant="compact"
         title="Academics & Curriculum"
         subtitle="CBSE 5+3+3+4 Pedagogical Framework under NEP 2020, Holistic Progress Card & Academic Calendar"
         imageUrl={schoolHeroUrl(3)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Academics" }]} />
 
       <Container className="py-10 space-y-10">
         {/* NEP 2020 5+3+3+4 Pedagogical Structure */}

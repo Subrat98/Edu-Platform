@@ -44,13 +44,13 @@ export default function SchoolAdmissions() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Admissions" }]} />
       <Hero
         variant="compact"
         title={siteContent.admissions?.heroTitle || "Admissions 2026–27"}
         subtitle={siteContent.admissions?.heroSubtitle || "Transparent Admissions, Age Criteria under NEP 2020, RTE 25% Reserved Quota & Approved Fee Schedule"}
         imageUrl={siteContent.admissions?.heroImage || schoolHeroUrl(4)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Admissions" }]} />
 
       <Container className="py-10 space-y-10">
         {/* RTE 25% Reserved Quota Notification Strip */}

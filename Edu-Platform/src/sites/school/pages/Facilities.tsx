@@ -93,13 +93,13 @@ export default function SchoolFacilities() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Facilities" }]} />
       <Hero
         variant="compact"
         title="Campus Infrastructure & Facilities"
         subtitle="4.0 Acres Green Campus, Atal Tinkering Lab, 6 Specialized Labs, Library & Safe Transport"
         imageUrl={schoolHeroUrl(2)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Facilities" }]} />
 
       <Container className="py-10 space-y-10">
         {/* Campus Overview Banner */}

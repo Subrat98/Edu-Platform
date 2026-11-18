@@ -54,8 +54,8 @@ export default function CollegeVirtualTour() {
 
   return (
     <>
-      <Hero variant="compact" title="Campus Tour & Location" imageUrl={collegeHeroUrl(4)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Virtual Tour & How to Reach" }]} />
+      <Hero variant="compact" title="Campus Tour & Location" imageUrl={collegeHeroUrl(4)} />
 
       <Container className="py-10 space-y-10">
         {/* Header Strip */}

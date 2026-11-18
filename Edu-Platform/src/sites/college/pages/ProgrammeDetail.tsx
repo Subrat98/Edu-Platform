@@ -41,7 +41,6 @@ export default function CollegeProgrammeDetail() {
 
   return (
     <>
-      <Hero variant="compact" title={programme.name} imageUrl={collegeHeroUrl(1)} />
       <Breadcrumbs
         items={[
           { label: "Home", href: "/college" },
@@ -49,6 +48,7 @@ export default function CollegeProgrammeDetail() {
           { label: programme.name },
         ]}
       />
+      <Hero variant="compact" title={programme.name} imageUrl={collegeHeroUrl(1)} />
 
       <Container className="py-10">
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">

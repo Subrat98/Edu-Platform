@@ -82,8 +82,8 @@ export default function CollegeAlumni() {
 
   return (
     <>
-      <Hero variant="compact" title="Alumni & Giving" imageUrl={collegeHeroUrl(3)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Alumni & Giving" }]} />
+      <Hero variant="compact" title="Alumni & Giving" imageUrl={collegeHeroUrl(3)} />
 
       <Container className="py-10 space-y-10">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-6">

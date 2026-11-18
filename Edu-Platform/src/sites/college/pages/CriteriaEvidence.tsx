@@ -64,17 +64,17 @@ export default function CollegeCriteriaEvidence() {
 
   return (
     <>
-      <Hero
-        variant="compact"
-        title="NAAC Criteria I–VII Evidence & Metrics Repository"
-        imageUrl={collegeHeroUrl(4)}
-      />
       <Breadcrumbs
         items={[
           { label: "Home", href: "/college" },
           { label: "Quality (IQAC / NAAC)", href: "/college/iqac" },
           { label: "Criteria I–VII Evidence" },
         ]}
+      />
+      <Hero
+        variant="compact"
+        title="NAAC Criteria I–VII Evidence & Metrics Repository"
+        imageUrl={collegeHeroUrl(4)}
       />
 
       {/* Overview Banner */}

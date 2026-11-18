@@ -38,7 +38,6 @@ export default function CollegeDepartmentDetail() {
 
   return (
     <>
-      <Hero variant="compact" title={department.name} imageUrl={collegeHeroUrl(1)} />
       <Breadcrumbs
         items={[
           { label: "Home", href: "/college" },
@@ -46,6 +45,7 @@ export default function CollegeDepartmentDetail() {
           { label: department.name },
         ]}
       />
+      <Hero variant="compact" title={department.name} imageUrl={collegeHeroUrl(1)} />
 
       <RichText
         eyebrow={`Established ${department.establishedYear}`}

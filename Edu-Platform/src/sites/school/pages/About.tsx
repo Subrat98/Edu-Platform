@@ -34,13 +34,13 @@ export default function SchoolAbout() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "About Us" }]} />
       <Hero
         variant="compact"
         title={siteContent.about?.heroTitle || "About Our School"}
         subtitle={siteContent.about?.heroSubtitle || "Heritage, Vision, Educational Philosophy & 27 Years of Scholarly Excellence"}
         imageUrl={siteContent.about?.heroImage || schoolHeroUrl(1)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "About Us" }]} />
 
       <Container className="py-10 space-y-12">
         {/* Story & Vision Header */}

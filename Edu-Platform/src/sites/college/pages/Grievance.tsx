@@ -79,8 +79,8 @@ export default function CollegeGrievance() {
 
   return (
     <>
-      <Hero variant="compact" title="Support, Welfare & Grievance Redressal" imageUrl={collegeHeroUrl(2)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Grievance & Support" }]} />
+      <Hero variant="compact" title="Support, Welfare & Grievance Redressal" imageUrl={collegeHeroUrl(2)} />
 
       <Container className="py-10 space-y-10">
         {/* Header Strip */}

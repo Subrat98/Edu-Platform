@@ -39,13 +39,13 @@ export default function SchoolStudentLife() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Student Life" }]} />
       <Hero
         variant="compact"
         title="Student Life & Co-Curriculars"
         subtitle="PM-POSHAN Nutrition, Four Houses, Scouts & Guides, Sports & Child Wellness"
         imageUrl={schoolHeroUrl(2)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Student Life" }]} />
 
       <Container className="py-10 space-y-12">
         {/* PM-POSHAN Mid-Day Meal Feature Card */}

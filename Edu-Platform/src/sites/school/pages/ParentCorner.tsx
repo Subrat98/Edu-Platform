@@ -15,8 +15,8 @@ const faqItems = [
 export default function SchoolParentCorner() {
   return (
     <>
-      <Hero variant="compact" title="Parent Corner" imageUrl={schoolHeroUrl(4)} />
       <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Parent Corner" }]} />
+      <Hero variant="compact" title="Parent Corner" imageUrl={schoolHeroUrl(4)} />
 
       <DepartmentCards
         eyebrow="Quick access"

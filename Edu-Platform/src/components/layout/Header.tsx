@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTheme } from "next-themes";
 import {
@@ -59,11 +59,36 @@ export function Header() {
   const currentUser = useAuthStore((s) => s.currentUser);
   const logout = useAuthStore((s) => s.logout);
   const navigate = useNavigate();
+  const location = useLocation();
   const { resolvedTheme, setTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [zoomLevel, setZoomLevel] = useState<TextZoomLevel>(getStoredTextZoom);
   const { t } = useTranslation();
+
+  const isItemActive = (item: { path?: string; children?: { path: string }[] }) => {
+    const currentPath = location.pathname;
+    // Exact match for root / home of institution
+    if (item.path === `/${institutionId}` || item.path === "/") {
+      return currentPath === item.path || (item.path === "/" && currentPath === `/${institutionId}`);
+    }
+    // Specific path match (not home)
+    if (item.path && item.path !== `/${institutionId}` && item.path !== "/") {
+      if (currentPath === item.path || currentPath.startsWith(`${item.path}/`)) {
+        return true;
+      }
+    }
+    // If item has children, check if any child matches current path
+    if (item.children && item.children.length > 0) {
+      return item.children.some((child) => {
+        if (child.path === `/${institutionId}` || child.path === "/") {
+          return currentPath === child.path;
+        }
+        return currentPath === child.path || currentPath.startsWith(`${child.path}/`);
+      });
+    }
+    return false;
+  };
 
   // Keyboard shortcut listener (Cmd/Ctrl + K) for search
   useEffect(() => {
@@ -479,47 +504,66 @@ export function Header() {
         <div className="hidden lg:block border-t border-border/70 bg-card">
           <Container>
             <nav className="flex items-center gap-0.5 overflow-x-auto py-1">
-              {(menu?.items ?? []).map((item) =>
-                item.children && item.children.length > 0 ? (
+              {(menu?.items ?? []).map((item) => {
+                const isActive = isItemActive(item);
+                return item.children && item.children.length > 0 ? (
                   <DropdownMenu key={item.label}>
                     <DropdownMenuTrigger asChild>
                       <Button
-                        variant="ghost"
+                        variant={isActive ? "default" : "ghost"}
                         size="sm"
-                        className="shrink-0 gap-1 px-2.5 h-8 text-xs font-bold text-foreground hover:text-primary hover:bg-primary/10 whitespace-nowrap"
+                        className={cn(
+                          "shrink-0 gap-1 px-3 h-8 text-xs font-bold rounded-lg transition-all whitespace-nowrap",
+                          isActive
+                            ? "bg-primary text-white shadow-xs hover:bg-primary/90 hover:text-white"
+                            : "text-foreground hover:text-primary hover:bg-primary/10"
+                        )}
                       >
-                        {t(item.label)} <ChevronDown className="size-3 text-muted-foreground" />
+                        {t(item.label)}{" "}
+                        <ChevronDown className={cn("size-3", isActive ? "text-white/80" : "text-muted-foreground")} />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="start" className="min-w-52 shadow-lg border-primary/20">
-                      {item.children.map((child) => (
-                        <DropdownMenuItem key={child.label} asChild>
-                          <Link to={child.path} className="text-xs cursor-pointer py-1.5 font-medium">
-                            {t(child.label)}
-                          </Link>
-                        </DropdownMenuItem>
-                      ))}
+                      {item.children.map((child) => {
+                        const isChildActive =
+                          location.pathname === child.path ||
+                          (child.path !== `/${institutionId}` && child.path !== "/" && location.pathname.startsWith(`${child.path}/`));
+                        return (
+                          <DropdownMenuItem
+                            key={child.label}
+                            asChild
+                            className={cn(
+                              "text-xs cursor-pointer py-1.5 font-medium rounded-md px-2",
+                              isChildActive && "bg-primary text-white font-bold focus:bg-primary focus:text-white"
+                            )}
+                          >
+                            <Link to={child.path}>
+                              {t(child.label)}
+                            </Link>
+                          </DropdownMenuItem>
+                        );
+                      })}
                     </DropdownMenuContent>
                   </DropdownMenu>
                 ) : (
                   <Button
                     key={item.label}
-                    variant="ghost"
+                    variant={isActive ? "default" : "ghost"}
                     size="sm"
                     asChild
-                    className="shrink-0 px-2.5 h-8 text-xs font-bold text-foreground hover:text-primary hover:bg-primary/10 whitespace-nowrap"
+                    className={cn(
+                      "shrink-0 px-3 h-8 text-xs font-bold rounded-lg transition-all whitespace-nowrap",
+                      isActive
+                        ? "bg-primary text-white shadow-xs hover:bg-primary/90 hover:text-white"
+                        : "text-foreground hover:text-primary hover:bg-primary/10"
+                    )}
                   >
-                    <NavLink
-                      to={item.path}
-                      className={({ isActive }) =>
-                        isActive ? "text-primary bg-primary/10 font-bold" : ""
-                      }
-                    >
+                    <Link to={item.path || `/${institutionId}`}>
                       {t(item.label)}
-                    </NavLink>
+                    </Link>
                   </Button>
-                )
-              )}
+                );
+              })}
             </nav>
           </Container>
         </div>
@@ -618,38 +662,63 @@ export function Header() {
 
               {/* Main Menu Groups */}
               <nav className="space-y-1">
-                {(menu?.items ?? []).map((item) => (
-                  <div key={item.label} className="py-1">
-                    {item.children ? (
-                      <div className="space-y-1">
-                        <div className="px-2 py-1 text-xs font-bold text-foreground flex items-center justify-between">
-                          <span>{t(item.label)}</span>
+                {(menu?.items ?? []).map((item) => {
+                  const isActive = isItemActive(item);
+                  return (
+                    <div key={item.label} className="py-1">
+                      {item.children ? (
+                        <div className="space-y-1">
+                          <div
+                            className={cn(
+                              "px-2.5 py-1 text-xs font-bold flex items-center justify-between rounded-md",
+                              isActive
+                                ? "bg-primary text-white font-bold shadow-xs"
+                                : "text-foreground"
+                            )}
+                          >
+                            <span>{t(item.label)}</span>
+                          </div>
+                          <div className="pl-3 space-y-0.5 border-l-2 border-primary/20 ml-2">
+                            {item.children.map((child) => {
+                              const isChildActive =
+                                location.pathname === child.path ||
+                                (child.path !== `/${institutionId}` && child.path !== "/" && location.pathname.startsWith(`${child.path}/`));
+                              return (
+                                <SheetClose key={child.label} asChild>
+                                  <Link
+                                    to={child.path}
+                                    className={cn(
+                                      "block py-1.5 px-2 text-xs rounded transition-colors",
+                                      isChildActive
+                                        ? "bg-primary text-white font-bold shadow-xs"
+                                        : "text-muted-foreground hover:text-primary hover:bg-muted/30"
+                                    )}
+                                  >
+                                    {t(child.label)}
+                                  </Link>
+                                </SheetClose>
+                              );
+                            })}
+                          </div>
                         </div>
-                        <div className="pl-3 space-y-0.5 border-l-2 border-primary/20 ml-2">
-                          {item.children.map((child) => (
-                            <SheetClose key={child.label} asChild>
-                              <Link
-                                to={child.path}
-                                className="block py-1 px-2 text-xs text-muted-foreground hover:text-primary hover:bg-muted/30 rounded"
-                              >
-                                {t(child.label)}
-                              </Link>
-                            </SheetClose>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <SheetClose asChild>
-                        <Link
-                          to={item.path}
-                          className="block px-2 py-1.5 text-xs font-bold text-foreground hover:text-primary hover:bg-muted/40 rounded"
-                        >
-                          {t(item.label)}
-                        </Link>
-                      </SheetClose>
-                    )}
-                  </div>
-                ))}
+                      ) : (
+                        <SheetClose asChild>
+                          <Link
+                            to={item.path || `/${institutionId}`}
+                            className={cn(
+                              "block px-2.5 py-1.5 text-xs font-bold rounded transition-colors",
+                              isActive
+                                ? "bg-primary text-white shadow-xs"
+                                : "text-foreground hover:text-primary hover:bg-muted/40"
+                            )}
+                          >
+                            {t(item.label)}
+                          </Link>
+                        </SheetClose>
+                      )}
+                    </div>
+                  );
+                })}
               </nav>
 
               <div className="pt-4 border-t space-y-2">

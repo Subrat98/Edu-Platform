@@ -21,8 +21,8 @@ export default function SchoolPolicyPage() {
 
   return (
     <>
-      <Hero variant="compact" title={policy.title} imageUrl={schoolHeroUrl(1)} />
       <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: policy.title }]} />
+      <Hero variant="compact" title={policy.title} imageUrl={schoolHeroUrl(1)} />
       <RichText
         title={`Last updated: ${new Date(policy.updatedDate).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}`}
         paragraphs={policy.paragraphs}

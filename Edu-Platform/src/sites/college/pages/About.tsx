@@ -45,13 +45,13 @@ export default function CollegeAbout() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "About" }]} />
       <Hero
         variant="compact"
         title={about?.heroTitle || "About the University"}
         subtitle={about?.heroSubtitle || "Heritage, Vision, Academic Excellence & 150+ Years of Public Higher Education"}
         imageUrl={about?.heroImage || collegeHeroUrl(4)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "About" }]} />
 
       <Container className="py-10 space-y-12">
         {/* Institutional Story & Vision Strip */}

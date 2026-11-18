@@ -102,13 +102,13 @@ export default function SchoolAdministration() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Administration" }]} />
       <Hero
         variant="compact"
         title="Administration & Governance"
         subtitle="Leadership, School Management Committee (SMC), PTA, and Child Safety Governance"
         imageUrl={schoolHeroUrl(2)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Administration" }]} />
 
       <Container className="py-10 space-y-8">
         {/* Navigation Tabs */}

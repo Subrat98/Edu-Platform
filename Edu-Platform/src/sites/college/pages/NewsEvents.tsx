@@ -7,8 +7,8 @@ import { collegeHeroUrl } from "@/mocks/data/images";
 export default function CollegeNewsEvents() {
   return (
     <>
-      <Hero variant="compact" title="News & Events" imageUrl={collegeHeroUrl(2)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "News & Events" }]} />
+      <Hero variant="compact" title="News & Events" imageUrl={collegeHeroUrl(2)} />
       <NoticeBoard institutionId="college" showFilter title="All Notices & Circulars" />
       <EventCards institutionId="college" title="Seminars, Workshops & Fests" />
     </>

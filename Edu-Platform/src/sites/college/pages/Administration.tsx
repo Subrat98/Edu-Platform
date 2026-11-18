@@ -114,8 +114,8 @@ export default function CollegeAdministration() {
 
   return (
     <>
-      <Hero variant="compact" title="Administration & Governance" imageUrl={collegeHeroUrl(4)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Administration" }]} />
+      <Hero variant="compact" title="Administration & Governance" imageUrl={collegeHeroUrl(4)} />
 
       <Container className="py-10 space-y-8">
         {/* Governance Overview Strip */}

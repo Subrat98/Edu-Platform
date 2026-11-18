@@ -8,12 +8,12 @@ export default function SchoolContact() {
   const siteContent = useLiveSiteContent("school");
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Contact" }]} />
       <Hero
         variant="compact"
         title="Contact Us"
         imageUrl={siteContent.contact?.heroImage || schoolHeroUrl(1)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Contact" }]} />
       <ContactForm title="We'd love to hear from you" />
     </>
   );

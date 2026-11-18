@@ -21,13 +21,13 @@ export default function CollegeAdmissions() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Admissions" }]} />
       <Hero
         variant="compact"
         title={adm?.heroTitle || "Admissions 2026–27"}
         subtitle={adm?.heroSubtitle}
         imageUrl={adm?.heroImage || collegeHeroUrl(7)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Admissions" }]} />
 
       <AdmissionsCTA
         title={adm?.bannerTitle || "UG & PG admissions are now open"}

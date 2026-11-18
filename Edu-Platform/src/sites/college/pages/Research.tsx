@@ -79,8 +79,8 @@ export default function CollegeResearch() {
 
   return (
     <>
-      <Hero variant="compact" title="Research, Innovations & Publications" imageUrl={collegeHeroUrl(1)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Research & Publications" }]} />
+      <Hero variant="compact" title="Research, Innovations & Publications" imageUrl={collegeHeroUrl(1)} />
 
       {/* Institutional Research Telemetry Stats */}
       <Stats

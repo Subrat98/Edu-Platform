@@ -67,13 +67,13 @@ export default function SchoolGrievance() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Grievance Redressal" }]} />
       <Hero
         variant="compact"
         title="Student & Parent Grievance Cell"
         subtitle="Confidential Online Grievance Submission, Anti-Bullying Monitoring & 24x7 Child Helpline"
         imageUrl={schoolHeroUrl(4)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Grievance Redressal" }]} />
 
       <Container className="py-10 space-y-10">
         {/* Child Safety & Helpline Emergency Banner */}

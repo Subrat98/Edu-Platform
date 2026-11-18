@@ -16,8 +16,8 @@ const toppers = [
 export default function SchoolResults() {
   return (
     <>
-      <Hero variant="compact" title="Results & Toppers" imageUrl={schoolHeroUrl(3)} />
       <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Results & Toppers" }]} />
+      <Hero variant="compact" title="Results & Toppers" imageUrl={schoolHeroUrl(3)} />
 
       <Stats
         items={[
