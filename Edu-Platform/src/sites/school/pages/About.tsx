@@ -3,7 +3,7 @@ import { Hero } from "@/components/sections/Hero";
 import { Stats } from "@/components/sections/Stats";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Container } from "@/components/common/Container";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { schoolHeroUrl } from "@/mocks/data/images";
@@ -13,14 +13,6 @@ import {
   Sparkles,
   BookOpen,
   Award,
-  ShieldCheck,
-  Building2,
-  Calendar,
-  Users,
-  Video,
-  Download,
-  CheckCircle2,
-  ExternalLink,
   ChevronRight,
 } from "lucide-react";
 

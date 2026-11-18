@@ -17,24 +17,24 @@ const faqItems = [
 
 export default function CollegeAdmissions() {
   const siteContent = useLiveSiteContent("college");
-  const adm = siteContent.admissions;
+  const adm = siteContent?.admissions;
 
   return (
     <>
       <Hero
         variant="compact"
-        title={adm.heroTitle || "Admissions 2026–27"}
-        subtitle={adm.heroSubtitle}
-        imageUrl={adm.heroImage || collegeHeroUrl(7)}
+        title={adm?.heroTitle || "Admissions 2026–27"}
+        subtitle={adm?.heroSubtitle}
+        imageUrl={adm?.heroImage || collegeHeroUrl(7)}
       />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Admissions" }]} />
 
       <AdmissionsCTA
-        title={adm.bannerTitle || "UG & PG admissions are now open"}
-        description={adm.bannerDescription || "Applications for all undergraduate and postgraduate programmes for the 2026–27 session are open. Merit lists are published in phases based on qualifying marks and category reservation norms."}
-        deadline={adm.deadline || "31 July 2026"}
-        eligibility={adm.eligibility || "Varies by programme — see Programmes & Courses"}
-        steps={adm.steps && adm.steps.length > 0 ? adm.steps : [
+        title={adm?.bannerTitle || "UG & PG admissions are now open"}
+        description={adm?.bannerDescription || "Applications for all undergraduate and postgraduate programmes for the 2026–27 session are open. Merit lists are published in phases based on qualifying marks and category reservation norms."}
+        deadline={adm?.deadline || "31 July 2026"}
+        eligibility={adm?.eligibility || "Varies by programme — see Programmes & Courses"}
+        steps={adm?.steps && adm.steps.length > 0 ? adm.steps : [
           "Create your application account and select your programme choices",
           "Upload scanned mark sheets and category/reservation documents",
           "Track your merit status and complete admission formalities online",

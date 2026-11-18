@@ -1,9 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Hero } from "@/components/sections/Hero";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Container } from "@/components/common/Container";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Faq } from "@/components/sections/Faq";
@@ -11,16 +8,10 @@ import { ContactForm } from "@/components/sections/ContactForm";
 import { schoolHeroUrl } from "@/mocks/data/images";
 import { useLiveSiteContent } from "@/features/content/siteContentService";
 import {
-  GraduationCap,
   Download,
-  Calendar,
   CreditCard,
   FileCheck2,
-  Users,
-  ShieldCheck,
-  AlertCircle,
   ExternalLink,
-  ChevronRight,
 } from "lucide-react";
 
 const faqItems = [

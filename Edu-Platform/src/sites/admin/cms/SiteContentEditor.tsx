@@ -9,7 +9,6 @@ import {
   Info,
   GraduationCap,
   Phone,
-  Layers,
   Sparkles,
   Plus,
   Trash2,
@@ -21,7 +20,6 @@ import {
   Award,
   Upload,
   Image as ImageIcon,
-  Eye,
 } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { Button } from "@/components/ui/button";
