@@ -49,7 +49,14 @@ import { cn } from "@/lib/utils";
 import { LanguageDropdown } from "@/components/common/LanguageDropdown";
 import { useTranslation } from "@/features/i18n/languageStore";
 import { UniversitySearchDialog } from "@/components/common/UniversitySearchDialog";
-import { setTextZoom, getStoredTextZoom, type TextZoomLevel } from "@/lib/accessibility";
+import {
+  setTextZoomPercent,
+  setTextZoom,
+  getStoredTextZoom,
+  getStoredTextZoomPercent,
+  TEXT_ZOOM_OPTIONS,
+  type TextZoomLevel,
+} from "@/lib/accessibility";
 import { useLiveSiteContent } from "@/features/content/siteContentService";
 
 export function Header() {
@@ -64,6 +71,7 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [zoomLevel, setZoomLevel] = useState<TextZoomLevel>(getStoredTextZoom);
+  const [zoomPercent, setZoomPercent] = useState<number>(getStoredTextZoomPercent);
   const { t } = useTranslation();
 
   const isChildActive = (childPath?: string) => {
@@ -180,9 +188,39 @@ export function Header() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  useEffect(() => {
+    const handleZoomEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ percent: number; level: TextZoomLevel } | TextZoomLevel>;
+      if (customEvent.detail) {
+        if (typeof customEvent.detail === "object" && typeof customEvent.detail.percent === "number") {
+          setZoomPercent(customEvent.detail.percent);
+          setZoomLevel(customEvent.detail.level);
+        } else if (typeof customEvent.detail === "string") {
+          setZoomLevel(customEvent.detail as TextZoomLevel);
+          setZoomPercent(getStoredTextZoomPercent());
+        }
+      }
+    };
+    window.addEventListener("eduplatform_text_zoom_changed", handleZoomEvent);
+    return () => window.removeEventListener("eduplatform_text_zoom_changed", handleZoomEvent);
+  }, []);
+
   const handleZoom = (lvl: TextZoomLevel) => {
-    setZoomLevel(lvl);
-    setTextZoom(lvl);
+    if (lvl === "normal") {
+      setTextZoomPercent(100);
+      setZoomPercent(100);
+      setZoomLevel("normal");
+    } else if (lvl === "small") {
+      const next = zoomPercent > 90 ? 90 : Math.max(80, zoomPercent - 10);
+      setTextZoomPercent(next);
+      setZoomPercent(next);
+      setZoomLevel("small");
+    } else if (lvl === "medium") {
+      const next = zoomPercent < 115 ? 115 : Math.min(150, zoomPercent + 15);
+      setTextZoomPercent(next);
+      setZoomPercent(next);
+      setZoomLevel("medium");
+    }
   };
 
   const { data: menu } = useQuery({
@@ -217,41 +255,32 @@ export function Header() {
                 {isCollege ? "Government of Odisha Higher Education" : "School & Mass Education · CBSE Affiliated (1998)"}
               </span>
 
-              {/* Text Size Scaling Controls */}
-              <div className="flex items-center rounded bg-white/15 p-0.5" title="Text Resizing (A- / 100% / A+)">
-                <button
-                  type="button"
-                  onClick={() => handleZoom("small")}
-                  className={cn(
-                    "px-1.5 py-0.2 text-[10px] font-bold rounded transition-colors",
-                    zoomLevel === "small" ? "bg-white text-primary" : "text-white/80 hover:text-white"
-                  )}
-                  aria-label="Decrease text size"
-                >
-                  A-
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleZoom("normal")}
-                  className={cn(
-                    "px-1.5 py-0.2 text-[10px] font-bold rounded transition-colors",
-                    zoomLevel === "normal" ? "bg-white text-primary" : "text-white/80 hover:text-white"
-                  )}
-                  aria-label="Normal text size"
-                >
-                  A
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleZoom("large")}
-                  className={cn(
-                    "px-1.5 py-0.2 text-[10px] font-bold rounded transition-colors",
-                    zoomLevel === "large" ? "bg-white text-primary" : "text-white/80 hover:text-white"
-                  )}
-                  aria-label="Increase text size"
-                >
-                  A+
-                </button>
+              {/* Text Size Scaling Controls: -A, A, A+ */}
+              <div className="flex items-center rounded-md bg-white/20 p-0.5 shadow-xs" title="Text Resizing: -A (90%) | A (100%) | A+ (115%)">
+                <span className="text-[10px] font-bold px-1.5 opacity-90 hidden sm:inline">Text:</span>
+                {TEXT_ZOOM_OPTIONS.map((opt) => {
+                  const isActive =
+                    opt.level === "normal"
+                      ? zoomPercent === 100
+                      : opt.level === "small"
+                      ? zoomPercent < 100
+                      : zoomPercent > 100;
+                  return (
+                    <button
+                      key={opt.level}
+                      type="button"
+                      onClick={() => handleZoom(opt.level)}
+                      className={cn(
+                        "px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-[11px] font-extrabold rounded transition-all",
+                        isActive ? "bg-white text-primary shadow-xs font-black" : "text-white/80 hover:text-white hover:bg-white/20"
+                      )}
+                      aria-label={opt.description}
+                      title={opt.description}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Contrast / Dark Theme Toggle */}
@@ -680,6 +709,43 @@ export function Header() {
             </SheetHeader>
 
             <div className="py-4 space-y-3">
+              {/* Accessibility Text Resizing (Mobile: -A, A, A+) */}
+              <div className="p-2.5 rounded-xl bg-primary/5 border border-primary/20 space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold text-foreground">
+                  <span className="flex items-center gap-1.5">
+                    <span className="text-primary font-black">A±</span> Text Size (Accessibility)
+                  </span>
+                  <Badge variant="outline" className="text-[10px] font-mono text-primary border-primary/30 font-bold">
+                    {zoomPercent}%
+                  </Badge>
+                </div>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {TEXT_ZOOM_OPTIONS.map((opt) => {
+                    const isActive =
+                      opt.level === "normal"
+                        ? zoomPercent === 100
+                        : opt.level === "small"
+                        ? zoomPercent < 100
+                        : zoomPercent > 100;
+                    return (
+                      <button
+                        key={opt.level}
+                        type="button"
+                        onClick={() => handleZoom(opt.level)}
+                        className={cn(
+                          "py-1.5 text-center rounded-lg text-xs font-bold transition-all",
+                          isActive
+                            ? "bg-primary text-white shadow-xs font-black"
+                            : "bg-background border border-border/70 text-foreground hover:bg-muted"
+                        )}
+                      >
+                        {opt.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Quick Access Links (Mobile) */}
               <div className="p-2 rounded-lg bg-muted/40 border border-border/60 space-y-1.5 text-xs">
                 <div className="font-bold text-[11px] text-primary uppercase tracking-wider">

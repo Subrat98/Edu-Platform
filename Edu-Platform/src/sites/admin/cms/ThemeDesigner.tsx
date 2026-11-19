@@ -14,6 +14,8 @@ import {
   Check,
   ExternalLink,
   Globe,
+  Minus,
+  Plus,
 } from "lucide-react";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { Button } from "@/components/ui/button";
@@ -32,6 +34,15 @@ import {
   getCustomTheme,
   type ThemeTargetScope,
 } from "@/theme/themePersistence";
+import { cn } from "@/lib/utils";
+import {
+  setTextZoomPercent,
+  setTextZoom,
+  getStoredTextZoom,
+  getStoredTextZoomPercent,
+  TEXT_ZOOM_OPTIONS,
+  type TextZoomLevel,
+} from "@/lib/accessibility";
 import type { ColorTokens } from "@/types";
 
 interface ColorItemConfig {
@@ -257,6 +268,47 @@ export default function ThemeDesigner() {
         console.error("Failed to apply radius:", err);
       }
     }
+  };
+
+  const [textZoomPercent, setTextZoomPercentState] = useState<number>(getStoredTextZoomPercent);
+  const [textZoomLevel, setTextZoomLevel] = useState<TextZoomLevel>(getStoredTextZoom);
+
+  useEffect(() => {
+    const handleZoomEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<{ percent: number; level: TextZoomLevel } | TextZoomLevel>;
+      if (customEvent.detail) {
+        if (typeof customEvent.detail === "object" && typeof customEvent.detail.percent === "number") {
+          setTextZoomPercentState(customEvent.detail.percent);
+          setTextZoomLevel(customEvent.detail.level);
+        } else if (typeof customEvent.detail === "string") {
+          setTextZoomLevel(customEvent.detail as TextZoomLevel);
+          setTextZoomPercentState(getStoredTextZoomPercent());
+        }
+      }
+    };
+    window.addEventListener("eduplatform_text_zoom_changed", handleZoomEvent);
+    return () => window.removeEventListener("eduplatform_text_zoom_changed", handleZoomEvent);
+  }, []);
+
+  const handleTextZoomPercentChange = (val: number) => {
+    setTextZoomPercentState(val);
+    setTextZoomPercent(val);
+    setTextZoomLevel(getStoredTextZoom());
+  };
+
+  const handleStepZoom = (delta: number) => {
+    const next = Math.max(80, Math.min(150, textZoomPercent + delta));
+    handleTextZoomPercentChange(next);
+  };
+
+  const handleTextZoomChange = (level: TextZoomLevel) => {
+    setTextZoomLevel(level);
+    setTextZoom(level);
+    setTextZoomPercentState(getStoredTextZoomPercent());
+    const opt = TEXT_ZOOM_OPTIONS.find((o) => o.level === level);
+    toast.success(`Website text size set to ${opt?.percent}% (${opt?.description})!`, {
+      description: "Applied across the whole website for all visitors.",
+    });
   };
 
   const applyPreset = (preset: QuickThemePreset) => {
@@ -619,6 +671,149 @@ export default function ThemeDesigner() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Section 6: Global Website Text Size & Accessibility (Slide Button) */}
+          <Card className="border border-border/70 shadow-xs">
+            <CardHeader className="pb-3 border-b border-border/50 bg-muted/20">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Type className="size-4 text-primary" />
+                  <CardTitle className="text-sm font-bold">6. Website Text Size Controller</CardTitle>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Badge variant="outline" className="font-mono text-xs font-bold text-primary bg-primary/10 border-primary/30">
+                    {textZoomPercent}% Scale
+                  </Badge>
+                  {textZoomPercent !== 100 && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleTextZoomPercentChange(100)}
+                      className="h-6 px-2 text-[11px] text-muted-foreground hover:text-foreground"
+                    >
+                      Reset (100%)
+                    </Button>
+                  )}
+                </div>
+              </div>
+              <CardDescription className="text-xs">
+                Slide the button left or right to decrease or increase text size across the whole website in real-time.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-4 space-y-4">
+              {/* Interactive Slider Controller with - and + step buttons */}
+              <div className="p-4 rounded-xl bg-card border border-border/70 shadow-xs space-y-3">
+                <div className="flex items-center justify-between text-xs font-semibold text-muted-foreground">
+                  <span className="flex items-center gap-1">
+                    <span className="text-primary font-bold">-A</span> Decrease Size
+                  </span>
+                  <span className="font-extrabold text-foreground text-sm font-mono bg-muted/50 px-2 py-0.5 rounded-md border border-border/50">
+                    {textZoomPercent}%
+                  </span>
+                  <span className="flex items-center gap-1">
+                    Increase Size <span className="text-primary font-bold">A+</span>
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={() => handleStepZoom(-5)}
+                    disabled={textZoomPercent <= 80}
+                    className="size-9 rounded-xl shrink-0 font-bold hover:border-primary hover:text-primary transition-colors"
+                    title="Decrease font size (-5%)"
+                  >
+                    <Minus className="size-4" />
+                  </Button>
+
+                  <div className="flex-1 px-1">
+                    <Slider
+                      value={[textZoomPercent]}
+                      onValueChange={([v]) => handleTextZoomPercentChange(v ?? 100)}
+                      min={80}
+                      max={150}
+                      step={5}
+                      className="cursor-pointer py-1"
+                    />
+                  </div>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={() => handleStepZoom(5)}
+                    disabled={textZoomPercent >= 150}
+                    className="size-9 rounded-xl shrink-0 font-bold hover:border-primary hover:text-primary transition-colors"
+                    title="Increase font size (+5%)"
+                  >
+                    <Plus className="size-4" />
+                  </Button>
+                </div>
+
+                {/* Range Labels */}
+                <div className="flex justify-between text-[11px] text-muted-foreground pt-0.5">
+                  <span className={textZoomPercent <= 85 ? "font-bold text-primary" : ""}>80% (Smaller)</span>
+                  <span className={textZoomPercent >= 95 && textZoomPercent <= 105 ? "font-bold text-primary" : ""}>100% (Default)</span>
+                  <span className={textZoomPercent >= 115 && textZoomPercent <= 125 ? "font-bold text-primary" : ""}>120% (Large)</span>
+                  <span className={textZoomPercent >= 145 ? "font-bold text-primary" : ""}>150% (Max)</span>
+                </div>
+              </div>
+
+              {/* Quick Tap Presets */}
+              <div className="space-y-1.5">
+                <p className="text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                  Quick Presets:
+                </p>
+                <div className="grid grid-cols-4 gap-2">
+                  {[
+                    { label: "-A", percent: 90, desc: "Compact" },
+                    { label: "A", percent: 100, desc: "Default" },
+                    { label: "A+", percent: 115, desc: "Large" },
+                    { label: "A++", percent: 130, desc: "Extra Large" },
+                  ].map((preset) => {
+                    const isPresetActive = textZoomPercent === preset.percent;
+                    return (
+                      <button
+                        key={preset.percent}
+                        type="button"
+                        onClick={() => handleTextZoomPercentChange(preset.percent)}
+                        className={cn(
+                          "py-2 px-2 rounded-xl border text-center transition-all flex flex-col items-center justify-center gap-0.5",
+                          isPresetActive
+                            ? "border-primary bg-primary/10 text-primary font-black shadow-xs ring-1 ring-primary"
+                            : "border-border/70 hover:border-primary/40 hover:bg-muted/40 text-foreground"
+                        )}
+                      >
+                        <span className="font-extrabold text-sm">{preset.label}</span>
+                        <span className="text-[10px] text-muted-foreground font-mono">{preset.percent}%</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Live Preview Sample Box */}
+              <div className="p-3.5 rounded-xl bg-muted/30 border border-border/60 space-y-2">
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span className="font-medium">Live Sample at {textZoomPercent}%:</span>
+                  <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">
+                    ✓ Live on entire site
+                  </span>
+                </div>
+                <div className="space-y-1 rounded-lg bg-background p-3 border border-border/50">
+                  <h4 className="text-base font-bold text-foreground">
+                    Sample University Headline
+                  </h4>
+                  <p className="text-xs text-muted-foreground">
+                    This sample text and all elements across every page scale dynamically in real time when you slide the button above.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Right Column: Sticky Live Preview (5 cols) */}
@@ -627,9 +822,14 @@ export default function ThemeDesigner() {
             <p className="text-xs font-bold tracking-wider text-muted-foreground uppercase">
               Live Real-Time Website Preview
             </p>
-            <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 text-[10px] font-bold">
-              Hot Applied Live
-            </Badge>
+            <div className="flex items-center gap-1.5">
+              <Badge variant="outline" className="border-primary/30 text-primary bg-primary/10 text-[10px] font-bold font-mono">
+                Scale: {textZoomPercent}%
+              </Badge>
+              <Badge variant="outline" className="border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 text-[10px] font-bold">
+                Hot Applied Live
+              </Badge>
+            </div>
           </div>
 
           {/* Realistic Website Mockup Card */}

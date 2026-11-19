@@ -175,7 +175,6 @@ export const platformNavGroups: AdminNavGroup[] = [
   {
     label: "Platform",
     items: [
-      { label: "Website Content Editor", path: "/admin/cms/site-editor", icon: PenSquare, end: true },
       { label: "Website Wings & Content", path: "/admin/platform/settings", icon: SlidersHorizontal, end: true },
       { label: "Setup Wizard", path: "/admin/platform/setup-wizard", icon: Wand2, end: true },
     ],
