@@ -45,6 +45,10 @@ const CollegeAdmissions = lazy(() => import("@/sites/college/pages/Admissions"))
 const CollegeFacultyStaff = lazy(() => import("@/sites/college/pages/FacultyStaff"));
 const CollegeIQAC = lazy(() => import("@/sites/college/pages/IQAC"));
 const CollegeResearch = lazy(() => import("@/sites/college/pages/Research"));
+const CollegeRndCell = lazy(() => import("@/sites/college/pages/RndCell"));
+const CollegePublications = lazy(() => import("@/sites/college/pages/PublicationsRegister"));
+const CollegeGrants = lazy(() => import("@/sites/college/pages/SponsoredGrants"));
+const CollegeCif = lazy(() => import("@/sites/college/pages/CifFacility"));
 const CollegePlacements = lazy(() => import("@/sites/college/pages/Placements"));
 const CollegeExamCell = lazy(() => import("@/sites/college/pages/ExaminationCell"));
 const CollegeScholarships = lazy(() => import("@/sites/college/pages/Scholarships"));
@@ -58,10 +62,33 @@ const CollegeContact = lazy(() => import("@/sites/college/pages/Contact"));
 const CollegePolicyPage = lazy(() => import("@/sites/college/pages/PolicyPage"));
 const CollegeAdministration = lazy(() => import("@/sites/college/pages/Administration"));
 const CollegeGrievance = lazy(() => import("@/sites/college/pages/Grievance"));
+const CollegeEPratikar = lazy(() => import("@/sites/college/pages/EPratikarGrievance"));
+const CollegeAntiRagging = lazy(() => import("@/sites/college/pages/AntiRaggingCell"));
+const CollegeIcc = lazy(() => import("@/sites/college/pages/InternalComplaintsCommittee"));
+const CollegeEqualOpportunity = lazy(() => import("@/sites/college/pages/EqualOpportunityCell"));
+const CollegeFeedbackAtr = lazy(() => import("@/sites/college/pages/StakeholderFeedbackAtr"));
 const CollegeTenders = lazy(() => import("@/sites/college/pages/Tenders"));
 const CollegeRecruitment = lazy(() => import("@/sites/college/pages/Recruitment"));
 const CollegeAlumni = lazy(() => import("@/sites/college/pages/Alumni"));
+const CollegeAlumniAssociation = lazy(() => import("@/sites/college/pages/AlumniAssociation"));
+const CollegeDistinguishedAlumni = lazy(() => import("@/sites/college/pages/DistinguishedAlumni"));
+const CollegeAlumniGiving = lazy(() => import("@/sites/college/pages/AlumniGiving"));
+const CollegeAlumniConnect = lazy(() => import("@/sites/college/pages/AlumniConnect"));
 const CollegeVirtualTour = lazy(() => import("@/sites/college/pages/VirtualTour"));
+const CollegeHistory = lazy(() => import("@/sites/college/pages/HistoryLegacy"));
+const CollegeVisionMission = lazy(() => import("@/sites/college/pages/VisionMission"));
+const CollegeActStatutes = lazy(() => import("@/sites/college/pages/ActStatutes"));
+const CollegeOrganogram = lazy(() => import("@/sites/college/pages/Organogram"));
+const CollegeFormerLeaders = lazy(() => import("@/sites/college/pages/FormerLeaders"));
+const CollegeLocation = lazy(() => import("@/sites/college/pages/LocationPage"));
+const CollegeOfficers = lazy(() => import("@/sites/college/pages/ChancellorOfficers"));
+const CollegeSyndicate = lazy(() => import("@/sites/college/pages/SyndicatePage"));
+const CollegeCouncils = lazy(() => import("@/sites/college/pages/CouncilsPage"));
+const CollegeDirectory = lazy(() => import("@/sites/college/pages/SecretariatsDirectory"));
+const CollegeAdmissionApply = lazy(() => import("@/sites/college/pages/AdmissionApply"));
+const CollegeProspectus = lazy(() => import("@/sites/college/pages/ProspectusLibrary"));
+const CollegeFeeStructure = lazy(() => import("@/sites/college/pages/FeeStructure"));
+const CollegeAdmissionFaqs = lazy(() => import("@/sites/college/pages/AdmissionFaqs"));
 const CollegeAccreditationSsr = lazy(() => import("@/sites/college/pages/AccreditationSsr"));
 const CollegeAqarArchive = lazy(() => import("@/sites/college/pages/AqarArchive"));
 const CollegeCriteriaEvidence = lazy(() => import("@/sites/college/pages/CriteriaEvidence"));
@@ -207,17 +234,46 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <CollegeHome /> },
       { path: "about", element: <CollegeAbout /> },
+      { path: "about/history", element: <CollegeHistory /> },
+      { path: "about/vision-mission", element: <CollegeVisionMission /> },
+      { path: "about/act-statutes", element: <CollegeActStatutes /> },
+      { path: "about/organogram", element: <CollegeOrganogram /> },
+      { path: "about/former-leaders", element: <CollegeFormerLeaders /> },
+      { path: "about/location", element: <CollegeLocation /> },
+      { path: "about/virtual-tour", element: <CollegeVirtualTour /> },
+      { path: "history", element: <CollegeHistory /> },
+      { path: "vision-mission", element: <CollegeVisionMission /> },
+      { path: "act-statutes", element: <CollegeActStatutes /> },
+      { path: "organogram", element: <CollegeOrganogram /> },
+      { path: "former-leaders", element: <CollegeFormerLeaders /> },
+      { path: "location", element: <CollegeLocation /> },
       { path: "departments", element: <CollegeDepartments /> },
       { path: "departments/:slug", element: <CollegeDepartmentDetail /> },
       { path: "programmes", element: <CollegeProgrammes /> },
       { path: "programmes/:slug", element: <CollegeProgrammeDetail /> },
       { path: "admissions", element: <CollegeAdmissions /> },
+      { path: "admissions/apply", element: <CollegeAdmissionApply /> },
+      { path: "admissions/prospectus", element: <CollegeProspectus /> },
+      { path: "admissions/fee-structure", element: <CollegeFeeStructure /> },
+      { path: "admissions/faqs", element: <CollegeAdmissionFaqs /> },
+      { path: "apply", element: <CollegeAdmissionApply /> },
+      { path: "prospectus", element: <CollegeProspectus /> },
+      { path: "fee-structure", element: <CollegeFeeStructure /> },
+      { path: "admission-faqs", element: <CollegeAdmissionFaqs /> },
       { path: "faculty-staff", element: <CollegeFacultyStaff /> },
       { path: "iqac", element: <CollegeIQAC /> },
       { path: "accreditation-ssr", element: <CollegeAccreditationSsr /> },
       { path: "aqar-archive", element: <CollegeAqarArchive /> },
       { path: "criteria-evidence", element: <CollegeCriteriaEvidence /> },
       { path: "research", element: <CollegeResearch /> },
+      { path: "research/rnd-cell", element: <CollegeRndCell /> },
+      { path: "research/publications", element: <CollegePublications /> },
+      { path: "research/grants", element: <CollegeGrants /> },
+      { path: "research/cif", element: <CollegeCif /> },
+      { path: "rnd-cell", element: <CollegeRndCell /> },
+      { path: "publications", element: <CollegePublications /> },
+      { path: "grants", element: <CollegeGrants /> },
+      { path: "cif", element: <CollegeCif /> },
       { path: "placements", element: <CollegePlacements /> },
       { path: "examination-cell", element: <CollegeExamCell /> },
       { path: "scholarships", element: <CollegeScholarships /> },
@@ -230,10 +286,36 @@ export const router = createBrowserRouter([
       { path: "contact", element: <CollegeContact /> },
       { path: "policies/:slug", element: <CollegePolicyPage /> },
       { path: "administration", element: <CollegeAdministration /> },
+      { path: "administration/officers", element: <CollegeOfficers /> },
+      { path: "administration/syndicate", element: <CollegeSyndicate /> },
+      { path: "administration/councils", element: <CollegeCouncils /> },
+      { path: "administration/directory", element: <CollegeDirectory /> },
+      { path: "officers", element: <CollegeOfficers /> },
+      { path: "syndicate", element: <CollegeSyndicate /> },
+      { path: "councils", element: <CollegeCouncils /> },
+      { path: "directory", element: <CollegeDirectory /> },
       { path: "grievance", element: <CollegeGrievance /> },
+      { path: "grievance/e-pratikar", element: <CollegeEPratikar /> },
+      { path: "grievance/anti-ragging", element: <CollegeAntiRagging /> },
+      { path: "grievance/icc", element: <CollegeIcc /> },
+      { path: "grievance/equal-opportunity", element: <CollegeEqualOpportunity /> },
+      { path: "grievance/feedback-atr", element: <CollegeFeedbackAtr /> },
+      { path: "e-pratikar", element: <CollegeEPratikar /> },
+      { path: "anti-ragging", element: <CollegeAntiRagging /> },
+      { path: "icc", element: <CollegeIcc /> },
+      { path: "equal-opportunity", element: <CollegeEqualOpportunity /> },
+      { path: "feedback-atr", element: <CollegeFeedbackAtr /> },
       { path: "tenders", element: <CollegeTenders /> },
       { path: "recruitment", element: <CollegeRecruitment /> },
       { path: "alumni", element: <CollegeAlumni /> },
+      { path: "alumni/association", element: <CollegeAlumniAssociation /> },
+      { path: "alumni/distinguished", element: <CollegeDistinguishedAlumni /> },
+      { path: "alumni/giving", element: <CollegeAlumniGiving /> },
+      { path: "alumni/connect", element: <CollegeAlumniConnect /> },
+      { path: "association", element: <CollegeAlumniAssociation /> },
+      { path: "distinguished-alumni", element: <CollegeDistinguishedAlumni /> },
+      { path: "giving", element: <CollegeAlumniGiving /> },
+      { path: "alumni-connect", element: <CollegeAlumniConnect /> },
       { path: "virtual-tour", element: <CollegeVirtualTour /> },
     ],
   },

@@ -133,14 +133,22 @@ export default function CollegeVirtualTour() {
 
         {/* How to Reach Guide */}
         <div className="space-y-4 pt-4">
-          <div className="border-b pb-2">
-            <h3 className="text-base font-bold text-foreground flex items-center gap-2">
-              <Navigation className="size-4 text-primary" />
-              How to Reach Our College
-            </h3>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Well connected via international airport, major railway junctions, and national highways.
-            </p>
+          <div className="border-b pb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <h3 className="text-base font-bold text-foreground flex items-center gap-2">
+                <Navigation className="size-4 text-primary" />
+                How to Reach Our College
+              </h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Well connected via international airport, major railway junctions, and national highways.
+              </p>
+            </div>
+            <Button size="xs" variant="outline" asChild className="gap-1.5 text-xs text-primary border-primary/30 w-fit">
+              <Link to="/college/about/location">
+                <span>Complete Transit Guide</span>
+                <ExternalLink className="size-3" />
+              </Link>
+            </Button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

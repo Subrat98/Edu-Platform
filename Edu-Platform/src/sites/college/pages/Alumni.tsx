@@ -13,6 +13,7 @@ import {
   Gift,
   Mail,
   Calendar,
+  ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Hero } from "@/components/sections/Hero";
@@ -110,6 +111,93 @@ export default function CollegeAlumni() {
               <ExternalLink className="size-3" />
             </a>
           </Button>
+        </div>
+
+        {/* Dedicated Alumni Sub-Pages Directory */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link
+            to="/college/alumni/association"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-primary/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-2.5 w-fit rounded-lg bg-primary/10 text-primary mb-2.5 group-hover:scale-105 transition-transform">
+                <Users className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-sm group-hover:text-primary transition-colors">
+                Alumni Association
+              </h3>
+              <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                Registered society, executive roster, regional chapters & life membership.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-primary gap-1 pt-3 border-t border-border/50 mt-3">
+              <span>View Association</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            to="/college/alumni/distinguished"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-amber-500/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-2.5 w-fit rounded-lg bg-amber-500/10 text-amber-600 mb-2.5 group-hover:scale-105 transition-transform">
+                <Award className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-sm group-hover:text-amber-600 transition-colors">
+                Distinguished Alumni
+              </h3>
+              <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                Hall of Fame, Padma & Jnanpith laureates, and DAA nomination portal.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-amber-600 gap-1 pt-3 border-t border-border/50 mt-3">
+              <span>Hall of Fame</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            to="/college/alumni/giving"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-emerald-500/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-2.5 w-fit rounded-lg bg-emerald-500/10 text-emerald-600 mb-2.5 group-hover:scale-105 transition-transform">
+                <Gift className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-sm group-hover:text-emerald-600 transition-colors">
+                Give to the University
+              </h3>
+              <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                Mo College 2x matching grants, 80G tax exemption & donor honor roll.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-emerald-600 gap-1 pt-3 border-t border-border/50 mt-3">
+              <span>Endowment Giving</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            to="/college/alumni/connect"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-purple-500/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-2.5 w-fit rounded-lg bg-purple-500/10 text-purple-600 mb-2.5 group-hover:scale-105 transition-transform">
+                <Calendar className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-sm group-hover:text-purple-600 transition-colors">
+                Mentorship & Reunions
+              </h3>
+              <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                1-on-1 student career mentoring, Annual Alumni Day & job referrals.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-purple-600 gap-1 pt-3 border-t border-border/50 mt-3">
+              <span>Connect & Reunite</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
         </div>
 
         {/* Give to the University / Donation Section */}

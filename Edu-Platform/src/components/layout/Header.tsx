@@ -66,26 +66,104 @@ export function Header() {
   const [zoomLevel, setZoomLevel] = useState<TextZoomLevel>(getStoredTextZoom);
   const { t } = useTranslation();
 
-  const isItemActive = (item: { path?: string; children?: { path: string }[] }) => {
-    const currentPath = location.pathname;
-    // Exact match for root / home of institution
-    if (item.path === `/${institutionId}` || item.path === "/") {
-      return currentPath === item.path || (item.path === "/" && currentPath === `/${institutionId}`);
+  const isChildActive = (childPath?: string) => {
+    if (!childPath) return false;
+    const current = location.pathname;
+
+    // 1. Exact match
+    if (current === childPath) return true;
+
+    // 2. Institution home exact match
+    if (childPath === `/${institutionId}` || childPath === "/") {
+      return current === childPath || (childPath === "/" && current === `/${institutionId}`);
     }
-    // Specific path match (not home)
-    if (item.path && item.path !== `/${institutionId}` && item.path !== "/") {
-      if (currentPath === item.path || currentPath.startsWith(`${item.path}/`)) {
+
+    // 3. Alias match between /college/{section}/x and /college/x
+    if (childPath.startsWith(`/${institutionId}/about/`)) {
+      const alias = childPath.replace(`/${institutionId}/about/`, `/${institutionId}/`);
+      if (current === alias) return true;
+    }
+    if (current.startsWith(`/${institutionId}/about/`)) {
+      const alias = current.replace(`/${institutionId}/about/`, `/${institutionId}/`);
+      if (alias === childPath) return true;
+    }
+    if (childPath.startsWith(`/${institutionId}/administration/`)) {
+      const alias = childPath.replace(`/${institutionId}/administration/`, `/${institutionId}/`);
+      if (current === alias) return true;
+    }
+    if (current.startsWith(`/${institutionId}/administration/`)) {
+      const alias = current.replace(`/${institutionId}/administration/`, `/${institutionId}/`);
+      if (alias === childPath) return true;
+    }
+    if (childPath.startsWith(`/${institutionId}/admissions/`)) {
+      const alias = childPath.replace(`/${institutionId}/admissions/`, `/${institutionId}/`);
+      if (current === alias) return true;
+    }
+    if (current.startsWith(`/${institutionId}/admissions/`)) {
+      const alias = current.replace(`/${institutionId}/admissions/`, `/${institutionId}/`);
+      if (alias === childPath) return true;
+    }
+    if (childPath.startsWith(`/${institutionId}/research/`)) {
+      const alias = childPath.replace(`/${institutionId}/research/`, `/${institutionId}/`);
+      if (current === alias) return true;
+    }
+    if (current.startsWith(`/${institutionId}/research/`)) {
+      const alias = current.replace(`/${institutionId}/research/`, `/${institutionId}/`);
+      if (alias === childPath) return true;
+    }
+    if (childPath.startsWith(`/${institutionId}/grievance/`)) {
+      const alias = childPath.replace(`/${institutionId}/grievance/`, `/${institutionId}/`);
+      if (current === alias) return true;
+    }
+    if (current.startsWith(`/${institutionId}/grievance/`)) {
+      const alias = current.replace(`/${institutionId}/grievance/`, `/${institutionId}/`);
+      if (alias === childPath) return true;
+    }
+    if (childPath.startsWith(`/${institutionId}/alumni/`)) {
+      const alias = childPath.replace(`/${institutionId}/alumni/`, `/${institutionId}/`);
+      if (current === alias) return true;
+    }
+    if (current.startsWith(`/${institutionId}/alumni/`)) {
+      const alias = current.replace(`/${institutionId}/alumni/`, `/${institutionId}/`);
+      if (alias === childPath) return true;
+    }
+
+    // 4. Sub-path match (e.g. /college/departments/physics matches /college/departments)
+    // Avoid section roots like /college/about, /college/administration, /college/admissions, /college/research, /college/grievance, /college/alumni matching specific sibling subpages
+    if (
+      childPath !== `/${institutionId}/about` &&
+      childPath !== `/${institutionId}/administration` &&
+      childPath !== `/${institutionId}/admissions` &&
+      childPath !== `/${institutionId}/research` &&
+      childPath !== `/${institutionId}/grievance` &&
+      childPath !== `/${institutionId}/alumni` &&
+      childPath !== `/${institutionId}` &&
+      childPath !== "/" &&
+      current.startsWith(`${childPath}/`)
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const isItemActive = (item: { path?: string; children?: { path: string }[] }) => {
+    const current = location.pathname;
+    // Highlight parent if any child is active
+    if (item.children && item.children.length > 0) {
+      if (item.children.some((child) => isChildActive(child.path))) {
         return true;
       }
     }
-    // If item has children, check if any child matches current path
-    if (item.children && item.children.length > 0) {
-      return item.children.some((child) => {
-        if (child.path === `/${institutionId}` || child.path === "/") {
-          return currentPath === child.path;
-        }
-        return currentPath === child.path || currentPath.startsWith(`${child.path}/`);
-      });
+    // Standalone top-level nav item
+    if (item.path) {
+      if (current === item.path) return true;
+      if (item.path === `/${institutionId}` || item.path === "/") {
+        return current === item.path || (item.path === "/" && current === `/${institutionId}`);
+      }
+      if (current.startsWith(`${item.path}/`)) {
+        return true;
+      }
     }
     return false;
   };
@@ -525,16 +603,14 @@ export function Header() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="start" className="min-w-52 shadow-lg border-primary/20">
                       {item.children.map((child) => {
-                        const isChildActive =
-                          location.pathname === child.path ||
-                          (child.path !== `/${institutionId}` && child.path !== "/" && location.pathname.startsWith(`${child.path}/`));
+                        const isChildActiveItem = isChildActive(child.path);
                         return (
                           <DropdownMenuItem
                             key={child.label}
                             asChild
                             className={cn(
                               "text-xs cursor-pointer py-1.5 font-medium rounded-md px-2",
-                              isChildActive && "bg-primary text-white font-bold focus:bg-primary focus:text-white"
+                              isChildActiveItem && "bg-primary text-white font-bold focus:bg-primary focus:text-white"
                             )}
                           >
                             <Link to={child.path}>
@@ -680,16 +756,14 @@ export function Header() {
                           </div>
                           <div className="pl-3 space-y-0.5 border-l-2 border-primary/20 ml-2">
                             {item.children.map((child) => {
-                              const isChildActive =
-                                location.pathname === child.path ||
-                                (child.path !== `/${institutionId}` && child.path !== "/" && location.pathname.startsWith(`${child.path}/`));
+                              const isChildActiveItem = isChildActive(child.path);
                               return (
                                 <SheetClose key={child.label} asChild>
                                   <Link
                                     to={child.path}
                                     className={cn(
                                       "block py-1.5 px-2 text-xs rounded transition-colors",
-                                      isChildActive
+                                      isChildActiveItem
                                         ? "bg-primary text-white font-bold shadow-xs"
                                         : "text-muted-foreground hover:text-primary hover:bg-muted/30"
                                     )}
