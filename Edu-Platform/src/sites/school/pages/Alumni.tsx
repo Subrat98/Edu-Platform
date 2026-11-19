@@ -66,13 +66,13 @@ export default function SchoolAlumni() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Alumni & Mo School" }]} />
       <Hero
         variant="compact"
         title="Alumni & 'Mo School Abhiyan'"
         subtitle="Connecting Generations of Learners, Strengthening Our Alma Mater & Odisha 'Mo School' Initiative"
         imageUrl={schoolHeroUrl(5)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Alumni & Mo School" }]} />
 
       <Container className="py-10 space-y-10">
         {/* Mo School Abhiyan Spotlight Card */}

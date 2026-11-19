@@ -14,6 +14,7 @@ import {
   FileCheck2,
   Lock,
   Send,
+  ArrowRight,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Hero } from "@/components/sections/Hero";
@@ -79,8 +80,8 @@ export default function CollegeGrievance() {
 
   return (
     <>
-      <Hero variant="compact" title="Support, Welfare & Grievance Redressal" imageUrl={collegeHeroUrl(2)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Grievance & Support" }]} />
+      <Hero variant="compact" title="Support, Welfare & Grievance Redressal" imageUrl={collegeHeroUrl(2)} />
 
       <Container className="py-10 space-y-10">
         {/* Header Strip */}
@@ -111,6 +112,114 @@ export default function CollegeGrievance() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Dedicated Grievance & Welfare Divisions Directory */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <Link
+            to="/college/grievance/e-pratikar"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-primary/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-2.5 w-fit rounded-lg bg-primary/10 text-primary mb-2.5 group-hover:scale-105 transition-transform">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-sm group-hover:text-primary transition-colors">
+                Online Grievance
+              </h3>
+              <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                e-Pratikar portal, filing, live status tracking, and SGRC hierarchy.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-primary gap-1 pt-3 border-t border-border/50 mt-3">
+              <span>e-Pratikar</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            to="/college/grievance/anti-ragging"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-rose-500/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-2.5 w-fit rounded-lg bg-rose-500/10 text-rose-600 mb-2.5 group-hover:scale-105 transition-transform">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-sm group-hover:text-rose-600 transition-colors">
+                Anti-Ragging Cell
+              </h3>
+              <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                24x7 helpline, flying squad roster, online undertaking & penalties.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-rose-600 gap-1 pt-3 border-t border-border/50 mt-3">
+              <span>Anti-Ragging</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            to="/college/grievance/icc"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-purple-500/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-2.5 w-fit rounded-lg bg-purple-500/10 text-purple-600 mb-2.5 group-hover:scale-105 transition-transform">
+                <Heart className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-sm group-hover:text-purple-600 transition-colors">
+                Internal Committee (ICC)
+              </h3>
+              <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                PoSH Act compliance, gender sensitization & confidential desk.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-purple-600 gap-1 pt-3 border-t border-border/50 mt-3">
+              <span>ICC Cell</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            to="/college/grievance/equal-opportunity"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-blue-500/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-2.5 w-fit rounded-lg bg-blue-500/10 text-blue-600 mb-2.5 group-hover:scale-105 transition-transform">
+                <Users className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-sm group-hover:text-blue-600 transition-colors">
+                Equal Opportunity Cell
+              </h3>
+              <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                SC/ST/OBC liaison desk, caste complaints & Divyangjan enabling.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-blue-600 gap-1 pt-3 border-t border-border/50 mt-3">
+              <span>Equal Opportunity</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            to="/college/grievance/feedback-atr"
+            className="group p-4 rounded-xl border border-border/80 bg-card hover:border-emerald-500/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-2.5 w-fit rounded-lg bg-emerald-500/10 text-emerald-600 mb-2.5 group-hover:scale-105 transition-transform">
+                <FileCheck2 className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-sm group-hover:text-emerald-600 transition-colors">
+                Feedback & ATR
+              </h3>
+              <p className="text-[11px] text-muted-foreground mt-1 leading-relaxed">
+                NAAC Metric 1.4 stakeholder feedback & audited Action Taken Reports.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-emerald-600 gap-1 pt-3 border-t border-border/50 mt-3">
+              <span>View ATRs</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
         </div>
 
         {/* e-Pratikar Online Filing & Status Tracker Grid */}

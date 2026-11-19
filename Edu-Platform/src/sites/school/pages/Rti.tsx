@@ -42,13 +42,13 @@ export default function SchoolRti() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "RTI & Transparency" }]} />
       <Hero
         variant="compact"
         title="Right to Information (RTI)"
         subtitle="Proactive Public Disclosures under Section 4(1)(b) of the RTI Act, 2005"
         imageUrl={schoolHeroUrl(3)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "RTI & Transparency" }]} />
 
       <Container className="py-10 space-y-8">
         {/* Header Notice Card */}

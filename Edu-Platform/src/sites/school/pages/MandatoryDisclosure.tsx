@@ -182,13 +182,13 @@ export default function SchoolMandatoryDisclosure() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Mandatory Public Disclosure" }]} />
       <Hero
         variant="compact"
         title="Mandatory Public Disclosure"
         subtitle="Mandatory Statutory Disclosures under CBSE Affiliation Bye-Laws (Appendix IX) & GIGW 3.0"
         imageUrl={schoolHeroUrl(1)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Mandatory Public Disclosure" }]} />
 
       <Container className="py-10 space-y-8">
         {/* Compliance Header Card */}

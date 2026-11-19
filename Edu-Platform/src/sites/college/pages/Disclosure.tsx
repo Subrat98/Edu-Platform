@@ -17,8 +17,8 @@ const committees = [
 export default function CollegeDisclosure() {
   return (
     <>
-      <Hero variant="compact" title="Mandatory Disclosure" imageUrl={collegeHeroUrl(1)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Mandatory Disclosure" }]} />
+      <Hero variant="compact" title="Mandatory Disclosure" imageUrl={collegeHeroUrl(1)} />
 
       <RichText
         eyebrow="Compliance"

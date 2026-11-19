@@ -14,6 +14,7 @@ export interface HeroProps {
   badge?: string;
   title: string;
   description?: string;
+  subtitle?: string;
   imageUrl?: string;
   /** When given (2+ photos), the hero renders as an auto-advancing, swipeable carousel instead of a single static image. */
   images?: string[];
@@ -22,37 +23,39 @@ export interface HeroProps {
   variant?: "full" | "compact";
 }
 
-export function Hero({ badge, title, description, imageUrl, images, primaryCta, secondaryCta, variant = "full" }: HeroProps) {
+export function Hero({ badge, title, description, subtitle, imageUrl, images, primaryCta, secondaryCta, variant = "full" }: HeroProps) {
   const isCompact = variant === "compact";
+  const heroDescription = description ?? subtitle;
 
   if (!isCompact && images && images.length > 1) {
-    return <HeroCarousel badge={badge} title={title} description={description} images={images} primaryCta={primaryCta} secondaryCta={secondaryCta} />;
+    return <HeroCarousel badge={badge} title={title} description={heroDescription} images={images} primaryCta={primaryCta} secondaryCta={secondaryCta} />;
   }
 
   return (
-    <section className="relative overflow-hidden">
+    <section className={cn("relative overflow-hidden flex items-center", isCompact ? "min-h-[380px] sm:min-h-[440px] md:min-h-[480px]" : "min-h-[500px] sm:min-h-[580px]")}>
       <div className="absolute inset-0">
         <img src={imageUrl ?? images?.[0] ?? ""} alt="" className="size-full object-cover" />
-        <div className="from-primary/95 via-primary/80 absolute inset-0 bg-gradient-to-r to-transparent" />
+        {/* Transparent neutral gradient overlay so only the pure photograph image is visible, with no colored blur */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/15" />
       </div>
-      <Container className={cn("relative py-20 sm:py-28", isCompact && "py-14 sm:py-16")}>
-        <div className={cn("max-w-2xl", isCompact && "max-w-xl")}>
+      <Container className={cn("relative w-full", isCompact ? "py-24 sm:py-32 md:py-36" : "py-20 sm:py-28")}>
+        <div className={cn("max-w-2xl", isCompact && "max-w-2xl sm:max-w-3xl")}>
           {badge ? (
-            <span className="bg-highlight text-highlight-foreground mb-4 inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide uppercase">
+            <span className="bg-highlight text-highlight-foreground mb-4 inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide uppercase shadow-sm">
               {badge}
             </span>
           ) : null}
           <h1
             className={cn(
-              "font-heading text-3xl font-bold text-balance text-white sm:text-5xl",
-              isCompact && "text-2xl sm:text-3xl",
+              "font-heading text-3xl font-bold text-balance text-white sm:text-5xl drop-shadow-md",
+              isCompact && "text-3xl sm:text-4xl md:text-5xl font-black leading-tight",
             )}
           >
             {title}
           </h1>
-          {description ? (
-            <p className={cn("mt-4 text-base text-white/85 sm:text-lg", isCompact && "mt-2 text-sm sm:text-base")}>
-              {description}
+          {heroDescription ? (
+            <p className={cn("mt-4 text-base text-white/95 sm:text-lg drop-shadow-sm", isCompact && "mt-3 text-base sm:text-lg md:text-xl text-white/95 leading-relaxed")}>
+              {heroDescription}
             </p>
           ) : null}
           {(primaryCta || secondaryCta) && !isCompact ? (

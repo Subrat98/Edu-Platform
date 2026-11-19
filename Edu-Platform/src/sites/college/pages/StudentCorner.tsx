@@ -8,8 +8,8 @@ import { collegeHeroUrl } from "@/mocks/data/images";
 export default function CollegeStudentCorner() {
   return (
     <>
-      <Hero variant="compact" title="Student Corner" imageUrl={collegeHeroUrl(2)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Student Corner" }]} />
+      <Hero variant="compact" title="Student Corner" imageUrl={collegeHeroUrl(2)} />
 
       <DepartmentCards
         eyebrow="Get involved"

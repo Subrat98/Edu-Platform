@@ -114,8 +114,8 @@ export default function CollegeAdministration() {
 
   return (
     <>
-      <Hero variant="compact" title="Administration & Governance" imageUrl={collegeHeroUrl(4)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Administration" }]} />
+      <Hero variant="compact" title="Administration & Governance" imageUrl={collegeHeroUrl(4)} />
 
       <Container className="py-10 space-y-8">
         {/* Governance Overview Strip */}
@@ -153,13 +153,81 @@ export default function CollegeAdministration() {
           </div>
         </div>
 
+        {/* Dedicated Administrative Portals Directory Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            {
+              title: "Chancellor & Officers",
+              desc: "The Hon'ble Chancellor, Vice-Chancellor, Registrar, COE, COF, IQAC Director, and statutory leaders.",
+              path: "/college/administration/officers",
+              badge: "Key Leadership",
+              icon: Landmark,
+            },
+            {
+              title: "The Syndicate",
+              desc: "Supreme executive governing council of the university; mandates, member roster, and ratified resolutions.",
+              path: "/college/administration/syndicate",
+              badge: "Apex Council",
+              icon: ShieldCheck,
+            },
+            {
+              title: "Academic & P.G. Council",
+              desc: "Highest bodies for curriculum design, NEP 2020 frameworks, postgraduate admissions, and Ph.D. regulations.",
+              path: "/college/administration/councils",
+              badge: "Curricula & Research",
+              icon: BookOpen,
+            },
+            {
+              title: "Secretariats & Directory",
+              desc: "Official campus contact directory with EPABX extensions, direct landlines, emails, and office locations.",
+              path: "/college/administration/directory",
+              badge: "Directory & Contacts",
+              icon: Phone,
+            },
+          ].map((sec, idx) => {
+            const Icon = sec.icon;
+            return (
+              <Card
+                key={idx}
+                className="p-5 border border-border/70 bg-card hover:border-primary/50 hover:shadow-md transition-all flex flex-col justify-between space-y-3 group"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="size-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Icon className="size-4" />
+                    </div>
+                    <Badge variant="secondary" className="text-[10px] font-mono">
+                      {sec.badge}
+                    </Badge>
+                  </div>
+                  <h3 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
+                    {sec.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {sec.desc}
+                  </p>
+                </div>
+
+                <div className="pt-2 border-t border-border/50">
+                  <Button size="xs" variant="ghost" asChild className="w-full justify-between text-xs text-primary font-bold p-0 hover:bg-transparent">
+                    <Link to={sec.path}>
+                      <span>Open Dedicated Page</span>
+                      <ChevronRight className="size-3 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+
         {/* Navigation Tabs */}
         <div className="flex items-center gap-1.5 p-1 rounded-xl bg-muted/50 border border-border/70 overflow-x-auto">
           {[
-            { id: "officers", label: "University Administrators" },
-            { id: "syndicate", label: "The Syndicate (Executive Body)" },
-            { id: "academic_council", label: "Academic Council & Councils" },
-            { id: "secretariats", label: "Secretariats & Directory" },
+            { id: "officers", label: "University Administrators", path: "/college/administration/officers" },
+            { id: "syndicate", label: "The Syndicate (Executive Body)", path: "/college/administration/syndicate" },
+            { id: "academic_council", label: "Academic Council & Councils", path: "/college/administration/councils" },
+            { id: "secretariats", label: "Secretariats & Directory", path: "/college/administration/directory" },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -178,56 +246,75 @@ export default function CollegeAdministration() {
 
         {/* Tab 1: Administrators Grid */}
         {activeTab === "officers" && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {administrators.map((admin, idx) => (
-              <Card key={idx} className="border border-border/70 bg-card hover:border-primary/40 transition-all flex flex-col justify-between">
-                <CardHeader className="p-4 pb-2">
-                  <div className="flex items-center justify-between">
-                    <Badge variant="outline" className="text-[10px] font-mono border-primary/30 text-primary">
-                      {admin.roleBadge}
-                    </Badge>
-                    <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">
-                      {admin.title}
-                    </span>
-                  </div>
-                  <CardTitle className="text-sm font-bold text-foreground mt-2">
-                    {admin.name}
-                  </CardTitle>
-                  <CardDescription className="text-[11px] leading-snug">
-                    {admin.designation}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-4 pt-2 border-t border-border/40 space-y-1.5 text-[11px]">
-                  <div className="text-muted-foreground flex items-center gap-1.5">
-                    <Building2 className="size-3 shrink-0" />
-                    <span className="truncate">{admin.office}</span>
-                  </div>
-                  <div className="text-muted-foreground flex items-center gap-1.5">
-                    <Phone className="size-3 shrink-0" />
-                    <span>{admin.phone}</span>
-                  </div>
-                  <div className="text-muted-foreground flex items-center gap-1.5 truncate">
-                    <Mail className="size-3 shrink-0" />
-                    <a href={`mailto:${admin.email}`} className="text-primary hover:underline truncate">
-                      {admin.email}
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2">
+              <h3 className="font-bold text-sm text-foreground">Principal Executive & Academic Officers</h3>
+              <Button size="xs" variant="outline" asChild className="gap-1.5 text-xs text-primary border-primary/30 w-fit">
+                <Link to="/college/administration/officers">
+                  <span>Open Dedicated Officers Page</span>
+                  <ExternalLink className="size-3" />
+                </Link>
+              </Button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {administrators.map((admin, idx) => (
+                <Card key={idx} className="border border-border/70 bg-card hover:border-primary/40 transition-all flex flex-col justify-between">
+                  <CardHeader className="p-4 pb-2">
+                    <div className="flex items-center justify-between">
+                      <Badge variant="outline" className="text-[10px] font-mono border-primary/30 text-primary">
+                        {admin.roleBadge}
+                      </Badge>
+                      <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">
+                        {admin.title}
+                      </span>
+                    </div>
+                    <CardTitle className="text-sm font-bold text-foreground mt-2">
+                      {admin.name}
+                    </CardTitle>
+                    <CardDescription className="text-[11px] leading-snug">
+                      {admin.designation}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-4 pt-2 border-t border-border/40 space-y-1.5 text-[11px]">
+                    <div className="text-muted-foreground flex items-center gap-1.5">
+                      <Building2 className="size-3 shrink-0" />
+                      <span className="truncate">{admin.office}</span>
+                    </div>
+                    <div className="text-muted-foreground flex items-center gap-1.5">
+                      <Phone className="size-3 shrink-0" />
+                      <span>{admin.phone}</span>
+                    </div>
+                    <div className="text-muted-foreground flex items-center gap-1.5 truncate">
+                      <Mail className="size-3 shrink-0" />
+                      <a href={`mailto:${admin.email}`} className="text-primary hover:underline truncate">
+                        {admin.email}
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
 
         {/* Tab 2: The Syndicate */}
         {activeTab === "syndicate" && (
           <div className="space-y-4">
-            <Card className="border border-border/60 bg-muted/10 p-5">
-              <h3 className="text-base font-bold text-foreground">
-                The Syndicate (Highest Executive Body)
-              </h3>
-              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                Under the Odisha Universities Act, the Syndicate is the apex executive authority exercising general management of institutional affairs, property, finances, statutes ratification, and recruitment approvals.
-              </p>
+            <Card className="border border-border/60 bg-muted/10 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="text-base font-bold text-foreground">
+                  The Syndicate (Highest Executive Body)
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                  Under the Odisha Universities Act, the Syndicate is the apex executive authority exercising general management of institutional affairs, property, finances, statutes ratification, and recruitment approvals.
+                </p>
+              </div>
+              <Button size="xs" variant="outline" asChild className="gap-1.5 text-xs text-primary border-primary/30 shrink-0 w-fit">
+                <Link to="/college/administration/syndicate">
+                  <span>Open Dedicated Syndicate Page</span>
+                  <ExternalLink className="size-3" />
+                </Link>
+              </Button>
             </Card>
 
             <div className="rounded-xl border border-border/60 overflow-hidden bg-card">
@@ -255,55 +342,76 @@ export default function CollegeAdministration() {
 
         {/* Tab 3: Academic Council & PG Council */}
         {activeTab === "academic_council" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card className="border border-border/60 bg-card p-5 space-y-3">
-              <Badge className="bg-blue-600 text-white text-[10px]">Academic Authority</Badge>
-              <h3 className="text-base font-bold text-foreground">The Academic Council</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Responsible for the maintenance of standards of instruction, curriculum framing, NEP 2020 LOCF adoption, examinations, and university research programs. Comprises all Deans, HODs, senior college principals, and eminent educationists.
-              </p>
-              <Button asChild size="xs" variant="outline" className="text-xs gap-1 text-primary">
-                <Link to="/college/iqac">
-                  <span>View Council Minutes & ATRs</span>
+          <div className="space-y-4">
+            <div className="flex justify-end">
+              <Button size="xs" variant="outline" asChild className="gap-1.5 text-xs text-primary border-primary/30">
+                <Link to="/college/administration/councils">
+                  <span>Open Dedicated Councils Page</span>
                   <ExternalLink className="size-3" />
                 </Link>
               </Button>
-            </Card>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card className="border border-border/60 bg-card p-5 space-y-3">
+                <Badge className="bg-blue-600 text-white text-[10px]">Academic Authority</Badge>
+                <h3 className="text-base font-bold text-foreground">The Academic Council</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Responsible for the maintenance of standards of instruction, curriculum framing, NEP 2020 LOCF adoption, examinations, and university research programs. Comprises all Deans, HODs, senior college principals, and eminent educationists.
+                </p>
+                <Button asChild size="xs" variant="outline" className="text-xs gap-1 text-primary">
+                  <Link to="/college/administration/councils">
+                    <span>View Academic Regulations</span>
+                    <ExternalLink className="size-3" />
+                  </Link>
+                </Button>
+              </Card>
 
-            <Card className="border border-border/60 bg-card p-5 space-y-3">
-              <Badge className="bg-purple-600 text-white text-[10px]">Postgraduate Governance</Badge>
-              <h3 className="text-base font-bold text-foreground">The Postgraduate (P.G.) Council</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Headed by the Chairperson, P.G. Council, this body coordinates all academic activities across the 32 postgraduate teaching departments, research fellowships, library allocations, and hostel administration.
-              </p>
-              <Button asChild size="xs" variant="outline" className="text-xs gap-1 text-primary">
-                <Link to="/college/departments">
-                  <span>Explore PG Departments</span>
-                  <ExternalLink className="size-3" />
-                </Link>
-              </Button>
-            </Card>
+              <Card className="border border-border/60 bg-card p-5 space-y-3">
+                <Badge className="bg-purple-600 text-white text-[10px]">Postgraduate Governance</Badge>
+                <h3 className="text-base font-bold text-foreground">The Postgraduate (P.G.) Council</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Headed by the Chairperson, P.G. Council, this body coordinates all academic activities across the 32 postgraduate teaching departments, research fellowships, library allocations, and hostel administration.
+                </p>
+                <Button asChild size="xs" variant="outline" className="text-xs gap-1 text-primary">
+                  <Link to="/college/administration/councils">
+                    <span>View PG Council Mandate</span>
+                    <ExternalLink className="size-3" />
+                  </Link>
+                </Button>
+              </Card>
+            </div>
           </div>
         )}
 
         {/* Tab 4: Secretariats */}
         {activeTab === "secretariats" && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="border border-border/60 bg-card p-4 space-y-2">
-              <span className="font-bold text-xs text-foreground block">Vice-Chancellor's Secretariat</span>
-              <p className="text-xs text-muted-foreground">Officer on Special Duty (OSD) & Personal Secretary to VC</p>
-              <div className="text-[11px] text-muted-foreground pt-1">Tel: +91 674 2567101 · principal@ourcollege.edu.in</div>
-            </Card>
-            <Card className="border border-border/60 bg-card p-4 space-y-2">
-              <span className="font-bold text-xs text-foreground block">Registrar's Secretariat</span>
-              <p className="text-xs text-muted-foreground">General Administration, Syndicate Branch & Estt.</p>
-              <div className="text-[11px] text-muted-foreground pt-1">Tel: +91 674 2567387 · registrar@ourcollege.edu.in</div>
-            </Card>
-            <Card className="border border-border/60 bg-card p-4 space-y-2">
-              <span className="font-bold text-xs text-foreground block">Examination Directorate</span>
-              <p className="text-xs text-muted-foreground">Result Tabulation, Marks Verification & Degrees</p>
-              <div className="text-[11px] text-muted-foreground pt-1">Tel: +91 671 2201690 · coe@ourcollege.edu.in</div>
-            </Card>
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2">
+              <h3 className="font-bold text-sm text-foreground">Administrative Secretariats Directory</h3>
+              <Button size="xs" variant="outline" asChild className="gap-1.5 text-xs text-primary border-primary/30 w-fit">
+                <Link to="/college/administration/directory">
+                  <span>Open Complete Secretariats Directory</span>
+                  <ExternalLink className="size-3" />
+                </Link>
+              </Button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card className="border border-border/60 bg-card p-4 space-y-2">
+                <span className="font-bold text-xs text-foreground block">Vice-Chancellor's Secretariat</span>
+                <p className="text-xs text-muted-foreground">Officer on Special Duty (OSD) & Personal Secretary to VC</p>
+                <div className="text-[11px] text-muted-foreground pt-1">Tel: +91 674 2567101 · principal@ourcollege.edu.in</div>
+              </Card>
+              <Card className="border border-border/60 bg-card p-4 space-y-2">
+                <span className="font-bold text-xs text-foreground block">Registrar's Secretariat</span>
+                <p className="text-xs text-muted-foreground">General Administration, Syndicate Branch & Estt.</p>
+                <div className="text-[11px] text-muted-foreground pt-1">Tel: +91 674 2567387 · registrar@ourcollege.edu.in</div>
+              </Card>
+              <Card className="border border-border/60 bg-card p-4 space-y-2">
+                <span className="font-bold text-xs text-foreground block">Examination Directorate</span>
+                <p className="text-xs text-muted-foreground">Result Tabulation, Marks Verification & Degrees</p>
+                <div className="text-[11px] text-muted-foreground pt-1">Tel: +91 671 2201690 · coe@ourcollege.edu.in</div>
+              </Card>
+            </div>
           </div>
         )}
       </Container>

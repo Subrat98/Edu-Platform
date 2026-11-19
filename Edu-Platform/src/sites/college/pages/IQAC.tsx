@@ -68,8 +68,8 @@ export default function CollegeIQAC() {
 
   return (
     <>
-      <Hero variant="compact" title="IQAC, NAAC & Quality Assurance" imageUrl={collegeHeroUrl(1)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "IQAC / NAAC" }]} />
+      <Hero variant="compact" title="IQAC, NAAC & Quality Assurance" imageUrl={collegeHeroUrl(1)} />
 
       <AccreditationStrip items={accreditationBadges} tone="surface" />
 

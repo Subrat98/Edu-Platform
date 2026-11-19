@@ -14,8 +14,8 @@ const faqItems = [
 export default function CollegeExamCell() {
   return (
     <>
-      <Hero variant="compact" title="Examination Cell" imageUrl={collegeHeroUrl(1)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Examination Cell" }]} />
+      <Hero variant="compact" title="Examination Cell" imageUrl={collegeHeroUrl(1)} />
       <NoticeBoard institutionId="college" title="Examination Notices" />
       <Downloads institutionId="college" title="Datesheets & Forms" category="Academics" />
       <Faq items={faqItems} />

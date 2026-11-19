@@ -122,8 +122,8 @@ export default function CollegeTenders() {
 
   return (
     <>
-      <Hero variant="compact" title="Tenders & Procurement" imageUrl={collegeHeroUrl(3)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Tenders & RFPs" }]} />
+      <Hero variant="compact" title="Tenders & Procurement" imageUrl={collegeHeroUrl(3)} />
 
       <Container className="py-10 space-y-8">
         {/* Header Strip */}

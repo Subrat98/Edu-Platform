@@ -210,17 +210,17 @@ export default function CollegeAqarArchive() {
 
   return (
     <>
-      <Hero
-        variant="compact"
-        title="Annual Quality Assurance Report (AQAR) 8-Year Archive"
-        imageUrl={collegeHeroUrl(3)}
-      />
       <Breadcrumbs
         items={[
           { label: "Home", href: "/college" },
           { label: "Quality (IQAC / NAAC)", href: "/college/iqac" },
           { label: "AQAR Archive" },
         ]}
+      />
+      <Hero
+        variant="compact"
+        title="Annual Quality Assurance Report (AQAR) 8-Year Archive"
+        imageUrl={collegeHeroUrl(3)}
       />
 
       {/* Overview & Key Stats */}

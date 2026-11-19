@@ -9,6 +9,10 @@ import {
   FileText,
   FileCheck2,
   ArrowUpDown,
+  Microscope,
+  Building2,
+  ArrowRight,
+  TrendingUp,
 } from "lucide-react";
 import { Hero } from "@/components/sections/Hero";
 import { Stats } from "@/components/sections/Stats";
@@ -79,8 +83,8 @@ export default function CollegeResearch() {
 
   return (
     <>
-      <Hero variant="compact" title="Research, Innovations & Publications" imageUrl={collegeHeroUrl(1)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Research & Publications" }]} />
+      <Hero variant="compact" title="Research, Innovations & Publications" imageUrl={collegeHeroUrl(1)} />
 
       {/* Institutional Research Telemetry Stats */}
       <Stats
@@ -91,6 +95,95 @@ export default function CollegeResearch() {
           { label: "Research Grants", value: `₹${MOCK_RESEARCH_FUNDING_DATA.totalSanctionedAmountLakhs}L` },
         ]}
       />
+
+      {/* Research Divisions & Dedicated Pages Directory */}
+      <Container className="py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <Link
+            to="/college/research/rnd-cell"
+            className="group p-5 rounded-2xl border border-border/80 bg-card hover:border-primary/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-3 w-fit rounded-xl bg-primary/10 text-primary mb-3 group-hover:scale-105 transition-transform">
+                <Building2 className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-base group-hover:text-primary transition-colors">
+                R&D Cell
+              </h3>
+              <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                Institutional seed grants, IPR & patent facilitation, ethics committees, and thrust areas.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-primary gap-1 pt-4 border-t border-border/50 mt-4">
+              <span>Explore Cell</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            to="/college/research/publications"
+            className="group p-5 rounded-2xl border border-border/80 bg-card hover:border-primary/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-3 w-fit rounded-xl bg-blue-500/10 text-blue-600 mb-3 group-hover:scale-105 transition-transform">
+                <FileText className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-base group-hover:text-primary transition-colors">
+                Publications Register
+              </h3>
+              <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                Scopus and Web of Science indexed journal papers, citation tracking, and DOI registers.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-primary gap-1 pt-4 border-t border-border/50 mt-4">
+              <span>View Papers</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            to="/college/research/grants"
+            className="group p-5 rounded-2xl border border-border/80 bg-card hover:border-primary/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-3 w-fit rounded-xl bg-emerald-500/10 text-emerald-600 mb-3 group-hover:scale-105 transition-transform">
+                <TrendingUp className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-base group-hover:text-primary transition-colors">
+                Sponsored Grants
+              </h3>
+              <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                Extramural funding from DST-SERB, CSIR, DBT with sanction letters and audited UCs.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-primary gap-1 pt-4 border-t border-border/50 mt-4">
+              <span>View Grants</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+
+          <Link
+            to="/college/research/cif"
+            className="group p-5 rounded-2xl border border-border/80 bg-card hover:border-primary/50 transition-all hover:shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <div className="p-3 w-fit rounded-xl bg-purple-500/10 text-purple-600 mb-3 group-hover:scale-105 transition-transform">
+                <Microscope className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-foreground text-base group-hover:text-primary transition-colors">
+                Central Instrumentation
+              </h3>
+              <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                FE-SEM with EDS, HR-XRD, 400 MHz NMR, slot booking SOP, and subsidized tariffs.
+              </p>
+            </div>
+            <div className="flex items-center text-xs font-semibold text-primary gap-1 pt-4 border-t border-border/50 mt-4">
+              <span>Access Facility</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+        </div>
+      </Container>
 
       {/* Focus Areas Narrative */}
       <RichText

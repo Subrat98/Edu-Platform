@@ -6,8 +6,8 @@ import { collegeHeroUrl } from "@/mocks/data/images";
 export default function CollegeGalleryPage() {
   return (
     <>
-      <Hero variant="compact" title="Gallery" imageUrl={collegeHeroUrl(2)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Gallery" }]} />
+      <Hero variant="compact" title="Gallery" imageUrl={collegeHeroUrl(2)} />
       <Gallery institutionId="college" title="Photo & Video Albums" />
     </>
   );

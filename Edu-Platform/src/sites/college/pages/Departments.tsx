@@ -12,8 +12,8 @@ export default function CollegeDepartments() {
 
   return (
     <>
-      <Hero variant="compact" title="Departments" imageUrl={collegeHeroUrl(1)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Departments" }]} />
+      <Hero variant="compact" title="Departments" imageUrl={collegeHeroUrl(1)} />
       {isLoading || !data ? (
         <PageLoadingSkeleton />
       ) : (

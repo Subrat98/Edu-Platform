@@ -21,8 +21,8 @@ export default function CollegePolicyPage() {
 
   return (
     <>
-      <Hero variant="compact" title={policy.title} imageUrl={collegeHeroUrl(1)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: policy.title }]} />
+      <Hero variant="compact" title={policy.title} imageUrl={collegeHeroUrl(1)} />
       <RichText
         title={`Last updated: ${new Date(policy.updatedDate).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}`}
         paragraphs={policy.paragraphs}

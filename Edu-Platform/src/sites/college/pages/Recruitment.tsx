@@ -96,8 +96,8 @@ export default function CollegeRecruitment() {
 
   return (
     <>
-      <Hero variant="compact" title="Recruitment & Careers" imageUrl={collegeHeroUrl(1)} />
       <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Recruitment" }]} />
+      <Hero variant="compact" title="Recruitment & Careers" imageUrl={collegeHeroUrl(1)} />
 
       <Container className="py-10 space-y-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-6">

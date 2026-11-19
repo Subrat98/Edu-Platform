@@ -1,9 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Hero } from "@/components/sections/Hero";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Container } from "@/components/common/Container";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Faq } from "@/components/sections/Faq";
@@ -11,16 +8,10 @@ import { ContactForm } from "@/components/sections/ContactForm";
 import { schoolHeroUrl } from "@/mocks/data/images";
 import { useLiveSiteContent } from "@/features/content/siteContentService";
 import {
-  GraduationCap,
   Download,
-  Calendar,
   CreditCard,
   FileCheck2,
-  Users,
-  ShieldCheck,
-  AlertCircle,
   ExternalLink,
-  ChevronRight,
 } from "lucide-react";
 
 const faqItems = [
@@ -53,13 +44,13 @@ export default function SchoolAdmissions() {
 
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Admissions" }]} />
       <Hero
         variant="compact"
         title={siteContent.admissions?.heroTitle || "Admissions 2026–27"}
         subtitle={siteContent.admissions?.heroSubtitle || "Transparent Admissions, Age Criteria under NEP 2020, RTE 25% Reserved Quota & Approved Fee Schedule"}
         imageUrl={siteContent.admissions?.heroImage || schoolHeroUrl(4)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Admissions" }]} />
 
       <Container className="py-10 space-y-10">
         {/* RTE 25% Reserved Quota Notification Strip */}

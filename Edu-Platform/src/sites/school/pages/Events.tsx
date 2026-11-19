@@ -6,8 +6,8 @@ import { schoolHeroUrl } from "@/mocks/data/images";
 export default function SchoolEvents() {
   return (
     <>
-      <Hero variant="compact" title="Events & Calendar" imageUrl={schoolHeroUrl(2)} />
       <Breadcrumbs items={[{ label: "Home", href: "/school" }, { label: "Events & Calendar" }]} />
+      <Hero variant="compact" title="Events & Calendar" imageUrl={schoolHeroUrl(2)} />
       <EventCards institutionId="school" title="School Events Calendar" />
     </>
   );

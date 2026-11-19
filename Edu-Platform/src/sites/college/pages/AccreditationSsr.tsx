@@ -34,17 +34,17 @@ export default function CollegeAccreditationSsr() {
 
   return (
     <>
-      <Hero
-        variant="compact"
-        title="NAAC Accreditation & Self Study Report (SSR)"
-        imageUrl={collegeHeroUrl(2)}
-      />
       <Breadcrumbs
         items={[
           { label: "Home", href: "/college" },
           { label: "Quality (IQAC / NAAC)", href: "/college/iqac" },
           { label: "Accreditation & SSR" },
         ]}
+      />
+      <Hero
+        variant="compact"
+        title="NAAC Accreditation & Self Study Report (SSR)"
+        imageUrl={collegeHeroUrl(2)}
       />
 
       {/* Main Dossier Banner */}

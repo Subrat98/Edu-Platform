@@ -8,12 +8,12 @@ export default function CollegeContact() {
   const siteContent = useLiveSiteContent("college");
   return (
     <>
+      <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Contact" }]} />
       <Hero
         variant="compact"
         title="Contact Us"
         imageUrl={siteContent.contact?.heroImage || collegeHeroUrl(6)}
       />
-      <Breadcrumbs items={[{ label: "Home", href: "/college" }, { label: "Contact" }]} />
       <ContactForm title="We'd love to hear from you" />
     </>
   );
