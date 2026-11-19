@@ -249,8 +249,21 @@ export function Footer() {
               {isCollege ? "RTI Act Section 4(1)(b)" : "Contact Office"}
             </Link>
           </div>
-          <div className="text-[10px] text-white/40">
-            Hosted securely on National Informatics Centre (NIC) / Government Cloud
+          <div className="text-[10px] text-white/40 text-right space-y-0.5">
+            <div>
+              Hosted securely on National Informatics Centre (NIC) / Government Cloud
+            </div>
+            <div>
+              Powered by{" "}
+              <a
+                href="https://www.intulet.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/60 hover:text-white hover:underline transition-colors"
+              >
+                Intulet Technologies
+              </a>
+            </div>
           </div>
         </Container>
       </div>
