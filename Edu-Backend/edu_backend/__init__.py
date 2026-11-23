@@ -1,3 +1,0 @@
-"""
-EduBackend Django Project
-"""
