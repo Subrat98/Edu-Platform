@@ -37,6 +37,10 @@ source .venv/bin/activate
 
 pip install -r requirements.txt
 
+#Demo User
+sudo -u postgres psql
+CREATE USER college_platform WITH LOGIN CREATEDB PASSWORD 'College@12345';
+
 python manage.py migrate --database=default
 python manage.py createsuperuser
 python manage.py runserver
