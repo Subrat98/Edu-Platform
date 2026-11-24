@@ -21,7 +21,7 @@ class TenantDatabaseRouter:
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         if app_label in self.tenant_apps:
-            return db != 'default'
+            return True
         if db != 'default':
             return False
         return None
