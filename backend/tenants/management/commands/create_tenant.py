@@ -22,7 +22,7 @@ class Command(BaseCommand):
         if not all([settings.TENANT_DB_USER, settings.TENANT_DB_PASSWORD]):
             raise CommandError('Set TENANT_DB_USER and TENANT_DB_PASSWORD before provisioning tenant databases.')
         if Tenant.objects.using('default').filter(slug=slug).exists():
-            raise CommandError(f'Tenant slug "{slug}" already exists.')
+            raise CommandError(f'Tenant slug "{slug}" already exists. To apply migrations to existing tenants, run: python manage.py migrate_tenants (or python manage.py seed_tenant --slug {slug})')
         db_name = f'college_{slug.replace("-", "_")}'[:63]
         if Tenant.objects.using('default').filter(database_name=db_name).exists():
             raise CommandError(f'Database name "{db_name}" is already registered.')
