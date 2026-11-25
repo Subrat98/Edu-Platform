@@ -41,15 +41,10 @@ pip install -r requirements.txt
 sudo -u postgres psql
 CREATE USER college_platform WITH LOGIN CREATEDB PASSWORD 'College@12345';
 
-python manage.py migrate --database=default
-python manage.py createsuperuser
-python manage.py runserver
+  python manage.py migrate --database=default
+  python manage.py createsuperuser
+  python manage.py runserver
 
-python manage.py create_tenant \
-  --name "Our College" \
-  --slug our-college
+python manage.py create_tenant --name "Our College" --slug our-college
 
-python manage.py create_tenant_admin \
-  --tenant our-college \
-  --username collegeadmin \
-  --email admin@example.com
+python manage.py create_tenant_admin --tenant our-college --username collegeadmin --email admin@example.com
