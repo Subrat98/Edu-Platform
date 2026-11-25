@@ -26,6 +26,14 @@ class Page(Timestamped):
 class GalleryImage(Timestamped):
     title=models.CharField(max_length=180); image=models.ImageField(upload_to=gallery_upload_to); caption=models.CharField(max_length=300,blank=True); is_published=models.BooleanField(default=True)
     def __str__(self): return self.title
+class MenuSection(Timestamped):
+    title=models.CharField(max_length=120)
+    slug=models.SlugField(unique=True)
+    link=models.CharField(max_length=255,blank=True)
+    sort_order=models.PositiveIntegerField(default=0)
+    is_active=models.BooleanField(default=True)
+    class Meta: ordering=['sort_order','title']
+    def __str__(self): return self.title
 class ContactMessage(Timestamped):
     name=models.CharField(max_length=120); email=models.EmailField(); subject=models.CharField(max_length=180); message=models.TextField(); is_read=models.BooleanField(default=False)
     def __str__(self): return f'{self.name}: {self.subject}'

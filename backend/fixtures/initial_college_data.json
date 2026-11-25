@@ -1,0 +1,258 @@
+{
+  "page": [
+    {
+      "title": "About Our College",
+      "slug": "overview",
+      "section": "about",
+      "content": "Welcome to Our College. Dedicated to excellence in higher education and research.",
+      "meta_description": "",
+      "is_published": true
+    },
+    {
+      "title": "Vision and Mission",
+      "slug": "vision-mission",
+      "section": "about",
+      "content": "Our vision is to provide quality higher education fostering research and innovation.",
+      "meta_description": "",
+      "is_published": true
+    }
+  ],
+  "menusection": [
+    {
+      "title": "Home",
+      "slug": "home",
+      "link": "/",
+      "sort_order": 1,
+      "is_active": true
+    },
+    {
+      "title": "About Us",
+      "slug": "about",
+      "link": "/about/overview",
+      "sort_order": 2,
+      "is_active": true
+    },
+    {
+      "title": "Administration",
+      "slug": "administration",
+      "link": "/administration/overview",
+      "sort_order": 3,
+      "is_active": true
+    },
+    {
+      "title": "Academics",
+      "slug": "academics",
+      "link": "/academics/overview",
+      "sort_order": 4,
+      "is_active": true
+    },
+    {
+      "title": "Admission",
+      "slug": "admission",
+      "link": "/admission/ug",
+      "sort_order": 5,
+      "is_active": true
+    },
+    {
+      "title": "Examination",
+      "slug": "examination",
+      "link": "/examination",
+      "sort_order": 6,
+      "is_active": true
+    },
+    {
+      "title": "NAAC",
+      "slug": "naac",
+      "link": "/naac",
+      "sort_order": 7,
+      "is_active": true
+    },
+    {
+      "title": "IQAC",
+      "slug": "iqac",
+      "link": "/iqac",
+      "sort_order": 8,
+      "is_active": true
+    },
+    {
+      "title": "R&D",
+      "slug": "research",
+      "link": "/research",
+      "sort_order": 9,
+      "is_active": true
+    },
+    {
+      "title": "Extn. Activities",
+      "slug": "extension-activities",
+      "link": "/extension-activities",
+      "sort_order": 10,
+      "is_active": true
+    },
+    {
+      "title": "Library",
+      "slug": "library",
+      "link": "/library",
+      "sort_order": 11,
+      "is_active": true
+    },
+    {
+      "title": "Alumni Cell",
+      "slug": "alumni",
+      "link": "/alumni",
+      "sort_order": 12,
+      "is_active": true
+    },
+    {
+      "title": "Cells and Centers",
+      "slug": "cells-centers",
+      "link": "/cells-centers",
+      "sort_order": 13,
+      "is_active": true
+    },
+    {
+      "title": "More",
+      "slug": "more",
+      "link": "/more",
+      "sort_order": 14,
+      "is_active": true
+    }
+  ],
+  "department": [
+    {
+      "name": "Chemistry",
+      "slug": "chemistry",
+      "faculty": "Faculty of Science",
+      "description": "",
+      "hod": "",
+      "programmes": [
+        "B.Sc.",
+        "M.Sc.",
+        "Ph.D."
+      ],
+      "is_published": true
+    },
+    {
+      "name": "Commerce",
+      "slug": "commerce",
+      "faculty": "Faculty of Commerce",
+      "description": "",
+      "hod": "",
+      "programmes": [
+        "B.Com.",
+        "M.Com."
+      ],
+      "is_published": true
+    },
+    {
+      "name": "English",
+      "slug": "english",
+      "faculty": "Faculty of Arts",
+      "description": "",
+      "hod": "",
+      "programmes": [
+        "B.A.",
+        "M.A.",
+        "Ph.D."
+      ],
+      "is_published": true
+    },
+    {
+      "name": "History",
+      "slug": "history",
+      "faculty": "Faculty of Arts",
+      "description": "",
+      "hod": "",
+      "programmes": [
+        "B.A.",
+        "M.A."
+      ],
+      "is_published": true
+    },
+    {
+      "name": "Mathematics",
+      "slug": "mathematics",
+      "faculty": "Faculty of Science",
+      "description": "",
+      "hod": "",
+      "programmes": [
+        "B.Sc.",
+        "M.Sc.",
+        "Ph.D."
+      ],
+      "is_published": true
+    },
+    {
+      "name": "Physics",
+      "slug": "physics",
+      "faculty": "Faculty of Science",
+      "description": "",
+      "hod": "",
+      "programmes": [
+        "B.Sc.",
+        "M.Sc.",
+        "Ph.D."
+      ],
+      "is_published": true
+    }
+  ],
+  "notice": [
+    {
+      "title": "UG second semester results published",
+      "description": "",
+      "date": "2026-11-24",
+      "category": "result",
+      "file": "",
+      "is_published": true
+    },
+    {
+      "title": "Tender notice for campus laboratory equipment",
+      "description": "",
+      "date": "2026-11-24",
+      "category": "tender",
+      "file": "",
+      "is_published": true
+    },
+    {
+      "title": "Inter-college cultural festival \u2014 registration notice",
+      "description": "",
+      "date": "2026-11-24",
+      "category": "event",
+      "file": "",
+      "is_published": true
+    },
+    {
+      "title": "Walk-in interview for guest faculty positions",
+      "description": "",
+      "date": "2026-11-24",
+      "category": "recruitment",
+      "file": "",
+      "is_published": true
+    },
+    {
+      "title": "Academic Calendar for the session 2026\u201327 released",
+      "description": "",
+      "date": "2026-11-24",
+      "category": "general",
+      "file": "",
+      "is_published": true
+    },
+    {
+      "title": "Admission open for undergraduate programmes 2026\u201327",
+      "description": "",
+      "date": "2026-11-24",
+      "category": "admission",
+      "file": "",
+      "is_published": true
+    },
+    {
+      "title": "Online Examination Form Fill-up \u2014 Semester Examination",
+      "description": "",
+      "date": "2026-11-24",
+      "category": "examination",
+      "file": "",
+      "is_published": true
+    }
+  ],
+  "banner": [],
+  "galleryimage": []
+}
