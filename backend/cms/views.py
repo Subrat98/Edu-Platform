@@ -4,8 +4,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from tenants.permissions import TenantStaffOnly, TenantStaffOrPublicRead
 from tenants.models import TenantMembership
-from .models import Notice, Department, Banner, Page, GalleryImage, ContactMessage, MenuSection
-from .serializers import NoticeSerializer, DepartmentSerializer, BannerSerializer, PageSerializer, GallerySerializer, ContactMessageSerializer, MenuSectionSerializer
+from .models import (
+    Notice, Department, Banner, Page, GalleryImage, ContactMessage, MenuSection,
+    Hostel, HostelRoomType, HostelMessMenu, HostelNotice, HostelFeeHead, HostelFee,
+)
+from .serializers import (
+    NoticeSerializer, DepartmentSerializer, BannerSerializer, PageSerializer, GallerySerializer, ContactMessageSerializer, MenuSectionSerializer,
+    HostelSerializer, HostelRoomTypeSerializer, HostelMessMenuSerializer, HostelNoticeSerializer, HostelFeeHeadSerializer, HostelFeeSerializer,
+)
 
 
 def is_tenant_staff(request):
@@ -89,6 +95,80 @@ class MenuSectionViewSet(TenantContentViewSet):
         qs = MenuSection.objects.all()
         return qs if is_tenant_staff(self.request) else qs.filter(is_active=True)
 
+class HostelViewSet(TenantContentViewSet):
+    queryset = Hostel.objects.all()
+    serializer_class = HostelSerializer
+    lookup_field = 'slug'
+    def get_queryset(self):
+        qs = Hostel.objects.all()
+        if not is_tenant_staff(self.request):
+            qs = qs.filter(is_published=True)
+        if self.request.query_params.get('hostel_type'):
+            qs = qs.filter(hostel_type=self.request.query_params['hostel_type'])
+        return qs
+
+class HostelRoomTypeViewSet(TenantContentViewSet):
+    queryset = HostelRoomType.objects.all()
+    serializer_class = HostelRoomTypeSerializer
+    def get_queryset(self):
+        qs = HostelRoomType.objects.all()
+        if not is_tenant_staff(self.request):
+            qs = qs.filter(is_published=True)
+        if self.request.query_params.get('hostel'):
+            qs = qs.filter(hostel__slug=self.request.query_params['hostel'])
+        if self.request.query_params.get('category'):
+            qs = qs.filter(category=self.request.query_params['category'])
+        return qs
+
+class HostelMessMenuViewSet(TenantContentViewSet):
+    queryset = HostelMessMenu.objects.all()
+    serializer_class = HostelMessMenuSerializer
+    def get_queryset(self):
+        qs = HostelMessMenu.objects.all()
+        if self.request.query_params.get('hostel'):
+            qs = qs.filter(hostel__slug=self.request.query_params['hostel'])
+        return qs
+
+class HostelNoticeViewSet(TenantContentViewSet):
+    queryset = HostelNotice.objects.all()
+    serializer_class = HostelNoticeSerializer
+    def get_queryset(self):
+        qs = HostelNotice.objects.all()
+        if not is_tenant_staff(self.request):
+            qs = qs.filter(is_published=True)
+        if self.request.query_params.get('hostel'):
+            qs = qs.filter(hostel__slug=self.request.query_params['hostel'])
+        if self.request.query_params.get('notice_type'):
+            qs = qs.filter(notice_type=self.request.query_params['notice_type'])
+        if self.request.query_params.get('year'):
+            qs = qs.filter(academic_year=self.request.query_params['year'])
+        return qs
+
+class HostelFeeHeadViewSet(TenantContentViewSet):
+    queryset = HostelFeeHead.objects.all()
+    serializer_class = HostelFeeHeadSerializer
+    lookup_field = 'slug'
+    def get_queryset(self):
+        qs = HostelFeeHead.objects.all()
+        return qs if is_tenant_staff(self.request) else qs.filter(is_active=True)
+
+class HostelFeeViewSet(TenantContentViewSet):
+    queryset = HostelFee.objects.all()
+    serializer_class = HostelFeeSerializer
+    def get_queryset(self):
+        qs = HostelFee.objects.all()
+        if not is_tenant_staff(self.request):
+            qs = qs.filter(is_active=True)
+        if self.request.query_params.get('hostel'):
+            qs = qs.filter(hostel__slug=self.request.query_params['hostel'])
+        if self.request.query_params.get('room_type'):
+            qs = qs.filter(room_type_id=self.request.query_params['room_type'])
+        if self.request.query_params.get('year'):
+            qs = qs.filter(academic_year=self.request.query_params['year'])
+        if self.request.query_params.get('category'):
+            qs = qs.filter(category=self.request.query_params['category'])
+        return qs
+
 class ContactMessageViewSet(viewsets.ModelViewSet):
     queryset = ContactMessage.objects.all()
     serializer_class = ContactMessageSerializer
@@ -113,5 +193,7 @@ class DashboardStatsView(APIView):
             'menu_sections': MenuSection.objects.count(),
             'gallery_images': GalleryImage.objects.count(),
             'unread_messages': ContactMessage.objects.filter(is_read=False).count(),
+            'hostels': Hostel.objects.count(),
+            'hostel_notices': HostelNotice.objects.count(),
             'tenant': {'name': request.tenant.name, 'slug': request.tenant.slug},
         })

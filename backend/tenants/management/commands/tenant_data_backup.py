@@ -2,7 +2,10 @@ import json
 from django.core.management import BaseCommand, CommandError
 from tenants.models import Tenant
 from tenants.db_context import configure_tenant_database
-from cms.models import Page, MenuSection, Department, Notice, Banner, GalleryImage
+from cms.models import (
+    Page, MenuSection, Department, Notice, Banner, GalleryImage,
+    Hostel, HostelRoomType, HostelFeeHead, HostelFee, HostelMessMenu, HostelNotice,
+)
 
 CMS_MODELS = {
     'pages': Page,
@@ -11,6 +14,12 @@ CMS_MODELS = {
     'notices': Notice,
     'banners': Banner,
     'gallery': GalleryImage,
+    'hostels': Hostel,
+    'hostel-room-types': HostelRoomType,
+    'hostel-fee-heads': HostelFeeHead,
+    'hostel-fees': HostelFee,
+    'hostel-mess-menu': HostelMessMenu,
+    'hostel-notices': HostelNotice,
 }
 
 class Command(BaseCommand):
@@ -52,11 +61,24 @@ class Command(BaseCommand):
                 key = model._meta.model_name
                 items = []
                 for item in model.objects.using(alias).all():
-                    record = {
-                        field.name: getattr(item, field.name)
-                        for field in model._meta.fields
-                        if field.name not in ['id', 'created_at', 'updated_at']
-                    }
+                    record = {}
+                    for field in model._meta.fields:
+                        if field.name in ['id', 'created_at', 'updated_at']:
+                            continue
+                        if field.is_relation:
+                            # Read the raw _id attname and look the related row up explicitly on
+                            # `alias`: fetching via field.name here would lazy-load the relation
+                            # through the default manager, which routes through db_for_read() and
+                            # resolves to 'default' outside a tenant-resolved request context.
+                            related_id = getattr(item, field.attname)
+                            if related_id is None:
+                                record[field.name] = None
+                            else:
+                                rel_model = field.related_model
+                                related = rel_model.objects.using(alias).filter(pk=related_id).first()
+                                record[field.name] = getattr(related, 'slug', related_id) if related else related_id
+                        else:
+                            record[field.name] = getattr(item, field.name)
                     items.append(record)
                 data[key] = items
 
@@ -83,23 +105,39 @@ class Command(BaseCommand):
                 created_cnt = 0
                 updated_cnt = 0
                 for record in items:
+                    kwargs = {}
+                    for k, v in record.items():
+                        field = next((f for f in matched_model._meta.fields if f.name == k), None)
+                        if field and field.is_relation and v is not None:
+                            rel_model = field.related_model
+                            related = (rel_model.objects.using(alias).filter(slug=v).first()
+                                       if hasattr(rel_model, 'slug') else
+                                       rel_model.objects.using(alias).filter(pk=v).first())
+                            # Assign the raw _id attname, not the related instance: assigning an
+                            # instance goes through the FK descriptor's router.allow_relation check,
+                            # which fails here because this command runs outside a tenant-resolved
+                            # request (no X-Tenant-Slug context), so db_for_write falls back to 'default'.
+                            kwargs[field.attname] = related.pk if related else None
+                        else:
+                            kwargs[k] = v
+
                     lookup = {}
-                    if 'slug' in record and record['slug']:
-                        lookup = {'slug': record['slug']}
-                    elif 'title' in record:
-                        lookup = {'title': record['title']}
-                    elif 'name' in record:
-                        lookup = {'name': record['name']}
+                    if 'slug' in kwargs and kwargs['slug']:
+                        lookup = {'slug': kwargs['slug']}
+                    elif 'title' in kwargs:
+                        lookup = {'title': kwargs['title']}
+                    elif 'name' in kwargs:
+                        lookup = {'name': kwargs['name']}
 
                     existing = matched_model.objects.using(alias).filter(**lookup).first() if lookup else None
                     if existing:
                         if overwrite:
-                            for k, v in record.items():
+                            for k, v in kwargs.items():
                                 setattr(existing, k, v)
                             existing.save(using=alias)
                             updated_cnt += 1
                     else:
-                        matched_model.objects.using(alias).create(**record)
+                        matched_model.objects.using(alias).create(**kwargs)
                         created_cnt += 1
 
                 self.stdout.write(self.style.SUCCESS(

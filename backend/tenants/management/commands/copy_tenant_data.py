@@ -1,7 +1,10 @@
 from django.core.management import BaseCommand, CommandError
 from tenants.models import Tenant
 from tenants.db_context import configure_tenant_database
-from cms.models import Page, MenuSection, Department, Notice, Banner, GalleryImage
+from cms.models import (
+    Page, MenuSection, Department, Notice, Banner, GalleryImage,
+    Hostel, HostelRoomType, HostelFeeHead, HostelFee, HostelMessMenu, HostelNotice,
+)
 
 CMS_MODELS = {
     'pages': Page,
@@ -10,6 +13,12 @@ CMS_MODELS = {
     'notices': Notice,
     'banners': Banner,
     'gallery': GalleryImage,
+    'hostels': Hostel,
+    'hostel-room-types': HostelRoomType,
+    'hostel-fee-heads': HostelFeeHead,
+    'hostel-fees': HostelFee,
+    'hostel-mess-menu': HostelMessMenu,
+    'hostel-notices': HostelNotice,
 }
 
 class Command(BaseCommand):
@@ -54,11 +63,31 @@ class Command(BaseCommand):
             copied = 0
             updated = 0
             for item in source_qs:
-                fields = {
-                    field.name: getattr(item, field.name)
-                    for field in model._meta.fields
-                    if field.name not in ['id', 'created_at', 'updated_at']
-                }
+                fields = {}
+                for field in model._meta.fields:
+                    if field.name in ['id', 'created_at', 'updated_at']:
+                        continue
+                    if field.is_relation:
+                        # Read the raw _id attname and look the related row up explicitly on
+                        # `source_alias`: fetching via field.name here would lazy-load the relation
+                        # through the default manager, which routes through db_for_read() and
+                        # resolves to 'default' outside a tenant-resolved request context.
+                        related_id = getattr(item, field.attname)
+                        if related_id is None:
+                            fields[field.name] = None
+                        else:
+                            rel_model = field.related_model
+                            source_related = rel_model.objects.using(source_alias).filter(pk=related_id).first()
+                            rel_slug = getattr(source_related, 'slug', None) if source_related else None
+                            target_related = (rel_model.objects.using(target_alias).filter(slug=rel_slug).first()
+                                               if rel_slug else None)
+                            # Assign the raw _id attname: assigning the related instance goes through
+                            # the FK descriptor's router.allow_relation check, which fails here because
+                            # this command runs outside a tenant-resolved request, so db_for_write falls
+                            # back to 'default' and mismatches the explicit target_alias being used.
+                            fields[field.attname] = target_related.pk if target_related else None
+                    else:
+                        fields[field.name] = getattr(item, field.name)
 
                 # Match by slug if present, else title/name
                 lookup = {}

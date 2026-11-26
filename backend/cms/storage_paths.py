@@ -14,3 +14,15 @@ def banner_upload_to(instance, filename):
 
 def gallery_upload_to(instance, filename):
     return _tenant_path('gallery', filename)
+
+def hostel_upload_to(instance, filename):
+    return _tenant_path('hostel', filename)
+
+def hostel_rules_upload_to(instance, filename):
+    return _tenant_path('hostel-rules', filename)
+
+def hostel_notice_upload_to(instance, filename):
+    return _tenant_path('hostel-notices', filename)
+
+def document_upload_to(instance, filename):
+    return _tenant_path('documents', filename)

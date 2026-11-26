@@ -115,6 +115,13 @@
       "link": "/more",
       "sort_order": 14,
       "is_active": true
+    },
+    {
+      "title": "Hostel",
+      "slug": "hostel",
+      "link": "/hostel",
+      "sort_order": 15,
+      "is_active": true
     }
   ],
   "department": [
@@ -197,42 +204,10 @@
   ],
   "notice": [
     {
-      "title": "UG second semester results published",
+      "title": "Online Examination Form Fill-up \u2014 Semester Examination",
       "description": "",
       "date": "2026-11-24",
-      "category": "result",
-      "file": "",
-      "is_published": true
-    },
-    {
-      "title": "Tender notice for campus laboratory equipment",
-      "description": "",
-      "date": "2026-11-24",
-      "category": "tender",
-      "file": "",
-      "is_published": true
-    },
-    {
-      "title": "Inter-college cultural festival \u2014 registration notice",
-      "description": "",
-      "date": "2026-11-24",
-      "category": "event",
-      "file": "",
-      "is_published": true
-    },
-    {
-      "title": "Walk-in interview for guest faculty positions",
-      "description": "",
-      "date": "2026-11-24",
-      "category": "recruitment",
-      "file": "",
-      "is_published": true
-    },
-    {
-      "title": "Academic Calendar for the session 2026\u201327 released",
-      "description": "",
-      "date": "2026-11-24",
-      "category": "general",
+      "category": "examination",
       "file": "",
       "is_published": true
     },
@@ -245,14 +220,369 @@
       "is_published": true
     },
     {
-      "title": "Online Examination Form Fill-up \u2014 Semester Examination",
+      "title": "Academic Calendar for the session 2026\u201327 released",
       "description": "",
       "date": "2026-11-24",
-      "category": "examination",
+      "category": "general",
+      "file": "",
+      "is_published": true
+    },
+    {
+      "title": "Walk-in interview for guest faculty positions",
+      "description": "",
+      "date": "2026-11-24",
+      "category": "recruitment",
+      "file": "",
+      "is_published": true
+    },
+    {
+      "title": "Inter-college cultural festival \u2014 registration notice",
+      "description": "",
+      "date": "2026-11-24",
+      "category": "event",
+      "file": "",
+      "is_published": true
+    },
+    {
+      "title": "Tender notice for campus laboratory equipment",
+      "description": "",
+      "date": "2026-11-24",
+      "category": "tender",
+      "file": "",
+      "is_published": true
+    },
+    {
+      "title": "UG second semester results published",
+      "description": "",
+      "date": "2026-11-24",
+      "category": "result",
       "file": "",
       "is_published": true
     }
   ],
   "banner": [],
-  "galleryimage": []
+  "galleryimage": [],
+  "hostel": [
+    {
+      "name": "Boys Hostel A",
+      "slug": "boys-hostel-a",
+      "hostel_type": "boys",
+      "capacity": 150,
+      "location": "North Campus, Block C",
+      "warden_name": "Dr. R. K. Sahoo",
+      "warden_phone": "+91 9000000001",
+      "warden_email": "warden.boysa@ourcollege.ac.in",
+      "description": "A well-maintained hostel for undergraduate and postgraduate boys.",
+      "facilities": [
+        "24x7 Security",
+        "Wi-Fi",
+        "Common Room",
+        "Study Hall",
+        "Indoor Games",
+        "RO Drinking Water"
+      ],
+      "rules_text": "Gates close at 9:30 PM on weekdays and 10:30 PM on weekends. Ragging is strictly prohibited.",
+      "rules_file": "",
+      "image": "",
+      "admission_process": "Hostel seats are allotted on a first-come-first-served basis to eligible admitted students, subject to availability.",
+      "important_dates": "Application window: 1 June - 20 June. Allotment list: 25 June. Reporting deadline: 5 July.",
+      "payment_instructions": "Pay via the college fee portal or by demand draft in favour of 'Our College Hostel Fund'.",
+      "bank_details": "A/C Name: Our College Hostel Fund. Bank: SBI. A/C No.: 00000012345678. IFSC: SBIN0001234.",
+      "is_published": true,
+      "sort_order": 1
+    },
+    {
+      "name": "Girls Hostel B",
+      "slug": "girls-hostel-b",
+      "hostel_type": "girls",
+      "capacity": 120,
+      "location": "South Campus, Block D",
+      "warden_name": "Mrs. S. Patnaik",
+      "warden_phone": "+91 9000000002",
+      "warden_email": "warden.girlsb@ourcollege.ac.in",
+      "description": "A secure hostel for girls with dedicated wardens and CCTV surveillance.",
+      "facilities": [
+        "24x7 Security",
+        "CCTV Surveillance",
+        "Wi-Fi",
+        "Common Room",
+        "Reading Room",
+        "Laundry"
+      ],
+      "rules_text": "Residents must return by 8:30 PM. Overnight leave requires written parental consent.",
+      "rules_file": "",
+      "image": "",
+      "admission_process": "Hostel seats are allotted on a first-come-first-served basis to eligible admitted students, subject to availability.",
+      "important_dates": "Application window: 1 June - 20 June. Allotment list: 25 June. Reporting deadline: 5 July.",
+      "payment_instructions": "Pay via the college fee portal or by demand draft in favour of 'Our College Hostel Fund'.",
+      "bank_details": "A/C Name: Our College Hostel Fund. Bank: SBI. A/C No.: 00000012345678. IFSC: SBIN0001234.",
+      "is_published": true,
+      "sort_order": 2
+    }
+  ],
+  "hostelroomtype": [
+    {
+      "hostel": "boys-hostel-a",
+      "slug": "boys-hostel-a-double-nonac",
+      "category": "double",
+      "seats_per_room": 2,
+      "is_ac": false,
+      "bathroom_type": "common",
+      "room_count": 20,
+      "vacant_count": 5,
+      "is_published": true
+    },
+    {
+      "hostel": "boys-hostel-a",
+      "slug": "boys-hostel-a-single-ac",
+      "category": "single",
+      "seats_per_room": 1,
+      "is_ac": true,
+      "bathroom_type": "attached",
+      "room_count": 10,
+      "vacant_count": 2,
+      "is_published": true
+    },
+    {
+      "hostel": "girls-hostel-b",
+      "slug": "girls-hostel-b-dormitory-nonac",
+      "category": "dormitory",
+      "seats_per_room": 6,
+      "is_ac": false,
+      "bathroom_type": "common",
+      "room_count": 5,
+      "vacant_count": 1,
+      "is_published": true
+    },
+    {
+      "hostel": "girls-hostel-b",
+      "slug": "girls-hostel-b-double-ac",
+      "category": "double",
+      "seats_per_room": 2,
+      "is_ac": true,
+      "bathroom_type": "attached",
+      "room_count": 15,
+      "vacant_count": 3,
+      "is_published": true
+    }
+  ],
+  "hostelfeehead": [
+    {
+      "name": "Application Fee",
+      "slug": "application-fee",
+      "fee_type": "one_time",
+      "frequency": "one_time",
+      "is_optional": false,
+      "description": "Non-refundable",
+      "sort_order": 1,
+      "is_active": true
+    },
+    {
+      "name": "Admission Fee",
+      "slug": "admission-fee",
+      "fee_type": "one_time",
+      "frequency": "one_time",
+      "is_optional": false,
+      "description": "Charged on allotment",
+      "sort_order": 2,
+      "is_active": true
+    },
+    {
+      "name": "Caution Deposit",
+      "slug": "caution-deposit",
+      "fee_type": "refundable",
+      "frequency": "one_time",
+      "is_optional": false,
+      "description": "Refunded at the end of stay, subject to no damages.",
+      "sort_order": 3,
+      "is_active": true
+    },
+    {
+      "name": "Room Rent",
+      "slug": "room-rent",
+      "fee_type": "recurring",
+      "frequency": "annual",
+      "is_optional": false,
+      "description": "",
+      "sort_order": 4,
+      "is_active": true
+    },
+    {
+      "name": "Mess Charges",
+      "slug": "mess-charges",
+      "fee_type": "recurring",
+      "frequency": "monthly",
+      "is_optional": false,
+      "description": "",
+      "sort_order": 5,
+      "is_active": true
+    },
+    {
+      "name": "Electricity / Utility",
+      "slug": "electricity-utility",
+      "fee_type": "recurring",
+      "frequency": "monthly",
+      "is_optional": false,
+      "description": "",
+      "sort_order": 6,
+      "is_active": true
+    },
+    {
+      "name": "Wi-Fi",
+      "slug": "wifi",
+      "fee_type": "recurring",
+      "frequency": "monthly",
+      "is_optional": true,
+      "description": "",
+      "sort_order": 7,
+      "is_active": true
+    },
+    {
+      "name": "Security Charges",
+      "slug": "security-charges",
+      "fee_type": "recurring",
+      "frequency": "annual",
+      "is_optional": false,
+      "description": "",
+      "sort_order": 8,
+      "is_active": true
+    }
+  ],
+  "hostelfee": [
+    {
+      "hostel": "boys-hostel-a",
+      "room_type": "boys-hostel-a-single-ac",
+      "fee_head": "application-fee",
+      "slug": "boys-hostel-a-boys-hostel-a-single-ac-application-fee-2026-2027-general",
+      "academic_year": "2026-2027",
+      "category": "general",
+      "amount": "500.00",
+      "is_active": true
+    },
+    {
+      "hostel": "boys-hostel-a",
+      "room_type": "boys-hostel-a-single-ac",
+      "fee_head": "admission-fee",
+      "slug": "boys-hostel-a-boys-hostel-a-single-ac-admission-fee-2026-2027-general",
+      "academic_year": "2026-2027",
+      "category": "general",
+      "amount": "2000.00",
+      "is_active": true
+    },
+    {
+      "hostel": "boys-hostel-a",
+      "room_type": "boys-hostel-a-single-ac",
+      "fee_head": "caution-deposit",
+      "slug": "boys-hostel-a-boys-hostel-a-single-ac-caution-deposit-2026-2027-general",
+      "academic_year": "2026-2027",
+      "category": "general",
+      "amount": "5000.00",
+      "is_active": true
+    },
+    {
+      "hostel": "boys-hostel-a",
+      "room_type": "boys-hostel-a-single-ac",
+      "fee_head": "room-rent",
+      "slug": "boys-hostel-a-boys-hostel-a-single-ac-room-rent-2026-2027-general",
+      "academic_year": "2026-2027",
+      "category": "general",
+      "amount": "24000.00",
+      "is_active": true
+    },
+    {
+      "hostel": "boys-hostel-a",
+      "room_type": "boys-hostel-a-single-ac",
+      "fee_head": "mess-charges",
+      "slug": "boys-hostel-a-boys-hostel-a-single-ac-mess-charges-2026-2027-general",
+      "academic_year": "2026-2027",
+      "category": "general",
+      "amount": "3000.00",
+      "is_active": true
+    },
+    {
+      "hostel": "boys-hostel-a",
+      "room_type": "boys-hostel-a-single-ac",
+      "fee_head": "electricity-utility",
+      "slug": "boys-hostel-a-boys-hostel-a-single-ac-electricity-utility-2026-2027-general",
+      "academic_year": "2026-2027",
+      "category": "general",
+      "amount": "500.00",
+      "is_active": true
+    },
+    {
+      "hostel": "boys-hostel-a",
+      "room_type": "boys-hostel-a-single-ac",
+      "fee_head": "wifi",
+      "slug": "boys-hostel-a-boys-hostel-a-single-ac-wifi-2026-2027-general",
+      "academic_year": "2026-2027",
+      "category": "general",
+      "amount": "300.00",
+      "is_active": true
+    },
+    {
+      "hostel": "boys-hostel-a",
+      "room_type": "boys-hostel-a-single-ac",
+      "fee_head": "security-charges",
+      "slug": "boys-hostel-a-boys-hostel-a-single-ac-security-charges-2026-2027-general",
+      "academic_year": "2026-2027",
+      "category": "general",
+      "amount": "1000.00",
+      "is_active": true
+    },
+    {
+      "hostel": "boys-hostel-a",
+      "room_type": "boys-hostel-a-single-ac",
+      "fee_head": "room-rent",
+      "slug": "boys-hostel-a-boys-hostel-a-single-ac-room-rent-2025-2026-general",
+      "academic_year": "2025-2026",
+      "category": "general",
+      "amount": "22000.00",
+      "is_active": true
+    }
+  ],
+  "hostelmessmenu": [
+    {
+      "hostel": "boys-hostel-a",
+      "slug": "boys-hostel-a-monday-breakfast",
+      "day": "Monday",
+      "meal": "breakfast",
+      "items": "Poha, Tea, Banana"
+    },
+    {
+      "hostel": "boys-hostel-a",
+      "slug": "boys-hostel-a-monday-dinner",
+      "day": "Monday",
+      "meal": "dinner",
+      "items": "Chapati, Paneer Curry, Rice"
+    },
+    {
+      "hostel": "boys-hostel-a",
+      "slug": "boys-hostel-a-monday-lunch",
+      "day": "Monday",
+      "meal": "lunch",
+      "items": "Rice, Dal, Mixed Vegetable, Curd"
+    }
+  ],
+  "hostelnotice": [
+    {
+      "hostel": "boys-hostel-a",
+      "title": "Provisional Selection List for Boys Hostel A (2026-27)",
+      "notice_type": "selection_list",
+      "academic_year": "2026-2027",
+      "date": "2026-06-25",
+      "file": "",
+      "description": "",
+      "is_published": true
+    },
+    {
+      "hostel": null,
+      "title": "Hostel Admission Notification 2026-27",
+      "notice_type": "general",
+      "academic_year": "2026-2027",
+      "date": "2026-06-01",
+      "file": "",
+      "description": "",
+      "is_published": true
+    }
+  ]
 }
