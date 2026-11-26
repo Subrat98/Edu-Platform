@@ -1,5 +1,9 @@
+from pathlib import Path
+from uuid import uuid4
+from django.core.files.storage import default_storage
 from rest_framework import filters, permissions, viewsets
 from rest_framework.exceptions import NotFound
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from tenants.permissions import TenantStaffOnly, TenantStaffOrPublicRead
@@ -17,7 +21,11 @@ from .serializers import (
 def is_tenant_staff(request):
     tenant = getattr(request, 'tenant', None)
     user = getattr(request, 'user', None)
-    return bool(tenant and user and user.is_authenticated and TenantMembership.objects.using('default').filter(tenant=tenant, user=user, is_active=True).exists())
+    if not tenant or not user or not user.is_authenticated:
+        return False
+    if user.is_superuser:
+        return True
+    return TenantMembership.objects.using('default').filter(tenant=tenant, user=user, is_active=True).exists()
 
 class TenantContentViewSet(viewsets.ModelViewSet):
     permission_classes = [TenantStaffOrPublicRead]
@@ -76,9 +84,25 @@ class PageViewSet(TenantContentViewSet):
     queryset = Page.objects.all()
     serializer_class = PageSerializer
     lookup_field = 'slug'
+    pagination_class = None
+
+    def create(self, request, *args, **kwargs):
+        if not (request.user and request.user.is_authenticated and request.user.is_superuser):
+            from rest_framework.exceptions import PermissionDenied
+            raise PermissionDenied('Only Super Admin can create new content pages.')
+        return super().create(request, *args, **kwargs)
+
     def get_queryset(self):
-        qs = Page.objects.all()
-        return qs if is_tenant_staff(self.request) else qs.filter(is_published=True)
+        qs = Page.objects.all().order_by('id')
+        if not is_tenant_staff(self.request):
+            qs = qs.filter(is_published=True)
+        user = getattr(self.request, 'user', None)
+        tenant = getattr(self.request, 'tenant', None)
+        if tenant and not (user and user.is_authenticated and user.is_superuser):
+            allowed_sections = (getattr(tenant, 'permissions', None) or {}).get('sections')
+            if isinstance(allowed_sections, list):
+                qs = qs.filter(section__in=allowed_sections)
+        return qs
 
 class GalleryViewSet(TenantContentViewSet):
     queryset = GalleryImage.objects.all()
@@ -91,9 +115,18 @@ class MenuSectionViewSet(TenantContentViewSet):
     queryset = MenuSection.objects.all()
     serializer_class = MenuSectionSerializer
     lookup_field = 'slug'
+    pagination_class = None
     def get_queryset(self):
-        qs = MenuSection.objects.all()
-        return qs if is_tenant_staff(self.request) else qs.filter(is_active=True)
+        qs = MenuSection.objects.all().order_by('sort_order', 'id')
+        if not is_tenant_staff(self.request):
+            qs = qs.filter(is_active=True)
+        user = getattr(self.request, 'user', None)
+        tenant = getattr(self.request, 'tenant', None)
+        if tenant and not (user and user.is_authenticated and user.is_superuser):
+            allowed_sections = (getattr(tenant, 'permissions', None) or {}).get('sections')
+            if isinstance(allowed_sections, list):
+                qs = qs.filter(slug__in=allowed_sections)
+        return qs
 
 class HostelViewSet(TenantContentViewSet):
     queryset = Hostel.objects.all()
@@ -197,3 +230,33 @@ class DashboardStatsView(APIView):
             'hostel_notices': HostelNotice.objects.count(),
             'tenant': {'name': request.tenant.name, 'slug': request.tenant.slug},
         })
+
+
+class TenantConfigView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request):
+        tenant = getattr(request, 'tenant', None)
+        if not tenant:
+            return Response({'detail': 'Tenant not found.'}, status=404)
+        return Response({
+            'name': tenant.name,
+            'slug': tenant.slug,
+            'permissions': tenant.permissions or {},
+        })
+
+
+class PageImageUploadView(APIView):
+    permission_classes = [TenantStaffOnly]
+    parser_classes = [MultiPartParser, FormParser]
+
+    def post(self, request):
+        file_obj = request.FILES.get('image') or request.FILES.get('file')
+        if not file_obj:
+            return Response({'detail': 'No image file provided.'}, status=400)
+        alias = getattr(request, 'tenant_db', None) or 'unassigned'
+        safe_name = Path(file_obj.name).name
+        rel_path = f'tenants/{alias}/pages/{uuid4().hex[:8]}_{safe_name}'
+        saved_path = default_storage.save(rel_path, file_obj)
+        url = request.build_absolute_uri(default_storage.url(saved_path))
+        return Response({'url': url})

@@ -7,6 +7,7 @@ class Tenant(models.Model):
     database_name = models.CharField(max_length=63, unique=True)
     domain = models.CharField(max_length=255, blank=True, unique=True, null=True)
     is_active = models.BooleanField(default=True)
+    permissions = models.JSONField(default=dict, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

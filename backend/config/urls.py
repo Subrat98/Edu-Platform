@@ -5,10 +5,10 @@ from django.conf.urls.static import static
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView
 from cms.views import (
-    NoticeViewSet, DepartmentViewSet, BannerViewSet, PageViewSet, GalleryViewSet, ContactMessageViewSet, DashboardStatsView, MenuSectionViewSet,
+    NoticeViewSet, DepartmentViewSet, BannerViewSet, PageViewSet, GalleryViewSet, ContactMessageViewSet, DashboardStatsView, MenuSectionViewSet, PageImageUploadView, TenantConfigView,
     HostelViewSet, HostelRoomTypeViewSet, HostelMessMenuViewSet, HostelNoticeViewSet, HostelFeeHeadViewSet, HostelFeeViewSet,
 )
-from tenants.views import TenantLoginView, PlatformTenantViewSet
+from tenants.views import TenantLoginView, PlatformLoginView, PlatformMasterCatalogView, PlatformTenantViewSet
 
 router = DefaultRouter()
 router.register('notices', NoticeViewSet, basename='notices')
@@ -32,6 +32,10 @@ urlpatterns = [
     path('api/auth/token/', TenantLoginView.as_view(), name='tenant-token'),
     path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
     path('api/dashboard/', DashboardStatsView.as_view()),
+    path('api/tenant-config/', TenantConfigView.as_view()),
+    path('api/upload-image/', PageImageUploadView.as_view()),
+    path('api/platform/login/', PlatformLoginView.as_view()),
+    path('api/platform/master-catalog/', PlatformMasterCatalogView.as_view()),
     path('api/platform/', include(platform_router.urls)),
     path('api/', include(router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

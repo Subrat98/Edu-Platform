@@ -15,7 +15,18 @@ MIDDLEWARE = ['django.middleware.security.SecurityMiddleware','corsheaders.middl
 ROOT_URLCONF = 'config.urls'
 TEMPLATES = [{'BACKEND':'django.template.backends.django.DjangoTemplates','DIRS':[],'APP_DIRS':True,'OPTIONS':{'context_processors':['django.template.context_processors.debug','django.template.context_processors.request','django.contrib.auth.context_processors.auth','django.contrib.messages.context_processors.messages']}}]
 WSGI_APPLICATION = 'config.wsgi.application'
-DATABASES = {'default': dj_database_url.config(default=f'sqlite:///{BASE_DIR / "db.sqlite3"}', conn_max_age=600)}
+DATABASES = {
+    'default': dj_database_url.config(
+        default=(
+            f"postgres://{os.getenv('TENANT_DB_USER', 'college_platform')}:"
+            f"{os.getenv('TENANT_DB_PASSWORD', '')}@"
+            f"{os.getenv('TENANT_DB_HOST', '127.0.0.1')}:"
+            f"{os.getenv('TENANT_DB_PORT', '5432')}/"
+            f"{os.getenv('CENTRAL_DB_NAME', 'college_platform_central')}"
+        ),
+        conn_max_age=600,
+    )
+}
 # Tenant databases are PostgreSQL databases created by the create_tenant command.
 TENANT_DB_USER = os.getenv('TENANT_DB_USER', '')
 TENANT_DB_PASSWORD = os.getenv('TENANT_DB_PASSWORD', '')

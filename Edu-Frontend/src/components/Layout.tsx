@@ -1,26 +1,76 @@
-import {useEffect,useRef,useState} from 'react';import {Link,NavLink,useLocation} from 'react-router-dom';import {Building2,CalendarDays,Clock,FileText,GraduationCap,Menu,X,Search,Send,ChevronDown,ExternalLink,Mail,MapPin,Phone,Facebook,Instagram,Youtube,ArrowUp,Accessibility,Home,Sun,Moon,Megaphone,Shield,MoreHorizontal} from 'lucide-react';import {navigation as staticNavigation} from '../data/navigation';import {moreLinks} from '../data/moreLinks';import {useFontScale} from '../hooks/useFontScale';import {useThemeToggle} from '../hooks/useThemeToggle';import type {NavItem} from '../types';
+import {useEffect,useMemo,useRef,useState} from 'react';import {Link,NavLink,useLocation} from 'react-router-dom';import {Building2,CalendarDays,Clock,FileText,GraduationCap,Menu,X,Search,Send,ChevronDown,ExternalLink,Mail,MapPin,Phone,Facebook,Instagram,Youtube,ArrowUp,Accessibility,Home,Sun,Moon,Megaphone,Shield,MoreHorizontal} from 'lucide-react';import {navigation as staticNavigation} from '../data/navigation';import {moreLinks} from '../data/moreLinks';import {useFontScale} from '../hooks/useFontScale';import {useThemeToggle} from '../hooks/useThemeToggle';import {getActiveTenantSlug} from '../utils/tenant';import type {NavItem} from '../types';
 const API = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api';
 export function SiteHeader(){
   const [drawer,setDrawer]=useState(false),[expanded,setExpanded]=useState(''),[search,setSearch]=useState('');
   const [closedSection,setClosedSection]=useState('');
   const [moreOpen,setMoreOpen]=useState(false);
   const moreRef=useRef<HTMLDivElement>(null);
+  const navRef=useRef<HTMLDivElement>(null);
+  const measureRef=useRef<HTMLDivElement>(null);
   const {increase,decrease,reset}=useFontScale();
   const {isDark,toggle:toggleTheme}=useThemeToggle();
   const location=useLocation();
   const [navItems,setNavItems]=useState<NavItem[]>(staticNavigation);
+  const [hasApiMenu,setHasApiMenu]=useState(false);
+  const [collegeName,setCollegeName]=useState('OUR COLLEGE');
+  const [allowedResources,setAllowedResources]=useState<string[]|null>(null);
+  const allBarItems=useMemo(()=>{
+    if(hasApiMenu)return navItems;
+    const seen=new Set(navItems.map(i=>i.label.trim().toLowerCase()));
+    const extra=moreLinks.filter(m=>!seen.has(m.label.trim().toLowerCase()));
+    return [...navItems,...extra];
+  },[navItems,hasApiMenu]);
+  const [visibleCount,setVisibleCount]=useState<number>(staticNavigation.length);
   const [updates,setUpdates]=useState<{id:string|number;title:string}[]>([]);
   useEffect(()=>{setDrawer(false);setExpanded('');setClosedSection('');setMoreOpen(false)},[location.pathname]);
   useEffect(()=>{document.body.style.overflow=drawer?'hidden':'';return()=>{document.body.style.overflow=''}},[drawer]);
   useEffect(()=>{const fn=(e:KeyboardEvent)=>{if(e.key==='Escape'){setDrawer(false);setClosedSection('');setMoreOpen(false)}};window.addEventListener('keydown',fn);return()=>window.removeEventListener('keydown',fn)},[]);
   useEffect(()=>{if(!moreOpen)return;const fn=(e:MouseEvent)=>{if(moreRef.current&&!moreRef.current.contains(e.target as Node))setMoreOpen(false)};document.addEventListener('mousedown',fn);return()=>document.removeEventListener('mousedown',fn)},[moreOpen]);
   useEffect(()=>{
-    const tenantSlug = localStorage.getItem('college_tenant_slug') || 'our-college';
+    const calcVisible=()=>{
+      const container=navRef.current;
+      const measure=measureRef.current;
+      if(!container||!measure)return;
+      const available=container.clientWidth;
+      if(available<=0)return;
+      const moreReserved=46;
+      const gap=4;
+      const children=Array.from(measure.children) as HTMLElement[];
+      const totalWidth=children.reduce((acc,el,idx)=>acc+el.offsetWidth+(idx>0?gap:0),0);
+      if(totalWidth<=available){
+        setVisibleCount(children.length);
+        return;
+      }
+      let used=0;
+      let count=0;
+      for(let i=0;i<children.length;i++){
+        const w=children[i].offsetWidth;
+        const needed=used+(count>0?gap:0)+w;
+        if(needed+moreReserved<=available){
+          used=needed;
+          count++;
+        }else{
+          break;
+        }
+      }
+      setVisibleCount(Math.max(1,count));
+    };
+    calcVisible();
+    const ro=new ResizeObserver(calcVisible);
+    if(navRef.current)ro.observe(navRef.current);
+    window.addEventListener('resize',calcVisible);
+    return()=>{ro.disconnect();window.removeEventListener('resize',calcVisible)};
+  },[allBarItems]);
+  useEffect(()=>{
+    const tenantSlug = getActiveTenantSlug();
     const headers = {'X-Tenant-Slug': tenantSlug};
     Promise.all([
       fetch(`${API}/menu-sections/`, {headers}).then(r=>r.ok?r.json():null),
-      fetch(`${API}/pages/`, {headers}).then(r=>r.ok?r.json():null)
-    ]).then(([secData, pagesData])=>{
+      fetch(`${API}/pages/`, {headers}).then(r=>r.ok?r.json():null),
+      fetch(`${API}/tenant-config/`, {headers}).then(r=>r.ok?r.json():null)
+    ]).then(([secData, pagesData, cfgData])=>{
+      if(cfgData?.name) setCollegeName(cfgData.name);
+      if(Array.isArray(cfgData?.permissions?.resources)) setAllowedResources(cfgData.permissions.resources);
       if(!secData) return;
       const rawSections = Array.isArray(secData) ? secData : (secData.results || []);
       if(!rawSections.length) return;
@@ -41,26 +91,31 @@ export function SiteHeader(){
           const pageSecNorm = String(p.section || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
           return (pageSecNorm === secSlugNorm || p.section === sec.slug) && p.is_published !== false;
         });
+        const dropdownPages = matchingPages.filter((p: any) => p.show_in_dropdown !== false);
+        const directPage = matchingPages.find((p: any) => p.show_in_dropdown === false);
         let children: NavItem[] | undefined = undefined;
-        if (matchingPages.length > 0) {
-          children = matchingPages.map((p: any) => ({
+        if (dropdownPages.length > 0) {
+          children = dropdownPages.map((p: any) => ({
             label: p.title,
             href: `/${sec.slug}/${p.slug}`
           }));
         }
+        const defaultHref = directPage ? `/${sec.slug}/${directPage.slug}` : (children?.length ? children[0].href : (sec.slug === 'home' ? '/' : `/${sec.slug}`));
         return {
           label: sec.title,
-          href: sec.link || (children?.length ? children[0].href : (sec.slug === 'home' ? '/' : `/${sec.slug}`)),
+          slug: sec.slug,
+          href: sec.link || defaultHref,
           children
         };
       });
       if(dynamicNav.length) {
         setNavItems(dynamicNav);
+        setHasApiMenu(true);
       }
     }).catch(()=>{});
   },[]);
   useEffect(()=>{
-    const tenantSlug = localStorage.getItem('college_tenant_slug') || 'our-college';
+    const tenantSlug = getActiveTenantSlug();
     fetch(`${API}/notices/`, {headers:{'X-Tenant-Slug': tenantSlug}}).then(r=>r.ok?r.json():null).then(data=>{
       if(!data) return;
       const raw = Array.isArray(data) ? data : (data.results || []);
@@ -85,7 +140,7 @@ export function SiteHeader(){
       <select className="lang-select" aria-label="Select language" defaultValue="en"><option value="en">English</option><option value="or">ଓଡ଼ିଆ</option></select>
     </div></div>
     <header className="brand-header"><div className="container brand-inner">
-      <Link to="/" className="brand-mark" aria-label="Our College home"><img className="brand-logo" src="/logo.png" alt="Our College logo"/><span className="brand-copy"><strong>OUR COLLEGE</strong><b lang="or">ଆମ କଲେଜ</b><small>Cuttack, Odisha</small></span></Link>
+      <Link to="/" className="brand-mark" aria-label={`${collegeName} home`}><img className="brand-logo" src="/logo.png" alt={`${collegeName} logo`}/><span className="brand-copy"><strong>{collegeName.toUpperCase()}</strong><b lang="or">ଆମ କଲେଜ</b><small>Cuttack, Odisha</small></span></Link>
       <div className="brand-right">
         <div className="accreditation"><span> A+ </span><small>NAAC ACCREDITED</small></div>
         <span className="brand-divider"/>
@@ -94,12 +149,18 @@ export function SiteHeader(){
         <button className="mobile-menu" onClick={()=>setDrawer(true)} aria-label="Open navigation"><Menu/></button>
       </div>
     </div></header>
-    <nav className="main-nav"><div className="container nav-inner">
-      {navItems.map(item=>{
+    <nav className="main-nav"><div className="container nav-inner" ref={navRef}>
+      <div className="nav-measure" ref={measureRef} aria-hidden="true">
+        {allBarItems.map(item=>{
+          const isHome=item.label==='Home';
+          return <div className={`nav-item ${isHome?'nav-item-home':''}`} key={`m-${item.label}`}><span>{isHome?<Home size={17}/>:item.label}{item.children&&item.children.length>0&&<ChevronDown size={13}/>}</span></div>;
+        })}
+      </div>
+      {allBarItems.slice(0,visibleCount).map(item=>{
         const isHome = item.label==='Home';
-        const isDirectActive = item.href === '/' ? location.pathname === '/' : (item.href ? location.pathname === item.href : false);
+        const isDirectActive = item.href === '/' ? location.pathname === '/' : (item.href ? (location.pathname === item.href || location.pathname.startsWith(`${item.href}/`)) : false);
         const isChildActive = Boolean(item.children?.some(c => c.href && (location.pathname === c.href || location.pathname.startsWith(`${c.href}/`))));
-        const isSectionPrefixActive = item.href && item.href !== '/' ? location.pathname.startsWith(item.href.split('/')[1] ? `/${item.href.split('/')[1]}` : item.href) : false;
+        const isSectionPrefixActive = item.slug && item.slug !== 'home' ? (location.pathname === `/${item.slug}` || location.pathname.startsWith(`/${item.slug}/`)) : false;
         const isSelected = isDirectActive || isChildActive || isSectionPrefixActive;
         const isClosed = closedSection === item.label;
         return (
@@ -132,10 +193,30 @@ export function SiteHeader(){
           </div>
         );
       })}
-      <div className={`nav-item more-trigger ${moreOpen?'force-open':''}`} ref={moreRef}>
-        <button onClick={()=>setMoreOpen(o=>!o)} aria-expanded={moreOpen} aria-label="More links"><MoreHorizontal size={19}/></button>
-        {moreOpen && <div className="dropdown more-panel">{moreLinks.map(l=><Link key={l.label} to={l.href||'#'} onClick={()=>setMoreOpen(false)}>{l.label}</Link>)}</div>}
-      </div>
+      {visibleCount < allBarItems.length && (
+        <div
+          className={`nav-item more-trigger ${moreOpen?'force-open':''} ${closedSection==='__more__'?'force-closed':''}`}
+          ref={moreRef}
+          onMouseEnter={()=>{if(closedSection==='__more__')setClosedSection('')}}
+        >
+          <button onClick={()=>setMoreOpen(o=>!o)} aria-expanded={moreOpen} aria-label="More menu sections"><MoreHorizontal size={19}/></button>
+          <div className="dropdown more-panel">
+            {allBarItems.slice(visibleCount).map(item=>{
+              const isOvActive = item.href === '/' ? location.pathname === '/' : (item.href ? (location.pathname === item.href || location.pathname.startsWith(`${item.href}/`)) : false) || (item.slug && item.slug !== 'home' ? (location.pathname === `/${item.slug}` || location.pathname.startsWith(`/${item.slug}/`)) : false);
+              return (
+                <Link
+                  key={`ov-${item.label}`}
+                  to={item.href||'#'}
+                  className={`more-overflow-item ${isOvActive ? 'sub-active' : ''}`}
+                  onClick={()=>{setMoreOpen(false);setClosedSection('__more__')}}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div></nav>
     {updates.length>0 && <div className="updates-bar"><div className="container updates-inner">
       <span className="updates-label"><Megaphone size={16}/> Important Updates</span>
@@ -146,9 +227,9 @@ export function SiteHeader(){
     {drawer&&<div className="drawer-backdrop" onClick={()=>setDrawer(false)}><aside className="drawer" onClick={e=>e.stopPropagation()}>
       <div className="drawer-head"><b>Explore Our College</b><button onClick={()=>setDrawer(false)} aria-label="Close navigation"><X/></button></div>
       {navItems.map(item=><div className="drawer-item" key={item.label}>{item.children&&item.children.length>0?<><button onClick={()=>setExpanded(expanded===item.label?'':item.label)}>{item.label}<ChevronDown size={16}/></button>{expanded===item.label&&<div className="drawer-sub">{item.children.map(c=><Link key={c.label} to={c.href||'#'}>{c.label}</Link>)}</div>}</>:<Link to={item.href||'#'}>{item.label}</Link>}</div>)}
-      <div className="drawer-item" key="more"><button onClick={()=>setExpanded(expanded==='More'?'':'More')}>More<ChevronDown size={16}/></button>{expanded==='More'&&<div className="drawer-sub">{moreLinks.map(c=><Link key={c.label} to={c.href||'#'}>{c.label}</Link>)}</div>}</div>
+      {!hasApiMenu && <div className="drawer-item" key="more"><button onClick={()=>setExpanded(expanded==='More'?'':'More')}>More<ChevronDown size={16}/></button>{expanded==='More'&&<div className="drawer-sub">{moreLinks.map(c=><Link key={c.label} to={c.href||'#'}>{c.label}</Link>)}</div>}</div>}
     </aside></div>}
-    <nav className="quick-action-bar" aria-label="Quick actions"><Link to="/notices"><FileText/><span>Notices</span></Link><Link to="/admission/ug"><GraduationCap/><span>Admissions</span></Link><Link to="/hostel"><Building2/><span>Hostel</span></Link><a href="tel:+911234567890"><Phone/><span>Call</span></a><button onClick={()=>setDrawer(true)} aria-label="Open menu"><Menu/><span>Menu</span></button></nav>
+    <nav className="quick-action-bar" aria-label="Quick actions">{(!allowedResources||allowedResources.includes('notices'))&&<Link to="/notices"><FileText/><span>Notices</span></Link>}<Link to="/admission/ug"><GraduationCap/><span>Admissions</span></Link>{(!allowedResources||allowedResources.includes('hostels'))&&<Link to="/hostel"><Building2/><span>Hostel</span></Link>}<a href="tel:+911234567890"><Phone/><span>Call</span></a><button onClick={()=>setDrawer(true)} aria-label="Open menu"><Menu/><span>Menu</span></button></nav>
     <Link to="/admission/ug" className="fab-apply" aria-label="Apply now"><Send/><span>Apply</span></Link>
   </>;
 }

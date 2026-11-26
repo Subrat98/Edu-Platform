@@ -25,7 +25,7 @@ class Banner(Timestamped):
     class Meta: ordering=['sort_order','-created_at']
     def __str__(self): return self.title
 class Page(Timestamped):
-    title=models.CharField(max_length=200); slug=models.SlugField(unique=True); section=models.CharField(max_length=60,default='about'); content=models.TextField(blank=True); meta_description=models.CharField(max_length=300,blank=True); is_published=models.BooleanField(default=True)
+    title=models.CharField(max_length=200); slug=models.SlugField(unique=True); section=models.CharField(max_length=60,default='about'); show_in_dropdown=models.BooleanField(default=True); content=models.TextField(blank=True); meta_description=models.CharField(max_length=300,blank=True); is_published=models.BooleanField(default=True)
     def __str__(self): return self.title
 class GalleryImage(Timestamped):
     title=models.CharField(max_length=180); image=models.ImageField(upload_to=gallery_upload_to); caption=models.CharField(max_length=300,blank=True); is_published=models.BooleanField(default=True)
