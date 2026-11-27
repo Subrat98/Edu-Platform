@@ -1,9 +1,20 @@
-export type BlockType = 'hero' | 'heading' | 'text' | 'image' | 'list' | 'cards' | 'button';
+export type BlockType = 'hero' | 'heading' | 'text' | 'image' | 'list' | 'cards' | 'button' | 'stats' | 'quote' | 'timeline';
 
 export interface PageCardItem {
   title: string;
   text: string;
   image?: string;
+}
+
+export interface PageStatItem {
+  value: string;
+  label: string;
+}
+
+export interface PageTimelineItem {
+  year: string;
+  title: string;
+  text: string;
 }
 
 export interface PageBlock {
@@ -17,6 +28,8 @@ export interface PageBlock {
   align?: 'full' | 'left' | 'right' | 'center';
   items?: string[];
   cards?: PageCardItem[];
+  stats?: PageStatItem[];
+  timeline?: PageTimelineItem[];
   link?: string;
   buttonText?: string;
 }

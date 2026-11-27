@@ -2,7 +2,24 @@ import type {NavItem} from '../types';
 export const navigation:NavItem[]=[
  {label:'Home',href:'/'},
  {label:'About Us',href:'/about/overview',children:[{label:'About',href:'/about/overview'},{label:'Anthem',href:'/about/anthem'},{label:'Vision and Mission',href:'/about/vision-mission'},{label:'Logo',href:'/about/logo'},{label:'Act and Statute',href:'/about/act-statute'},{label:'Location',href:'/about/location'}]},
- {label:'Administration',href:'/administration/overview',children:[{label:'Administrators',href:'/administration/administrators'},{label:'Statutory Bodies',href:'/administration/statutory-bodies'},{label:'Secretariats',href:'/administration/secretariats'},{label:'Students’ Welfare',href:'/administration/students-welfare'},{label:'Staff',href:'/administration/staff'},{label:'Organogram',href:'/administration/organogram'}]},
+ {label:'Administration',href:'/administration/chancellor',children:[
+   {label:'Administrator',href:'/administration/chancellor',children:[
+     {label:'Chancellor',href:'/administration/chancellor'},
+     {label:'Vice Chancellor',href:'/administration/vice-chancellor'},
+     {label:'Chairperson, PG Council',href:'/administration/chairperson-pg-council'},
+     {label:'Registrar',href:'/administration/registrar'},
+     {label:'Deans',href:'/administration/deans'},
+     {label:'Comptroller of Finance',href:'/administration/comptroller-of-finance'},
+     {label:'Controller of Examinations',href:'/administration/controller-of-examinations'}
+   ]},
+   {label:'Statutory Bodies',href:'/administration/the-syndicate',children:[
+     {label:'The Syndicate',href:'/administration/the-syndicate'},
+     {label:'Academic Council',href:'/administration/academic-council'},
+     {label:'College Development Council',href:'/administration/college-development-council'}
+   ]},
+   {label:'Students’ Welfare',href:'/administration/students-welfare'},
+   {label:'Organogram',href:'/administration/organogram'}
+ ]},
  {label:'Academics',href:'/academics/overview',children:[{label:'Faculties and Departments',href:'/academics/departments'},{label:'UG Programmes',href:'/academics/programmes/ug'},{label:'PG Programmes',href:'/academics/programmes/pg'},{label:'PhD Programmes',href:'/academics/programmes/phd'},{label:'Syllabus',href:'/academics/syllabus'},{label:'Academic Calendar',href:'/academics/calendar'},{label:'Holiday List',href:'/academics/holidays'},{label:'LMS',href:'/academics/lms'}]},
  {label:'Admission',href:'/admission/ug',children:[{label:'Undergraduate',href:'/admission/ug'},{label:'Postgraduate',href:'/admission/pg'},{label:'B.Ed',href:'/admission/bed'},{label:'PhD',href:'/admission/phd'}]},
  {label:'Examination',href:'/examination',children:[{label:'Student Login',href:'/examination/student-login'},{label:'Online Exams and Results',href:'/examination/results'},{label:'Rules',href:'/examination/rules'},{label:'Notifications',href:'/examination/notifications'},{label:'Download Forms',href:'/examination/forms'}]},

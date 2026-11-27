@@ -1,24 +1,6 @@
 {
   "page": [
     {
-      "title": "About Our College",
-      "slug": "overview",
-      "section": "about",
-      "show_in_dropdown": true,
-      "content": "Welcome to Our College. Dedicated to excellence in higher education and research.",
-      "meta_description": "",
-      "is_published": true
-    },
-    {
-      "title": "Vision and Mission",
-      "slug": "vision-mission",
-      "section": "about",
-      "show_in_dropdown": true,
-      "content": "Our vision is to provide quality higher education fostering research and innovation.",
-      "meta_description": "",
-      "is_published": true
-    },
-    {
       "title": "Administration Overview",
       "slug": "administration-overview",
       "section": "administration",
@@ -250,6 +232,24 @@
       "show_in_dropdown": false,
       "content": "Digital file movement and paperless office portal for staff.",
       "meta_description": "",
+      "is_published": true
+    },
+    {
+      "title": "About Our College",
+      "slug": "overview",
+      "section": "about",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"template\": \"about-university\", \"blocks\": [{\"id\": \"blk-hero\", \"type\": \"hero\", \"title\": \"About Our College\", \"subtitle\": \"A premier institution dedicated to academic excellence, empowering learners, research, and holistic nation-building.\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80\", \"buttonText\": \"Explore Academics\", \"link\": \"/academics/departments\"}, {\"id\": \"blk-stats\", \"type\": \"stats\", \"stats\": [{\"value\": \"1964\", \"label\": \"Year Established\"}, {\"value\": \"A+\", \"label\": \"NAAC Accredited\"}, {\"value\": \"5,000+\", \"label\": \"Students Enrolled\"}, {\"value\": \"18+\", \"label\": \"Academic Departments\"}]}, {\"id\": \"blk-quote\", \"type\": \"quote\", \"title\": \"\\u0938\\u093e \\u0935\\u093f\\u0926\\u094d\\u092f\\u093e \\u092f\\u093e \\u0935\\u093f\\u092e\\u0941\\u0915\\u094d\\u0924\\u092f\\u0947\", \"subtitle\": \"\\u201cKnowledge is that which liberates.\\u201d \\u2014 Institutional Motto\"}, {\"id\": \"blk-img\", \"type\": \"image\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80\", \"caption\": \"Main Academic Campus\", \"align\": \"right\"}, {\"id\": \"blk-h1\", \"type\": \"heading\", \"title\": \"Heritage & Institutional Overview\"}, {\"id\": \"blk-t1\", \"type\": \"text\", \"text\": \"Our College stands as a distinguished center of higher education committed to intellectual rigor, inclusivity, and community service. Over the decades, the institution has grown from humble beginnings into a vibrant hub of undergraduate, postgraduate, and doctoral scholarship.\"}, {\"id\": \"blk-t2\", \"type\": \"text\", \"text\": \"With modern laboratories, a rich central library, dedicated faculty, and active student cells, we nurture confident, ethical, and future-ready graduates.\"}, {\"id\": \"blk-tl\", \"type\": \"timeline\", \"title\": \"Milestones & Journey\", \"timeline\": [{\"year\": \"1964\", \"title\": \"Foundation\", \"text\": \"Established to expand access to quality higher education in the region.\"}, {\"year\": \"1999\", \"title\": \"Autonomous Recognition\", \"text\": \"Conferred autonomous status for academic innovation and curriculum leadership.\"}, {\"year\": \"2015\", \"title\": \"Center of Excellence\", \"text\": \"Upgraded infrastructure, research centers, and interdisciplinary programmes.\"}, {\"year\": \"Present\", \"title\": \"Future-Ready Campus\", \"text\": \"NAAC A+ accredited institution advancing NEP 2020, digital learning, and global collaborations.\"}]}, {\"id\": \"blk-cards\", \"type\": \"cards\", \"title\": \"Vision, Mission & Core Pillars\", \"cards\": [{\"title\": \"Our Vision\", \"text\": \"To foster intellectual growth, leadership, and self-reliance, molding students into progressive, responsible global citizens rooted in strong moral values.\"}, {\"title\": \"Our Mission\", \"text\": \"To deliver inclusive, skill-oriented, and research-driven education through innovative teaching, modern facilities, and strategic collaborations.\"}, {\"title\": \"Core Values\", \"text\": \"Academic integrity, equity, environmental stewardship, and active participation in community and nation-building.\"}]}]}",
+      "meta_description": "Heritage, milestones, vision, mission, and institutional overview of Our College.",
+      "is_published": true
+    },
+    {
+      "title": "Vision and Mission",
+      "slug": "vision-mission",
+      "section": "about",
+      "show_in_dropdown": true,
+      "content": "{\"version\":1,\"template\":\"about-university\",\"blocks\":[{\"id\":\"vm-hero\",\"type\":\"hero\",\"title\":\"Vision and Mission\",\"subtitle\":\"Guided by our motto of liberating knowledge, we are committed to academic excellence, inclusivity, innovation, and nation-building.\",\"image\":\"http://127.0.0.1:8000/media/tenants/tenant_1/pages/08b87188_images%20(4).jpeg\",\"buttonText\":\"About Our College\",\"link\":\"/about/overview\"},{\"id\":\"vm-quote\",\"type\":\"quote\",\"title\":\"\u0938\u093e \u0935\u093f\u0926\u094d\u092f\u093e \u092f\u093e \u0935\u093f\u092e\u0941\u0915\u094d\u0924\u092f\u0947 (Sa Vidya Ya Vimuktaya)\",\"subtitle\":\"\u201cKnowledge is that which liberates.\u201d \u2014 Institutional Motto\"},{\"id\":\"vm-stats\",\"type\":\"stats\",\"stats\":[{\"value\":\"Quality\",\"label\":\"Teaching & Research\"},{\"value\":\"Inclusive\",\"label\":\"Equitable Campus\"},{\"value\":\"Skill-Based\",\"label\":\"Future-Ready Courses\"},{\"value\":\"Global\",\"label\":\"Collaborations & Impact\"}]},{\"id\":\"vm-vision-list\",\"type\":\"list\",\"title\":\"Our Vision\",\"items\":[\"Holistic development of students through the promotion of quality teaching, mentorship, and interdisciplinary research.\",\"Enhancing global visibility in terms of academic quality, employability, inclusiveness, and student empowerment.\",\"Equipping and enabling learners with knowledge, confidence, and ethical values to lead a purposeful and meaningful life.\"]},{\"id\":\"vm-mission-list\",\"type\":\"list\",\"title\":\"Our Mission\",\"items\":[\"To strive for excellence by continuously enriching the curriculum and institutional work culture through innovative teaching, research, and extension activities.\",\"To ensure a stress-free and inclusive learning environment by providing accessible facilities and support to students from diverse backgrounds.\",\"To develop entrepreneurial skills and self-reliance among students through well-structured, skill-based, future-ready, and value-added courses.\",\"To build student capacity through hands-on experiential learning in collaboration with institutions of national and international repute.\",\"To maximize active student participation in leadership, community outreach, and nation-building initiatives.\"]},{\"id\":\"vm-cards\",\"type\":\"cards\",\"title\":\"Core Values & Strategic Pillars\",\"cards\":[{\"title\":\"Academic Excellence\",\"text\":\"Continuous curriculum enrichment, outcome-based education, and research rigor.\",\"image\":\"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80\"},{\"title\":\"Inclusiveness & Equity\",\"text\":\"A supportive, accessible, and stress-free campus welcoming learners from every background.\",\"image\":\"https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=900&q=80\"},{\"title\":\"Skill & Nation Building\",\"text\":\"Entrepreneurial mindset, industry readiness, and ethical leadership for society.\",\"image\":\"https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80\"}]}]}",
+      "meta_description": "Institutional motto, vision statement, mission objectives, and core values of Our College.",
       "is_published": true
     }
   ],

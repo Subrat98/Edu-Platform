@@ -156,7 +156,25 @@ export default function Admin({ embeddedToken, embeddedTenantSlug, embeddedResou
   });
   setForm(initial);
  }
- function openEdit(row:Row){setEditing(row);setSlugTouched(Boolean(row.slug));const copy={...row};if(resource==='departments'&&Array.isArray(copy.programmes))copy.programmes=copy.programmes.join(', ');if(resource==='hostels'&&Array.isArray(copy.facilities))copy.facilities=copy.facilities.join(', ');setForm(copy)}
+ async function openEdit(row:Row){
+  setEditing(row);
+  setSlugTouched(Boolean(row.slug));
+  const copy={...row};
+  if(resource==='departments'&&Array.isArray(copy.programmes))copy.programmes=copy.programmes.join(', ');
+  if(resource==='hostels'&&Array.isArray(copy.facilities))copy.facilities=copy.facilities.join(', ');
+  setForm(copy);
+  if(resource==='pages'){
+   const key=row.id??row.slug;
+   if(key){
+    const r=await fetch(`${API}/${resource}/${key}/`,{headers}).catch(()=>null);
+    if(r&&r.ok){
+     const fresh=await r.json();
+     setEditing(fresh);
+     setForm(fresh);
+    }
+   }
+  }
+ }
  async function save(e:React.FormEvent){e.preventDefault();setBusy(true);try{const payload={...form};if(resource==='departments')payload.programmes=String(payload.programmes||'').split(',').map((x:string)=>x.trim()).filter(Boolean);if(resource==='hostels')payload.facilities=String(payload.facilities||'').split(',').map((x:string)=>x.trim()).filter(Boolean);if(resource==='menu-sections'){payload.sort_order=payload.sort_order!==undefined&&payload.sort_order!==''?Number(payload.sort_order):0;if(!payload.slug&&payload.title){payload.slug=String(payload.title).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')}}if(resource==='pages'){if(!payload.slug&&payload.title){payload.slug=String(payload.title).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')}}if(resource==='hostel-fees'&&(payload.room_type===''||payload.room_type===undefined))payload.room_type=null;if(resource==='hostel-notices'&&(payload.hostel===''||payload.hostel===undefined))payload.hostel=null;const isEdit=Boolean(editing?.id||editing?.slug);const key=editing?.id??editing?.slug;const url=isEdit?`${API}/${resource}/${key}/`:`${API}/${resource}/`;const r=await fetch(url,{method:isEdit?'PATCH':'POST',headers,body:JSON.stringify(payload)});if(!r.ok){const d=await r.json();throw new Error(typeof d==='object'?JSON.stringify(d):String(d))}setEditing(null);await load()}catch(e:any){setError(e.message)}finally{setBusy(false)}}
  async function remove(row:Row){if(!confirm('Delete this record? This cannot be undone.'))return;const key=row.id??row.slug;const r=await fetch(`${API}/${resource}/${key}/`,{method:'DELETE',headers});if(!r.ok){setError('Delete failed');return}load()}
  async function toggleStatus(row:Row){
