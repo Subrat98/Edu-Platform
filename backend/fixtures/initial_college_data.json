@@ -248,8 +248,116 @@
       "slug": "vision-mission",
       "section": "about",
       "show_in_dropdown": true,
-      "content": "{\"version\":1,\"template\":\"about-university\",\"blocks\":[{\"id\":\"vm-hero\",\"type\":\"hero\",\"title\":\"Vision and Mission\",\"subtitle\":\"Guided by our motto of liberating knowledge, we are committed to academic excellence, inclusivity, innovation, and nation-building.\",\"image\":\"http://127.0.0.1:8000/media/tenants/tenant_1/pages/08b87188_images%20(4).jpeg\",\"buttonText\":\"About Our College\",\"link\":\"/about/overview\"},{\"id\":\"vm-quote\",\"type\":\"quote\",\"title\":\"\u0938\u093e \u0935\u093f\u0926\u094d\u092f\u093e \u092f\u093e \u0935\u093f\u092e\u0941\u0915\u094d\u0924\u092f\u0947 (Sa Vidya Ya Vimuktaya)\",\"subtitle\":\"\u201cKnowledge is that which liberates.\u201d \u2014 Institutional Motto\"},{\"id\":\"vm-stats\",\"type\":\"stats\",\"stats\":[{\"value\":\"Quality\",\"label\":\"Teaching & Research\"},{\"value\":\"Inclusive\",\"label\":\"Equitable Campus\"},{\"value\":\"Skill-Based\",\"label\":\"Future-Ready Courses\"},{\"value\":\"Global\",\"label\":\"Collaborations & Impact\"}]},{\"id\":\"vm-vision-list\",\"type\":\"list\",\"title\":\"Our Vision\",\"items\":[\"Holistic development of students through the promotion of quality teaching, mentorship, and interdisciplinary research.\",\"Enhancing global visibility in terms of academic quality, employability, inclusiveness, and student empowerment.\",\"Equipping and enabling learners with knowledge, confidence, and ethical values to lead a purposeful and meaningful life.\"]},{\"id\":\"vm-mission-list\",\"type\":\"list\",\"title\":\"Our Mission\",\"items\":[\"To strive for excellence by continuously enriching the curriculum and institutional work culture through innovative teaching, research, and extension activities.\",\"To ensure a stress-free and inclusive learning environment by providing accessible facilities and support to students from diverse backgrounds.\",\"To develop entrepreneurial skills and self-reliance among students through well-structured, skill-based, future-ready, and value-added courses.\",\"To build student capacity through hands-on experiential learning in collaboration with institutions of national and international repute.\",\"To maximize active student participation in leadership, community outreach, and nation-building initiatives.\"]},{\"id\":\"vm-cards\",\"type\":\"cards\",\"title\":\"Core Values & Strategic Pillars\",\"cards\":[{\"title\":\"Academic Excellence\",\"text\":\"Continuous curriculum enrichment, outcome-based education, and research rigor.\",\"image\":\"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80\"},{\"title\":\"Inclusiveness & Equity\",\"text\":\"A supportive, accessible, and stress-free campus welcoming learners from every background.\",\"image\":\"https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=900&q=80\"},{\"title\":\"Skill & Nation Building\",\"text\":\"Entrepreneurial mindset, industry readiness, and ethical leadership for society.\",\"image\":\"https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80\"}]}]}",
+      "content": "{\"version\":1,\"template\":\"about-university\",\"blocks\":[{\"id\":\"vm-hero\",\"type\":\"hero\",\"title\":\"Vision and Mission\",\"subtitle\":\"Guided by our motto of liberating knowledge, we are committed to academic excellence, inclusivity, innovation, and nation-building.\",\"image\":\"http://127.0.0.1:8000/media/tenants/tenant_1/pages/08b87188_images%20(4).jpeg\",\"buttonText\":\"About Our College\",\"link\":\"/about/overview\"},{\"id\":\"vm-quote\",\"type\":\"quote\",\"title\":\"सा विद्या या विमुक्तये (Sa Vidya Ya Vimuktaya)\",\"subtitle\":\"“Knowledge is that which liberates.” — Institutional Motto\"},{\"id\":\"vm-stats\",\"type\":\"stats\",\"stats\":[{\"value\":\"Quality\",\"label\":\"Teaching & Research\"},{\"value\":\"Inclusive\",\"label\":\"Equitable Campus\"},{\"value\":\"Skill-Based\",\"label\":\"Future-Ready Courses\"},{\"value\":\"Global\",\"label\":\"Collaborations & Impact\"}]},{\"id\":\"vm-vision-list\",\"type\":\"list\",\"title\":\"Our Vision\",\"items\":[\"Holistic development of students through the promotion of quality teaching, mentorship, and interdisciplinary research.\",\"Enhancing global visibility in terms of academic quality, employability, inclusiveness, and student empowerment.\",\"Equipping and enabling learners with knowledge, confidence, and ethical values to lead a purposeful and meaningful life.\"]},{\"id\":\"vm-mission-list\",\"type\":\"list\",\"title\":\"Our Mission\",\"items\":[\"To strive for excellence by continuously enriching the curriculum and institutional work culture through innovative teaching, research, and extension activities.\",\"To ensure a stress-free and inclusive learning environment by providing accessible facilities and support to students from diverse backgrounds.\",\"To develop entrepreneurial skills and self-reliance among students through well-structured, skill-based, future-ready, and value-added courses.\",\"To build student capacity through hands-on experiential learning in collaboration with institutions of national and international repute.\",\"To maximize active student participation in leadership, community outreach, and nation-building initiatives.\"]},{\"id\":\"vm-cards\",\"type\":\"cards\",\"title\":\"Core Values & Strategic Pillars\",\"cards\":[{\"title\":\"Academic Excellence\",\"text\":\"Continuous curriculum enrichment, outcome-based education, and research rigor.\",\"image\":\"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80\"},{\"title\":\"Inclusiveness & Equity\",\"text\":\"A supportive, accessible, and stress-free campus welcoming learners from every background.\",\"image\":\"https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=900&q=80\"},{\"title\":\"Skill & Nation Building\",\"text\":\"Entrepreneurial mindset, industry readiness, and ethical leadership for society.\",\"image\":\"https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80\"}]}]}",
       "meta_description": "Institutional motto, vision statement, mission objectives, and core values of Our College.",
+      "is_published": true
+    },
+    {
+      "title": "Chancellor",
+      "slug": "chancellor",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"ch-hero\", \"type\": \"hero\", \"title\": \"Hon\\u2019ble Chancellor\", \"subtitle\": \"Patron and Constitutional Head of the Institution, guiding academic excellence and governance.\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"ch-quote\", \"type\": \"quote\", \"title\": \"Guiding Vision & Institutional Patronage\", \"subtitle\": \"\\u201cHigher education must empower learners with knowledge, character, and social responsibility.\\u201d\"}, {\"id\": \"ch-cards\", \"type\": \"cards\", \"title\": \"Office of the Chancellor\", \"cards\": [{\"title\": \"Hon\\u2019ble Governor / Chancellor\", \"text\": \"Constitutional Head and Visitor of the University/College.\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85\"}, {\"title\": \"Convocation & Honours\", \"text\": \"Presides over Annual Convocations and confers degrees and distinctions.\", \"image\": \"https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85\"}]}, {\"id\": \"ch-list\", \"type\": \"list\", \"title\": \"Key Functions & Powers\", \"items\": [\"Presides over the Convocation and key statutory ceremonies.\", \"Exercises statutory powers under the University Act and Statutes.\", \"Provides overarching guidance on quality, ethics, and institutional growth.\"]}]}",
+      "meta_description": "Patron and Constitutional Head of the Institution.",
+      "is_published": true
+    },
+    {
+      "title": "Vice Chancellor",
+      "slug": "vice-chancellor",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"vc-hero\", \"type\": \"hero\", \"title\": \"Vice Chancellor\", \"subtitle\": \"Chief Executive and Academic Officer leading institutional strategy, research, and student success.\", \"image\": \"https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"vc-stats\", \"type\": \"stats\", \"stats\": [{\"value\": \"Academic\", \"label\": \"Leadership\"}, {\"value\": \"Research\", \"label\": \"Innovation\"}, {\"value\": \"Quality\", \"label\": \"NAAC & NEP 2020\"}, {\"value\": \"Governance\", \"label\": \"Transparency\"}]}, {\"id\": \"vc-cards\", \"type\": \"cards\", \"title\": \"Vice Chancellor Profile\", \"cards\": [{\"title\": \"Prof. (Dr.) Vice Chancellor\", \"text\": \"Principal Academic & Executive Officer. Email: vc@ourcollege.ac.in\", \"image\": \"https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85\"}]}, {\"id\": \"vc-list\", \"type\": \"list\", \"title\": \"Core Responsibilities\", \"items\": [\"Chairs the Syndicate, Academic Council, and Finance Committee.\", \"Steers curriculum modernization, research collaborations, and faculty development.\", \"Ensures transparent administration and student-centric campus governance.\"]}]}",
+      "meta_description": "Chief Executive and Academic Officer.",
+      "is_published": true
+    },
+    {
+      "title": "Chairperson, PG Council",
+      "slug": "chairperson-pg-council",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"pgc-hero\", \"type\": \"hero\", \"title\": \"Chairperson, PG Council\", \"subtitle\": \"Coordinating Postgraduate teaching, interdisciplinary research, and doctoral programmes.\", \"image\": \"https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"pgc-list\", \"type\": \"list\", \"title\": \"Mandate & Functions\", \"items\": [\"Oversees all Postgraduate departments, timetables, and academic calendars.\", \"Coordinates PG admissions, seminars, and research fellowships.\", \"Chairs the Postgraduate Council meetings and academic review boards.\"]}]}",
+      "meta_description": "Postgraduate academic council leadership.",
+      "is_published": true
+    },
+    {
+      "title": "Registrar",
+      "slug": "registrar",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"reg-hero\", \"type\": \"hero\", \"title\": \"Registrar\", \"subtitle\": \"Custodian of institutional records, statutory compliance, and general administration.\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"reg-cards\", \"type\": \"cards\", \"title\": \"Office of the Registrar\", \"cards\": [{\"title\": \"Dr. Registrar\", \"text\": \"Administrative Head & Secretary to Statutory Bodies. Email: registrar@ourcollege.ac.in\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85\"}]}, {\"id\": \"reg-list\", \"type\": \"list\", \"title\": \"Key Responsibilities\", \"items\": [\"Maintains official records, properties, and institutional seal.\", \"Acts as Secretary to the Syndicate and Academic Council.\", \"Coordinates establishment, RTI, legal, and statutory compliance.\"]}]}",
+      "meta_description": "Custodian of institutional records and administration.",
+      "is_published": true
+    },
+    {
+      "title": "Deans",
+      "slug": "deans",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"deans-hero\", \"type\": \"hero\", \"title\": \"Deans of Faculties\", \"subtitle\": \"Academic leadership across Humanities, Science, Commerce, and Professional Studies.\", \"image\": \"https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"deans-cards\", \"type\": \"cards\", \"title\": \"Faculty Deans\", \"cards\": [{\"title\": \"Dean, Faculty of Science\", \"text\": \"Oversees Physics, Chemistry, Mathematics, Life Sciences & Computer Science.\", \"image\": \"https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85\"}, {\"title\": \"Dean, Faculty of Humanities & Social Sciences\", \"text\": \"Oversees English, Odia, History, Economics, Political Science & Sociology.\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85\"}, {\"title\": \"Dean, Faculty of Commerce & Management\", \"text\": \"Oversees Commerce, Business Administration, and Entrepreneurship.\", \"image\": \"https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1800&q=85\"}]}]}",
+      "meta_description": "Deans of Faculties overseeing academic schools.",
+      "is_published": true
+    },
+    {
+      "title": "Comptroller of Finance",
+      "slug": "comptroller-of-finance",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"cof-hero\", \"type\": \"hero\", \"title\": \"Comptroller of Finance\", \"subtitle\": \"Stewarding institutional budgets, grants, audits, and transparent financial management.\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"cof-list\", \"type\": \"list\", \"title\": \"Financial Governance\", \"items\": [\"Prepares annual budget estimates and monitors fund utilization.\", \"Manages UGC, RUSA, and State Government grants and scholarships.\", \"Coordinates internal and statutory audits for full financial accountability.\"]}]}",
+      "meta_description": "Financial planning, budgeting, and accounts.",
+      "is_published": true
+    },
+    {
+      "title": "Controller of Examinations",
+      "slug": "controller-of-examinations",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"coe-hero\", \"type\": \"hero\", \"title\": \"Controller of Examinations\", \"subtitle\": \"Ensuring fair, timely, and transparent conduct of examinations and result publication.\", \"image\": \"https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"coe-list\", \"type\": \"list\", \"title\": \"Examination Cell Functions\", \"items\": [\"Schedules semester and annual examinations across UG, PG, and PhD programmes.\", \"Manages question paper moderation, evaluation, and timely result declaration.\", \"Issues mark sheets, provisional certificates, and degree transcripts.\"]}]}",
+      "meta_description": "Conduct of examinations and result publication.",
+      "is_published": true
+    },
+    {
+      "title": "The Syndicate",
+      "slug": "the-syndicate",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"syn-hero\", \"type\": \"hero\", \"title\": \"The Syndicate\", \"subtitle\": \"The apex executive governing body responsible for policy, finance, and institutional administration.\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"syn-list\", \"type\": \"list\", \"title\": \"Powers & Composition\", \"items\": [\"Chaired by the Vice Chancellor with statutory, government, and academic nominees.\", \"Approves annual budgets, faculty appointments, and infrastructure projects.\", \"Reviews recommendations of the Academic Council and Finance Committee.\"]}]}",
+      "meta_description": "Apex executive governing body.",
+      "is_published": true
+    },
+    {
+      "title": "Academic Council",
+      "slug": "academic-council",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"ac-hero\", \"type\": \"hero\", \"title\": \"Academic Council\", \"subtitle\": \"The highest academic body governing curricula, research standards, and programme regulations.\", \"image\": \"https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"ac-list\", \"type\": \"list\", \"title\": \"Academic Mandate\", \"items\": [\"Approves new programmes, NEP 2020 curricula, and syllabus revisions.\", \"Sets standards for teaching, evaluation, and doctoral research.\", \"Considers recommendations from Boards of Studies across all departments.\"]}]}",
+      "meta_description": "Highest academic body governing curricula and standards.",
+      "is_published": true
+    },
+    {
+      "title": "College Development Council",
+      "slug": "college-development-council",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"cdc-hero\", \"type\": \"hero\", \"title\": \"College Development Council\", \"subtitle\": \"Facilitating affiliated college growth, academic quality, and UGC/State grant coordination.\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"cdc-list\", \"type\": \"list\", \"title\": \"Key Objectives\", \"items\": [\"Guides affiliated colleges on infrastructure, accreditation, and academic standards.\", \"Coordinates inspection, affiliation renewal, and development grants.\", \"Organizes capacity-building workshops for principals and faculty.\"]}]}",
+      "meta_description": "Planning, affiliation, and institutional development.",
+      "is_published": true
+    },
+    {
+      "title": "Students’ Welfare",
+      "slug": "students-welfare",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"sw-hero\", \"type\": \"hero\", \"title\": \"Students\\u2019 Welfare\", \"subtitle\": \"Supporting student well-being, scholarships, counseling, hostels, and co-curricular life.\", \"image\": \"https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"sw-cards\", \"type\": \"cards\", \"title\": \"Student Support Services\", \"cards\": [{\"title\": \"Scholarships & Financial Aid\", \"text\": \"Guidance for State, Central, and institutional merit-cum-means scholarships.\", \"image\": \"https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1800&q=85\"}, {\"title\": \"Counseling & Mentorship\", \"text\": \"Dedicated wellness, career guidance, and anti-ragging support.\", \"image\": \"https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85\"}, {\"title\": \"Clubs, Cultural & Sports\", \"text\": \"Vibrant campus life through NCC, NSS, YRC, and cultural societies.\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85\"}]}]}",
+      "meta_description": "Student support, scholarships, and campus welfare.",
+      "is_published": true
+    },
+    {
+      "title": "Organogram",
+      "slug": "organogram",
+      "section": "administration",
+      "show_in_dropdown": true,
+      "content": "{\"version\": 1, \"blocks\": [{\"id\": \"org-hero\", \"type\": \"hero\", \"title\": \"Institutional Organogram\", \"subtitle\": \"Clear hierarchy of statutory governance, academic leadership, and administrative offices.\", \"image\": \"https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85\"}, {\"id\": \"org-timeline\", \"type\": \"timeline\", \"title\": \"Governance Hierarchy\", \"timeline\": [{\"year\": \"Level 1\", \"title\": \"Hon\\u2019ble Chancellor\", \"text\": \"Constitutional Head & Patron of the Institution.\"}, {\"year\": \"Level 2\", \"title\": \"Vice Chancellor\", \"text\": \"Chief Executive & Academic Officer, Chair of Syndicate & Academic Council.\"}, {\"year\": \"Level 3\", \"title\": \"Statutory Officers\", \"text\": \"Chairperson PG Council, Registrar, Deans, Comptroller of Finance, Controller of Examinations.\"}, {\"year\": \"Level 4\", \"title\": \"Departments & Cells\", \"text\": \"Academic Departments, IQAC, Students\\u2019 Welfare, Library, and Hostels.\"}]}]}",
+      "meta_description": "Organizational hierarchy and governance structure.",
       "is_published": true
     }
   ],
@@ -554,7 +662,7 @@
       "is_published": true
     },
     {
-      "title": "Inter-college cultural festival \u2014 registration notice",
+      "title": "Inter-college cultural festival — registration notice",
       "description": "",
       "date": "2026-11-24",
       "category": "event",
@@ -570,7 +678,7 @@
       "is_published": true
     },
     {
-      "title": "Academic Calendar for the session 2026\u201327 released",
+      "title": "Academic Calendar for the session 2026–27 released",
       "description": "",
       "date": "2026-11-24",
       "category": "general",
@@ -578,7 +686,7 @@
       "is_published": true
     },
     {
-      "title": "Admission open for undergraduate programmes 2026\u201327",
+      "title": "Admission open for undergraduate programmes 2026–27",
       "description": "",
       "date": "2026-11-24",
       "category": "admission",
@@ -586,7 +694,7 @@
       "is_published": true
     },
     {
-      "title": "Online Examination Form Fill-up \u2014 Semester Examination",
+      "title": "Online Examination Form Fill-up — Semester Examination",
       "description": "",
       "date": "2026-11-24",
       "category": "examination",
