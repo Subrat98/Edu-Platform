@@ -15,11 +15,10 @@ export function SiteHeader(){
   const [collegeName,setCollegeName]=useState('OUR COLLEGE');
   const [allowedResources,setAllowedResources]=useState<string[]|null>(null);
   const allBarItems=useMemo(()=>{
-    if(hasApiMenu)return navItems;
     const seen=new Set(navItems.map(i=>i.label.trim().toLowerCase()));
     const extra=moreLinks.filter(m=>!seen.has(m.label.trim().toLowerCase()));
     return [...navItems,...extra];
-  },[navItems,hasApiMenu]);
+  },[navItems]);
   const [visibleCount,setVisibleCount]=useState<number>(staticNavigation.length);
   const [updates,setUpdates]=useState<{id:string|number;title:string}[]>([]);
   useEffect(()=>{setDrawer(false);setExpanded('');setClosedSection('');setMoreOpen(false)},[location.pathname]);
@@ -56,6 +55,7 @@ export function SiteHeader(){
       setVisibleCount(Math.max(1,count));
     };
     calcVisible();
+    document.fonts?.ready?.then(calcVisible);
     const ro=new ResizeObserver(calcVisible);
     if(navRef.current)ro.observe(navRef.current);
     window.addEventListener('resize',calcVisible);

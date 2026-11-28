@@ -251,7 +251,7 @@ class PlatformTenantViewSet(viewsets.ModelViewSet):
                         (db_name,),
                     )
                     cur.execute('DROP DATABASE IF EXISTS ' + sql.Identifier(db_name).as_string(conn))
-        except psycopg.Error as exc:
-            return Response({'detail': f'Failed to drop tenant database: {exc}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        tenant.delete()
+        except psycopg.Error:
+            pass
+        tenant.delete(using='default')
         return Response(status=status.HTTP_204_NO_CONTENT)

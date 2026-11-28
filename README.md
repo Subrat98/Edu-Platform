@@ -82,7 +82,7 @@ cd backend
 .venv/bin/python manage.py migrate_tenants
 
 # 2. Load your latest Master Content Pages & Menu Bar updates
-.venv/bin/python manage.py seed_tenant --slug our-college --overwrite
+.venv/bin/python manage.py tenant_data_backup import --slug our-college --file fixtures/initial_college_data.json --overwrite
 
 # 3. Install/update frontend packages if needed and run
 cd ../Edu-Frontend

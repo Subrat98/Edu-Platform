@@ -89,3 +89,23 @@
 .pv-tl-item span{font-size:10px;font-weight:800;background:#8c1116;color:#fff;padding:2px 7px;border-radius:10px;display:inline-block;margin-bottom:3px}
 .pv-tl-item b{display:block;font-size:12px;color:#6f0d11}
 .pv-tl-item p{font-size:11px}
+
+.menu-section-grid{display:flex;flex-direction:column;gap:8px;padding:14px 20px}
+.menu-section-card{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;padding:16px;border:1px solid #dbe2ec;border-radius:10px;background:#fff;cursor:pointer;transition:all .15s ease}
+.menu-section-card:hover{border-color:#8C1116;background:#fdf6f6;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.menu-section-card b{display:block;font-size:15px;color:#1d3152}
+.menu-section-card small{display:block;font-size:12px;color:#64748b;margin-top:2px}
+.menu-section-count{font-size:12px;font-weight:700;color:#8C1116;white-space:nowrap;background:#fdf2f2;padding:5px 10px;border-radius:20px}
+.admin-back-btn{border:1px solid #dbe2ec;background:#f8fafc;color:#1d3152;border-radius:6px;padding:5px 11px;font-size:12px;font-weight:700;cursor:pointer;margin-bottom:8px;display:inline-block}
+.admin-back-btn:hover{border-color:#8C1116;color:#8C1116}
+
+.admin-subgroup-row td{background:#f8fafc;color:#8C1116;font-size:12px;text-transform:uppercase;letter-spacing:.06em;padding:9px 14px!important;border-top:2px solid #e2e8f0}
+.admin-subgroup-row td span{color:#64748b;font-weight:600}
+
+.admin-pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border-top:1px solid #edf0f5;font-size:12px;color:#64748b}
+.admin-pagination>div{display:flex;align-items:center;gap:8px}
+.admin-pagination button{border:1px solid #dbe2ec;background:#fff;color:#1d3152;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer}
+.admin-pagination button:hover:not(:disabled){border-color:#8C1116;color:#8C1116}
+.admin-pagination button:disabled{opacity:.45;cursor:not-allowed}
+
+.admin-pagination button.active{background:#8C1116;border-color:#8C1116;color:#fff}

@@ -182,7 +182,9 @@ export default function SuperAdmin() {
           },
         }),
       });
-      const d = await r.json();
+      const text = await r.text();
+      let d: any = {};
+      try { d = text ? JSON.parse(text) : {}; } catch { throw new Error(`Server error (${r.status}): ${r.statusText || 'Invalid response'}`); }
       if (!r.ok) throw new Error(d.detail || JSON.stringify(d));
       setCreateOpen(false);
       setNotice(`Created college "${d.name}" from master format.`);
@@ -228,7 +230,9 @@ export default function SuperAdmin() {
           },
         }),
       });
-      const d = await r.json();
+      const text = await r.text();
+      let d: any = {};
+      try { d = text ? JSON.parse(text) : {}; } catch { throw new Error(`Server error (${r.status}): ${r.statusText || 'Invalid response'}`); }
       if (!r.ok) throw new Error(d.detail || JSON.stringify(d));
       setPermTarget(null);
       setNotice(`Updated RBAC permissions for "${permTarget.name}".`);
@@ -251,7 +255,9 @@ export default function SuperAdmin() {
         headers,
         body: JSON.stringify(adminForm),
       });
-      const d = await r.json();
+      const text = await r.text();
+      let d: any = {};
+      try { d = text ? JSON.parse(text) : {}; } catch { throw new Error(`Server error (${r.status}): ${r.statusText || 'Invalid response'}`); }
       if (!r.ok) throw new Error(d.detail || JSON.stringify(d));
       setAdminTarget(null);
       setNotice(`Updated admin credentials for "${adminTarget.name}".`);
@@ -273,7 +279,9 @@ export default function SuperAdmin() {
         headers,
         body: JSON.stringify({ template_slug: masterSlug }),
       });
-      const d = await r.json();
+      const text = await r.text();
+      let d: any = {};
+      try { d = text ? JSON.parse(text) : {}; } catch { throw new Error(`Server error (${r.status}): ${r.statusText || 'Invalid response'}`); }
       if (!r.ok) throw new Error(d.detail || JSON.stringify(d));
       setNotice(d.detail || 'Synced from master format.');
     } catch (err: any) {

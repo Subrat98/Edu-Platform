@@ -116,6 +116,10 @@ class MenuSectionViewSet(TenantContentViewSet):
     serializer_class = MenuSectionSerializer
     lookup_field = 'slug'
     pagination_class = None
+
+    def perform_destroy(self, instance):
+        Page.objects.filter(section=instance.slug).delete()
+        instance.delete()
     def get_queryset(self):
         qs = MenuSection.objects.all().order_by('sort_order', 'id')
         if not is_tenant_staff(self.request):
